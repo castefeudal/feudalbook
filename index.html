@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СУВЕРЕН — Анти-Психология</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            DEFAULT: '#c5a880',
+                            light: '#e2d4be',
+                            dark: '#9d7f58',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts for crisp premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #080808;
+            --panel-color: #121212;
+            --border-color: #222222;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --gold-accent: #c5a880;
+            --gold-hover: #a1855e;
+            --card-hover: rgba(197, 168, 128, 0.06);
+            --shadow-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        body.light-theme {
+            --bg-color: #faf9f5;
+            --panel-color: #ffffff;
+            --border-color: #e5e3d7;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --gold-accent: #9d7f58;
+            --gold-hover: #7d6543;
+            --card-hover: rgba(157, 127, 88, 0.05);
+            --shadow-color: rgba(157, 127, 88, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, .font-accent {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .premium-panel {
+            background-color: var(--panel-color);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .premium-input {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: border-color 0.2s ease, background-color 0.3s;
+        }
+
+        .premium-input:focus {
+            border-color: var(--gold-accent);
+            outline: none;
+        }
+
+        .glow-gold:hover {
+            box-shadow: 0 0 15px rgba(197, 168, 128, 0.15);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-accent);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row overflow-x-hidden selection:bg-gold/30 selection:text-white">
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="fixed top-6 right-6 z-50 bg-[#161616] border border-gold text-white px-5 py-3 rounded shadow-2xl opacity-0 translate-y-[-20px] transition-all duration-300 pointer-events-none max-w-sm">
+        <div class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 rounded-full bg-gold animate-ping"></div>
+            <p id="toast-text" class="text-xs font-semibold tracking-wide"></p>
+        </div>
+    </div>
+
+    <!-- MOBILE TOP BAR -->
+    <div class="md:hidden w-full premium-panel p-4 flex items-center justify-between z-40 sticky top-0">
+        <div class="flex flex-col">
+            <span class="text-[9px] uppercase tracking-[0.2em] text-gold font-bold">Каста Феодалов</span>
+            <span class="text-base font-bold tracking-tight">СУВЕРЕН</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <!-- Theme Toggle Mobile -->
+            <button onclick="toggleTheme()" class="p-2 text-gold focus:outline-none" aria-label="Смена темы">
+                <svg id="theme-icon-mob" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                </svg>
+            </button>
+            <button onclick="toggleMobileSidebar()" class="p-2 text-gold focus:outline-none" aria-label="Открыть меню">
+                <svg id="hamburger-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- SIDEBAR NAVIGATION (Tactical Command Panel) -->
+    <aside id="sidebar-panel" class="hidden md:flex w-full md:w-80 bg-[color:var(--panel-color)] border-b md:border-b-0 md:border-r border-[color:var(--border-color)] flex-col justify-between shrink-0 z-30 fixed md:sticky top-0 md:top-auto h-[calc(100vh-65px)] md:h-screen overflow-y-auto">
+        <div>
+            <!-- Sovereign Brand Header -->
+            <div class="p-6 border-b border-[color:var(--border-color)] flex flex-col gap-1 hidden md:flex">
+                <div class="flex items-center justify-between">
+                    <span class="text-[9px] uppercase tracking-[0.25em] text-gold font-bold">Каста Феодалов · 2026</span>
+                    <!-- Theme Toggle Desktop -->
+                    <button onclick="toggleTheme()" class="p-1.5 text-gold hover:text-white rounded border border-[color:var(--border-color)] hover:border-gold/30 transition-all focus:outline-none" title="Сменить тему">
+                        <svg id="theme-icon-desk" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+                </div>
+                <h1 class="text-2xl font-bold tracking-tight text-[color:var(--text-primary)]">
+                    СУВЕРЕН
+                </h1>
+                <span class="text-xs text-[color:var(--text-secondary)] font-serif italic">
+                    Управление ближайшим шагом.
+                </span>
+            </div>
+
+            <!-- Gamification Sidebar Widget -->
+            <div class="px-6 py-4 border-b border-[color:var(--border-color)] bg-neutral-900/5 flex flex-col gap-2">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-neutral-500 uppercase tracking-widest text-[9px] font-bold">Ранг Суверена:</span>
+                    <span id="sidebar-rank" class="text-gold font-bold uppercase text-[10px]">Новобранец</span>
+                </div>
+                <!-- XP Bar -->
+                <div class="w-full bg-neutral-900/50 dark:bg-neutral-900/80 rounded-full h-2 overflow-hidden border border-[color:var(--border-color)]">
+                    <div id="sidebar-xp-bar" class="bg-gold h-full transition-all duration-500" style="width: 0%;"></div>
+                </div>
+                <div class="flex justify-between text-[9px] text-neutral-500">
+                    <span>Уровень <span id="sidebar-lvl-val">1</span></span>
+                    <span><span id="sidebar-xp-val">0</span> / <span id="sidebar-xp-max">100</span> XP</span>
+                </div>
+            </div>
+
+            <!-- Interactive Navigation Items -->
+            <nav class="p-4 flex flex-col gap-1" id="sidebar-nav">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full text-left px-4 py-2.5 rounded transition-all flex items-center gap-3 text-gold bg-gold/10 font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                    Карта твоего порядка
+                </button>
+                <div class="text-[9px] font-bold text-neutral-500 uppercase tracking-[0.2em] px-4 pt-4 pb-1">7 Шагов управления</div>
+                
+                <button onclick="switchTab('frontier1')" id="nav-frontier1" class="w-full text-left px-4 py-2 rounded text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-neutral-800/10 transition-all flex items-center gap-3 text-xs">
+                    <span class="text-xs text-gold font-accent w-4 text-center">I</span> Шредер оправданий
+                </button>
+                <button onclick="switchTab('frontier2')" id="nav-frontier2" class="w-full text-left px-4 py-2 rounded text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-neutral-800/10 transition-all flex items-center gap-3 text-xs">
+                    <span class="text-xs text-gold font-accent w-4 text-center">II</span> Защита внимания
+                </button>
+                <button onclick="switchTab('frontier3')" id="nav-frontier3" class="w-full text-left px-4 py-2 rounded text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-neutral-800/10 transition-all flex items-center gap-3 text-xs">
+                    <span class="text-xs text-gold font-accent w-4 text-center">III</span> Физическое состояние
+                </button>
+                <button onclick="switchTab('frontier4')" id="nav-frontier4" class="w-full text-left px-4 py-2 rounded text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-neutral-800/10 transition-all flex items-center gap-3 text-xs">
+                    <span class="text-xs text-gold font-accent w-4 text-center">IV</span> Бюджет жизни (Недели)
+                </button>
+                <button onclick="switchTab('frontier5')" id="nav-frontier5" class="w-full text-left px-4 py-2 rounded text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-neutral-800/10 transition-all flex items-center gap-3 text-xs">
+                    <span class="text-xs text-gold font-accent w-4 text-center">V</span> Анализ форс-мажоров
+                </button>
+                <button onclick="switchTab('frontier6')" id="nav-frontier6" class="w-full text-left px-4 py-2 rounded text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-neutral-800/10 transition-all flex items-center gap-3 text-xs">
+                    <span class="text-xs text-gold font-accent w-4 text-center">VI</span> Личные границы
+                </button>
+                <button onclick="switchTab('frontier7')" id="nav-frontier7" class="w-full text-left px-4 py-2 rounded text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] hover:bg-neutral-800/10 transition-all flex items-center gap-3 text-xs">
+                    <span class="text-xs text-gold font-accent w-4 text-center">VII</span> Баланс нагрузки
+                </button>
+
+                <div class="text-[9px] font-bold text-neutral-500 uppercase tracking-[0.2em] px-4 pt-4 pb-1">Действие наружу</div>
+                <button onclick="switchTab('projectX')" id="nav-projectX" class="w-full text-left px-4 py-2 rounded border border-[color:var(--border-color)] hover:border-gold/30 hover:bg-neutral-800/10 transition-all flex items-center justify-between text-xs">
+                    <span class="flex items-center gap-2 font-semibold">
+                        <svg class="w-4 h-4 text-gold animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        Проект «X»
+                    </span>
+                    <span id="nav-badge-x" class="text-[9px] px-1.5 py-0.5 bg-gold/10 text-gold rounded font-bold uppercase tracking-wider">Черновик</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Persistent Footprint controls -->
+        <div class="p-6 border-t border-[color:var(--border-color)] flex flex-col gap-4">
+            <div class="flex items-center justify-between text-xs text-[color:var(--text-secondary)]">
+                <span>Возраст в системе:</span>
+                <button onclick="playSound('click'); openAgeModal();" class="text-gold font-bold hover:underline" id="sidebar-age-display">28 лет</button>
+            </div>
+            <div class="flex flex-col gap-2">
+                <button onclick="exportSovereignData()" class="w-full py-2 bg-neutral-900/10 dark:bg-neutral-900/40 hover:bg-gold/10 text-[10px] uppercase font-bold tracking-wider rounded border border-[color:var(--border-color)] transition-all flex items-center justify-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    Экспортировать отчеты
+                </button>
+                <button onclick="openResetModal()" class="w-full py-1 text-red-500 hover:text-red-400 text-[9px] uppercase font-bold tracking-wider rounded transition-all">
+                    Очистить данные
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN INTERACTIVE SPACE -->
+    <main class="flex-1 min-h-[calc(100vh-65px)] md:min-h-screen overflow-y-auto p-4 md:p-8 relative">
+
+        <!-- TAB: DASHBOARD -->
+        <section id="tab-dashboard" class="tab-content flex flex-col gap-6 max-w-5xl">
+            <div class="flex flex-col gap-2 border-b border-[color:var(--border-color)] pb-6">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold font-bold">Твоя личная территория</span>
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight">Карта твоего порядка</h2>
+                <p class="text-[color:var(--text-secondary)] text-sm max-w-2xl leading-relaxed">Пойми за одну секунду, на каком рубеже ты теряешь управление, и сделай конкретный физический шаг для возвращения контроля.</p>
+            </div>
+
+            <!-- Dashboard Progress Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+                <div class="premium-panel p-5 rounded flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] text-[color:var(--text-secondary)] uppercase tracking-wider block font-bold">Возраст калибровки</span>
+                        <span class="text-2xl font-bold mt-1 block" id="dash-age-info">28 лет</span>
+                    </div>
+                    <svg class="w-8 h-8 text-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-12 0 9 9 0 0112 0z"/></svg>
+                </div>
+                <div class="premium-panel p-5 rounded flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] text-[color:var(--text-secondary)] uppercase tracking-wider block font-bold">Физическая база</span>
+                        <span class="text-2xl font-bold text-emerald-500 mt-1 block" id="dash-bio-info">Собрана</span>
+                    </div>
+                    <svg class="w-8 h-8 text-emerald-500/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                </div>
+                <div class="premium-panel p-5 rounded flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] text-[color:var(--text-secondary)] uppercase tracking-wider block font-bold">Часы фокуса (streak)</span>
+                        <span class="text-2xl font-bold text-amber-500 mt-1 block" id="dash-focus-info">0 часов</span>
+                    </div>
+                    <svg class="w-8 h-8 text-amber-500/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+            </div>
+
+            <!-- Achievements & Badges Panel (Gamification Core) -->
+            <div class="premium-panel p-6 rounded flex flex-col gap-4">
+                <span class="text-[10px] uppercase tracking-[0.25em] text-gold font-bold">Ордена Суверенной Касты</span>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="badges-container">
+                    <!-- Dynamic badges populated by JS state -->
+                </div>
+            </div>
+
+            <!-- Dynamic grid generated from JavaScript state -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="frontiers-grid">
+                <!-- Javascript will render custom detailed locks here -->
+            </div>
+
+            <!-- Quick manifesto action box -->
+            <div class="premium-panel border-gold/20 p-6 md:p-8 rounded flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden mt-2">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full filter blur-3xl pointer-events-none"></div>
+                <div class="flex flex-col gap-2 z-10">
+                    <span class="text-[10px] uppercase tracking-[0.25em] text-gold font-bold">Манифест действия</span>
+                    <h3 class="text-xl font-bold">Выведи свое главное решение наружу</h3>
+                    <p class="text-xs text-[color:var(--text-secondary)] max-w-xl leading-relaxed">Любые инсайты на бумаге равны нулю, если твой вторник остается прежним. Хватит бесконечно репетировать жизнь.</p>
+                </div>
+                <div class="flex gap-3 shrink-0 z-10 w-full md:w-auto">
+                    <button onclick="playSound('click'); switchTab('frontier3')" class="flex-1 md:flex-none text-center px-4 py-3 border border-[color:var(--border-color)] hover:border-gold/30 text-xs uppercase font-bold tracking-wider rounded transition-all">База тела</button>
+                    <button onclick="playSound('click'); switchTab('projectX')" class="flex-1 md:flex-none text-center px-5 py-3 bg-gold hover:bg-gold-light text-black text-xs uppercase font-bold tracking-wider rounded transition-all">Открыть Проект «X»</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: FRONTIER 1 (Alibi / Шредер оправданий) -->
+        <section id="tab-frontier1" class="tab-content hidden flex flex-col gap-6 max-w-4xl">
+            <div class="flex flex-col gap-2 border-b border-[color:var(--border-color)] pb-6">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold font-bold">Рубеж I · Оправдания</span>
+                <h2 class="text-3xl font-bold">Шредер твоих оправданий</h2>
+                <p class="text-[color:var(--text-secondary)] text-sm max-w-2xl leading-relaxed">Старая легенда снимает сегодняшний спрос. Выбери из списка оправдание, за которым ты прячешься, и переведи его на честный язык фактов.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Alibi selector -->
+                <div class="premium-panel p-5 rounded flex flex-col gap-4">
+                    <h3 class="text-md font-bold text-gold">Список твоих любимых отговорок</h3>
+                    <p class="text-xs text-[color:var(--text-secondary)]">Нажми на нужную фразу, чтобы запустить процесс утилизации и честной самооценки:</p>
+                    <div class="flex flex-col gap-2 mt-1" id="alibi-selection-box">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Shredder screen -->
+                <div class="premium-panel p-5 rounded flex flex-col items-center justify-center text-center relative overflow-hidden min-h-[300px]" id="shredder-box">
+                    <div id="shredder-idle" class="flex flex-col items-center gap-4">
+                        <svg class="w-12 h-12 text-neutral-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        <div>
+                            <h4 class="font-bold text-sm">Шредер готов к утилизации</h4>
+                            <p class="text-xs text-neutral-500 mt-1 max-w-xs">Кликни на оправдание слева. Мы заставим тебя взглянуть фактам в лицо.</p>
+                        </div>
+                    </div>
+                    <div id="shredder-active" class="hidden flex flex-col items-center gap-4">
+                        <div class="text-red-500 font-bold text-xs uppercase tracking-[0.2em] animate-pulse">Идет утилизация отговорки...</div>
+                        <div class="w-48 bg-neutral-900/50 h-1.5 rounded overflow-hidden">
+                            <div class="bg-gold h-full w-full animate-[pulse_1s_infinite]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shredded log list -->
+            <div class="premium-panel p-5 rounded flex flex-col gap-4">
+                <h3 class="text-md font-bold">Журнал честных авторских решений</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-[color:var(--text-primary)]">
+                        <thead>
+                            <tr class="border-b border-[color:var(--border-color)] text-neutral-500 font-bold uppercase tracking-wider">
+                                <th class="pb-3">Твоя старая отговорка</th>
+                                <th class="pb-3">Что за ней стоит на самом деле (Правда)</th>
+                                <th class="pb-3">Время фиксации</th>
+                            </tr>
+                        </thead>
+                        <tbody id="shredded-log">
+                            <!-- Loaded from local storage state -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: FRONTIER 2 (Focus / Защита внимания) -->
+        <section id="tab-frontier2" class="tab-content hidden flex flex-col gap-6 max-w-4xl">
+            <div class="flex flex-col gap-2 border-b border-[color:var(--border-color)] pb-6">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold font-bold">Рубеж II · Внимание</span>
+                <h2 class="text-3xl font-bold">Защита утреннего внимания</h2>
+                <p class="text-[color:var(--text-secondary)] text-sm max-w-2xl leading-relaxed">Пока ты не назначил первый ход, его напишет мир. Первый час твоего дня — санитарная зона для твоей головы. Никакого внешнего шума до первого выполненного дела.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Audio settings panel -->
+                <div class="md:col-span-1 premium-panel p-5 rounded flex flex-col gap-4">
+                    <h3 class="text-md font-bold text-gold">Утренний настрой разума</h3>
+                    <p class="text-xs text-[color:var(--text-secondary)] leading-relaxed">Выбери аудио-установку на сегодня. Трезвый, мотивирующий голос автора уберет суету.</p>
+                    
+                    <div class="flex flex-col gap-2 mt-1">
+                        <label class="text-[9px] text-neutral-500 uppercase tracking-widest font-bold">Твой текущий день недели</label>
+                        <select id="audio-day" class="premium-input p-3 text-xs rounded">
+                            <option value="1">День I — Как мы врем себе про слабость</option>
+                            <option value="2">День II — Осада твоего внимания утром</option>
+                            <option value="3">День III — Твое тело как физический каркас</option>
+                            <option value="4">День IV — Математика твоего конца: 2600 недель</option>
+                            <option value="5">День V — Что делать сразу после провала</option>
+                            <option value="6">День VI — Выборочный доступ людей к твоей жизни</option>
+                            <option value="7">День VII — Почему сила любит трение и вызовы</option>
+                        </select>
+                        <button onclick="playMorningAudio()" class="mt-2 px-4 py-3 bg-gold hover:bg-gold-light text-black text-xs uppercase font-bold tracking-wider rounded transition-all flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
+                            Запустить настрой
+                        </button>
+                    </div>
+
+                    <!-- Live Quote Output -->
+                    <div id="audio-player-sim" class="hidden border border-gold/15 p-4 rounded bg-cyberblack/10 flex flex-col gap-2 mt-1">
+                        <span class="text-[9px] text-gold uppercase tracking-wider font-bold animate-pulse">Голос Павла Маркова:</span>
+                        <blockquote class="text-xs text-[color:var(--text-primary)] font-serif italic leading-relaxed" id="audio-quote"></blockquote>
+                    </div>
+                </div>
+
+                <!-- Strict Focus Timer with Customizable Limits -->
+                <div class="md:col-span-2 premium-panel p-6 md:p-8 rounded flex flex-col items-center justify-center text-center gap-6 relative overflow-hidden">
+                    <span class="text-xs uppercase tracking-[0.2em] text-neutral-500 font-bold">Таймер «Час Суверена»</span>
+                    
+                    <!-- Configurable selector button panel -->
+                    <div class="flex gap-2 justify-center w-full" id="timer-presets">
+                        <button onclick="setFocusPreset(15)" class="px-3 py-1.5 rounded border border-[color:var(--border-color)] hover:border-gold text-xs text-[color:var(--text-primary)] font-bold transition-all focus:outline-none" id="preset-15">15 мин</button>
+                        <button onclick="setFocusPreset(25)" class="px-3 py-1.5 rounded border border-[color:var(--border-color)] hover:border-gold text-xs text-[color:var(--text-primary)] font-bold transition-all focus:outline-none" id="preset-25">25 мин (Помодоро)</button>
+                        <button onclick="setFocusPreset(45)" class="px-3 py-1.5 rounded border border-[color:var(--border-color)] hover:border-gold text-xs text-[color:var(--text-primary)] font-bold transition-all focus:outline-none" id="preset-45">45 мин</button>
+                        <button onclick="setFocusPreset(60)" class="px-3 py-1.5 rounded border border-[color:var(--border-color)] hover:border-gold text-xs text-[color:var(--text-primary)] font-bold transition-all focus:outline-none bg-gold/10 border-gold" id="preset-60">60 мин</button>
+                    </div>
+
+                    <div class="text-6xl md:text-7xl font-light tracking-widest font-accent" id="focus-timer-display">60:00</div>
+                    
+                    <div class="max-w-md">
+                        <h4 class="font-bold text-sm">Запереть фокус-шлюз на выбранное время?</h4>
+                        <p class="text-xs text-[color:var(--text-secondary)] mt-1 leading-relaxed">Условия жесткие: ты откладываешь телефон, не переключаешься на соцсети и делаешь СВОЕ главное дело. Встроенный бинауральный шум (40 Гц) поможет уму зацепиться.</p>
+                    </div>
+                    <button onclick="toggleFocusTimer()" id="focus-timer-btn" class="px-8 py-3 bg-neutral-900 text-gold border border-gold hover:bg-gold hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all">Запереть фокус</button>
+                    <div class="text-[10px] text-neutral-500 uppercase tracking-widest" id="focus-streak-info">Часов суверенности зафиксировано: 0/7</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: FRONTIER 3 (Biology / Физическое состояние) -->
+        <section id="tab-frontier3" class="tab-content hidden flex flex-col gap-6 max-w-4xl">
+            <div class="flex flex-col gap-2 border-b border-[color:var(--border-color)] pb-6">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold font-bold">Рубеж III · Твое тело</span>
+                <h2 class="text-3xl font-bold">Твое физическое состояние</h2>
+                <p class="text-[color:var(--text-secondary)] text-sm max-w-2xl leading-relaxed">Тело не спорит с твоей философией — оно просто выставляет счет. Если базовая физиология разрушена, любые рассуждения о целях бессмысленны.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Checkbox list -->
+                <div class="lg:col-span-2 premium-panel p-5 rounded flex flex-col gap-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-md font-bold">Суверенная норма организма</h3>
+                        <span id="bio-score" class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded font-bold border border-emerald-500/20">Прочность: 100%</span>
+                    </div>
+                    <p class="text-xs text-[color:var(--text-secondary)] leading-relaxed">Отметь галочками только те вещи, которые ты реально и честно соблюдал за последние 24 часа. Будь беспристрастен.</p>
+
+                    <div class="flex flex-col gap-3" id="bio-checklist-box">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Shock Lock status -->
+                <div class="lg:col-span-1 premium-panel p-5 rounded flex flex-col justify-between gap-6" id="shock-lock-widget">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center gap-2 text-red-500">
+                            <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                            <span class="text-[9px] uppercase tracking-widest font-bold">Оценка Защиты</span>
+                        </div>
+                        <h3 class="text-lg font-bold" id="shock-status-title">Протокол Активен</h3>
+                        <p class="text-xs text-[color:var(--text-secondary)] leading-relaxed" id="shock-status-desc">Твое тело готово к нагрузкам. Когнитивные доступы и построение планов разрешены.</p>
+                    </div>
+                    <div id="shock-lock-indicator" class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded text-center text-[10px] text-emerald-400 font-bold uppercase tracking-wider">
+                        Шоковый барьер чист
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: FRONTIER 4 (Memento Mori / Бюджет жизни) -->
+        <section id="tab-frontier4" class="tab-content hidden flex flex-col gap-6 max-w-5xl">
+            <div class="flex flex-col gap-2 border-b border-[color:var(--border-color)] pb-6">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold font-bold">Рубеж IV · Твое время</span>
+                <h2 class="text-3xl font-bold">Твой бюджет жизни в неделях</h2>
+                <p class="text-[color:var(--text-secondary)] text-sm max-w-2xl leading-relaxed">Смерть — это единственный безжалостный редактор твоего календаря. Время тает. Хватит бесконечно готовиться.</p>
+            </div>
+
+            <!-- Lifespan Grid and input -->
+            <div class="premium-panel p-5 rounded flex flex-col gap-6">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                    <div>
+                        <h3 class="text-md font-bold text-gold">Резервуар Недель (До 80 лет)</h3>
+                        <p class="text-xs text-[color:var(--text-secondary)] mt-1 max-w-lg leading-relaxed">Одна точка — одна неделя твоей жизни. Выжженные точки — пройденное время. Золотом мерцает твой текущий боевой запас.</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 bg-neutral-900/5 px-4 py-3 rounded border border-[color:var(--border-color)] shrink-0 w-full lg:w-auto">
+                        <div class="flex flex-col gap-1 w-full">
+                            <span class="text-[9px] uppercase tracking-wider text-neutral-500 font-bold">Твой точный возраст</span>
+                            <input type="number" id="mori-age-input" onchange="updateAgeDirectly(this.value)" class="w-full lg:w-20 premium-input px-2 py-1 text-sm font-bold text-center rounded">
+                        </div>
+                        <div class="text-xs text-[color:var(--text-secondary)] border-l border-[color:var(--border-color)] pl-4 shrink-0">
+                            <div>Пройдено: <span class="font-bold text-[color:var(--text-primary)]" id="mori-spent">0</span> нед.</div>
+                            <div>Осталось: <span class="text-gold font-bold" id="mori-rem">0</span> нед.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom visual legend containing life epochs -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                    <div class="border-l-2 border-emerald-500 pl-2">
+                        <span class="font-bold text-emerald-500 text-[10px] block">0 - 20 лет</span>
+                        <span class="text-[color:var(--text-secondary)]">Сборка & Юность</span>
+                    </div>
+                    <div class="border-l-2 border-blue-500 pl-2">
+                        <span class="font-bold text-blue-500 text-[10px] block">20 - 40 лет</span>
+                        <span class="text-[color:var(--text-secondary)]">Экспансия & Сила</span>
+                    </div>
+                    <div class="border-l-2 border-yellow-500 pl-2">
+                        <span class="font-bold text-yellow-500 text-[10px] block">40 - 60 лет</span>
+                        <span class="text-[color:var(--text-secondary)]">Опыт & Мастерство</span>
+                    </div>
+                    <div class="border-l-2 border-neutral-500 pl-2">
+                        <span class="font-bold text-neutral-500 text-[10px] block">60 - 80 лет</span>
+                        <span class="text-[color:var(--text-secondary)]">Wisdom & Наследие</span>
+                    </div>
+                </div>
+
+                <!-- High-DPI canvas wrapper -->
+                <div class="relative w-full bg-neutral-900/5 rounded border border-[color:var(--border-color)] p-4 flex items-center justify-center">
+                    <canvas id="lifespan-canvas" width="840" height="260" class="max-w-full block"></canvas>
+                </div>
+            </div>
+
+            <!-- Binding active weekly steps -->
+            <div class="premium-panel p-5 rounded flex flex-col gap-4">
+                <h3 class="text-md font-bold">Шаг недели (Преодоление долгостроя)</h3>
+                <p class="text-xs text-[color:var(--text-secondary)] leading-relaxed">Пока у дела нет точной даты, дедлайна и внешнего следа — оно не живет. Вытащи одну залежавшуюся задачу в плоскость обязательств.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-1">
+                    <input type="text" id="mori-task-title" placeholder="Какое дело лежит в «потом»?" class="premium-input p-3 text-xs rounded">
+                    <input type="text" id="mori-task-deadline" placeholder="Точный срок (Например: Пятница, 18:00)" class="premium-input p-3 text-xs rounded">
+                    <button onclick="saveMoriTask()" class="px-5 py-3 bg-gold hover:bg-gold-light text-black text-xs uppercase font-bold tracking-wider rounded transition-all">Связать дедлайном</button>
+                </div>
+
+                <div id="mori-active-task-box" class="hidden mt-2 p-4 border border-gold/15 rounded bg-neutral-900/5 flex items-center justify-between">
+                    <div>
+                        <div class="text-[9px] text-gold uppercase tracking-wider font-bold">Обязательство недели:</div>
+                        <h4 class="font-bold text-xs mt-1" id="active-mori-title"></h4>
+                        <p class="text-[11px] text-[color:var(--text-secondary)]">Дедлайн: <span id="active-mori-deadline"></span></p>
+                    </div>
+                    <button onclick="completeMoriTask()" class="px-4 py-2 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-black text-[10px] uppercase font-bold tracking-wider rounded transition-all">Сделано</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: FRONTIER 5 (Amor Fati / Анализ трудностей) -->
+        <section id="tab-frontier5" class="tab-content hidden flex flex-col gap-6 max-w-4xl">
+            <div class="flex flex-col gap-2 border-b border-[color:var(--border-color)] pb-6">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold font-bold">Рубеж V · Вызов</span>
+                <h2 class="text-3xl font-bold">Инженерный разбор форс-мажоров</h2>
+                <p class="text-[color:var(--text-secondary)] text-sm max-w-2xl leading-relaxed">Когда случается крах, хочется немедленно придумать красивый оправдывающий смысл. Это слишком рано. Раздели сухие факты от личной драмы.</p>
+            </div>
+
+            <!-- Impact Engineering protocol form -->
+            <div class="premium-panel p-5 rounded flex flex-col gap-5">
+                <div class="flex items-center gap-2 text-gold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    <h3 class="text-md font-bold">Разбор внезапного сбоя</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">Шаг 1: Опиши произошедшее (только сухие факты)</label>
+                        <textarea id="f5-fact" placeholder="Исключи эмоции, слезы и сравнения. Только сухие цифры и фактические события..." class="premium-input p-3 text-xs rounded h-24 resize-none leading-relaxed"></textarea>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">Шаг 2: Что находится строго в твоей зоне влияния?</label>
+                        <textarea id="f5-control" placeholder="Какие конкретно твои действия прямо сейчас способны повлиять на последствия..." class="premium-input p-3 text-xs rounded h-24 resize-none leading-relaxed"></textarea>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">Шаг 3: Что находится вне твоей зоны влияния?</label>
+                        <input type="text" id="f5-uncontrol" placeholder="Мнения чужих людей, уже прошедшее время, погода..." class="premium-input p-3 text-xs rounded">
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">Шаг 4: Мой первый безопасный шаг за 24 часа</label>
+                        <input type="text" id="f5-next-step" placeholder="Одно простое действие для возврата контроля над средой..." class="premium-input p-3 text-xs rounded">
+                    </div>
+                </div>
+
+                <button onclick="submitImpactReport()" class="w-full py-4 bg-gold hover:bg-gold-light text-black text-xs uppercase font-bold tracking-wider rounded transition-all">Зафиксировать Протокол Безупречности</button>
+            </div>
+
+            <!-- List of impact records -->
+            <div id="impact-logs-box" class="hidden premium-panel p-5 rounded flex flex-col gap-4">
+                <h3 class="text-md font-bold">Журнал переработанных ударов</h3>
+                <div class="flex flex-col gap-4" id="impact-logs-container">
+                    <!-- Loaded dynamically via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: FRONTIER 6 (Access / Личные границы) -->
+        <section id="tab-frontier6" class="tab-content hidden flex flex-col gap-6 max-w-4xl">
+            <div class="flex flex-col gap-2 border-b border-[color:var(--border-color)] pb-6">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold font-bold">Рубеж VI · Среда</span>
+                <h2 class="text-3xl font-bold">Твои личные границы</h2>
+                <p class="text-[color:var(--text-secondary)] text-sm max-w-2xl leading-relaxed">Открытая дверь всегда найдет того, кто в нее войдет. Доступ к твоему времени не может быть бесплатной услугой для каждого встречного.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Access audit block -->
+                <div class="lg:col-span-1 premium-panel p-5 rounded flex flex-col gap-4">
+                    <h3 class="text-md font-bold text-gold">Закон твоих границ</h3>
+                    <p class="text-xs text-[color:var(--text-secondary)] leading-relaxed">Внедри неприкосновенные часы работы и жесткий регламент для входящего внешнего трафика.</p>
+                    
+                    <div class="flex flex-col gap-3 mt-1">
+                        <div class="p-3.5 bg-neutral-900/5 border border-[color:var(--border-color)] rounded">
+                            <span class="text-[9px] text-gold font-bold uppercase tracking-wider block">Режим полной недоступности</span>
+                            <p class="text-xs font-semibold mt-1">Ежедневно: 08:00 — 10:00</p>
+                        </div>
+                        <div class="p-3.5 bg-neutral-900/5 border border-[color:var(--border-color)] rounded">
+                            <span class="text-[9px] text-red-400 font-bold uppercase tracking-wider block">Порог неуважения времени</span>
+                            <p class="text-xs text-[color:var(--text-secondary)] mt-1 leading-relaxed">Вторжение в рабочие слоты без предупреждения = бан доступа.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shortcuts decline helper -->
+                <div class="lg:col-span-2 premium-panel p-5 rounded flex flex-col gap-4">
+                    <h3 class="text-md font-bold">Шлюз вежливых, но твердых отказов</h3>
+                    <p class="text-xs text-[color:var(--text-secondary)] leading-relaxed">Когда внешний мир пытается взломать твой день чужой срочностью, скопируй этот готовый лаконичный отказ.</p>
+
+                    <div class="flex flex-col gap-3" id="decline-shortcuts-container">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: FRONTIER 7 (Scar / Баланс нагрузки) -->
+        <section id="tab-frontier7" class="tab-content hidden flex flex-col gap-6 max-w-4xl">
+            <div class="flex flex-col gap-2 border-b border-[color:var(--border-color)] pb-6">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold font-bold">Рубеж VII · Рост</span>
+                <h2 class="text-3xl font-bold">Баланс твоей нагрузки и отдыха</h2>
+                <p class="text-[color:var(--text-secondary)] text-sm max-w-2xl leading-relaxed">Сила куется трением, но глупое самонаказание разрушает форму. Рядом с каждым контролируемым вызовом обязательно ставь качественный отдых.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Balancer Form -->
+                <div class="premium-panel p-5 rounded flex flex-col gap-4">
+                    <h3 class="text-md font-bold text-gold">Весы нагрузки и отката</h3>
+                    
+                    <div class="flex flex-col gap-4 mt-1">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[9px] text-neutral-500 uppercase tracking-wider font-bold">Управляемый вызов (Трение)</label>
+                            <select id="f7-friction-type" class="premium-input p-3 text-xs rounded">
+                                <option value="1">Отказ от цифрового экрана перед сном (60 минут)</option>
+                                <option value="2">Трудный силовой подход в зале до реального края</option>
+                                <option value="3">Горметическая пищевая пауза (чистый питьевой день)</option>
+                                <option value="4">Отказ от сладкого или стимулятора на 24 часа</option>
+                            </select>
+                        </div>
+
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[9px] text-neutral-500 uppercase tracking-wider font-bold">Качественное восстановление</label>
+                            <select id="f7-recovery-type" class="premium-input p-3 text-xs rounded">
+                                <option value="1">Сон ровно в выбранное окно времени</option>
+                                <option value="2">Горячая ванна / баня без телефона и шума</option>
+                                <option value="3">Пешая прогулка по лесу или парку в полной тишине</option>
+                                <option value="4">Полноценный тихий час посреди дня</option>
+                            </select>
+                        </div>
+
+                        <button onclick="commitFrictionContract()" class="px-5 py-3.5 bg-neutral-900 border border-gold hover:bg-gold hover:text-black text-gold text-xs uppercase font-bold tracking-wider rounded transition-all">Утвердить Контракт Трения</button>
+                    </div>
+                </div>
+
+                <!-- Active contract card -->
+                <div class="premium-panel p-5 rounded flex flex-col justify-between min-h-[300px]" id="f7-contract-box">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: PROJECT X -->
+        <section id="tab-projectX" class="tab-content hidden flex flex-col gap-6 max-w-4xl relative">
+            
+            <!-- SHOCK LOCK OVERLAY (Iron Grid Screen) -->
+            <div id="shock-lock-overlay" class="absolute inset-0 bg-neutral-950/98 z-40 flex flex-col items-center justify-center text-center p-8 border border-red-950/40 rounded hidden">
+                <svg class="w-16 h-16 text-red-600 animate-bounce mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                <h3 class="text-2xl md:text-3xl font-bold text-red-500 font-accent uppercase tracking-wider">ДОСТУП ЗАБЛОКИРОВАН</h3>
+                <p class="text-xs text-neutral-400 mt-3 max-w-md leading-relaxed">Каста Феодалов не строит планы на пустом баке. У тебя сорвано 2 или более пунктов биологической базы тела (сон, вода, шаги, экраны перед сном). Наведи порядок в базовом строе, прежде чем лезть сюда.</p>
+                <button onclick="playSound('click'); switchTab('frontier3')" class="mt-6 px-6 py-3 border border-red-600 text-red-500 hover:bg-red-600 hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all">Восстановить тело</button>
+            </div>
+
+            <div class="flex flex-col gap-2 border-b border-[color:var(--border-color)] pb-6">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold font-bold">Главный выход книги в реальность</span>
+                <h2 class="text-3xl font-bold">Карта твоего проекта «X»</h2>
+                <p class="text-[color:var(--text-secondary)] text-sm max-w-2xl leading-relaxed">Любое серьезное начинание должно иметь адресата, срок, минимальную версию (MVP) и внешнюю проверку. Здесь заканчивается черновик.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Form Builder -->
+                <div class="lg:col-span-2 flex flex-col gap-5 premium-panel p-5 rounded" id="project-x-builder">
+                    <h3 class="text-md font-bold text-gold">Регистратор Новой Задачи</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">Мой Проект «X» (Простыми словами)</label>
+                            <input type="text" id="px-title" placeholder="Например: Запуск рекламы в Telegram" class="premium-input p-3 text-xs rounded">
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">Минимальная версия (MVP)</label>
+                            <input type="text" id="px-version" placeholder="Один пост, ссылка на форму, звонок 5 клиентам" class="premium-input p-3 text-xs rounded">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">Проверяющий адресат (Кто спросит?)</label>
+                            <input type="text" id="px-recipient" placeholder="Подписчики, партнер по бизнесу, друг" class="premium-input p-3 text-xs rounded">
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">Точная дата и время дедлайна</label>
+                            <input type="text" id="px-deadline" placeholder="Пятница, 18:00" class="premium-input p-3 text-xs rounded">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">Какое оправдание теперь ЗАПРЕЩЕНО использовать?</label>
+                        <select id="px-forbidden-alibi" class="premium-input p-3 text-xs rounded">
+                            <option value="«Сначала еще допилю упаковку»">«Сначала еще допилю упаковку»</option>
+                            <option value="«Я пока слишком сырой»">«Я пока слишком сырой»</option>
+                            <option value="«Время еще не то»">«Время еще не то»</option>
+                            <option value="«У меня сейчас нет ресурса»">«У меня сейчас нет ресурса»</option>
+                        </select>
+                    </div>
+
+                    <button onclick="commitProjectX()" class="w-full py-4 bg-gold hover:bg-gold-light text-black text-xs uppercase font-bold tracking-wider rounded transition-all">Запечатать контракт проекта</button>
+                </div>
+
+                <!-- Active Project Card -->
+                <div class="lg:col-span-1 premium-panel p-5 rounded flex flex-col justify-between hidden" id="project-x-active-card">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <!-- Manifesto block -->
+                <div class="lg:col-span-1 premium-panel p-5 rounded flex flex-col gap-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider">Отрезание черновика</h3>
+                    <p class="text-xs text-[color:var(--text-secondary)] leading-relaxed">Пока у дела нет точной даты, адресата и внешнего следа — оно не живет. Оно висит внутри твоей головы и старит тебя.</p>
+                    <div class="p-4 bg-neutral-900/5 rounded border border-[color:var(--border-color)] text-xs font-serif italic text-neutral-400 leading-relaxed">
+                        "Черновое существование заканчивается. Выход в реальность делает твою жизнь подтвержденным фактом."
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- AGE CONFIGURATION MODAL -->
+    <div id="age-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 z-50 hidden transition-all">
+        <div class="premium-panel p-8 rounded max-w-sm w-full flex flex-col gap-6">
+            <div>
+                <h3 class="text-xl font-bold font-accent">Паспорт Суверена</h3>
+                <p class="text-xs text-[color:var(--text-secondary)] mt-1 leading-relaxed">Твой точный возраст необходим для калибровки тактического холста времени Memento Mori.</p>
+            </div>
+            <div class="flex flex-col gap-1.5">
+                <label class="text-[9px] text-neutral-400 font-bold uppercase tracking-wider">Сколько тебе полных лет?</label>
+                <input type="number" id="user-age-input" value="28" min="12" max="100" class="premium-input p-3 text-lg font-bold rounded text-center">
+            </div>
+            <div class="flex gap-3">
+                <button onclick="playSound('click'); closeAgeModal();" class="flex-1 py-3 border border-[color:var(--border-color)] hover:bg-neutral-800/20 text-[10px] uppercase font-bold tracking-wider rounded transition-all text-neutral-400">Отмена</button>
+                <button onclick="playSound('success'); saveUserAge();" class="flex-1 py-3 bg-gold hover:bg-gold-light text-black text-[10px] uppercase font-bold tracking-wider rounded transition-all">Утвердить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUSTOM APP RESET MODAL -->
+    <div id="reset-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 z-50 hidden transition-all">
+        <div class="premium-panel p-8 rounded max-w-sm w-full flex flex-col gap-6 border-red-500/30">
+            <div>
+                <h3 class="text-xl font-bold font-accent text-red-500">Сброс данных</h3>
+                <p class="text-xs text-[color:var(--text-secondary)] mt-1 leading-relaxed">Вы уверены, что хотите полностью стереть все локальные данные? Это действие необратимо и сотрет ваш паспорт.</p>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="playSound('click'); closeResetModal();" class="flex-1 py-3 border border-[color:var(--border-color)] text-[10px] uppercase font-bold tracking-wider rounded transition-all text-neutral-400">Отмена</button>
+                <button onclick="playSound('anvil'); resetAppState();" class="flex-1 py-3 bg-red-600 hover:bg-red-500 text-white text-[10px] uppercase font-bold tracking-wider rounded transition-all">Очистить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO ENGINE (Self-Contained Web Audio Synthesizer) -->
+    <script>
+        let audioCtx = null;
+        let binauralOsc1 = null;
+        let binauralOsc2 = null;
+        let binauralGain = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
+        function playSound(type) {
+            try {
+                initAudio();
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(1200, now);
+                    osc.frequency.exponentialRampToValueAtTime(300, now + 0.04);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+                    osc.start(now);
+                    osc.stop(now + 0.04);
+                } else if (type === 'anvil') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(90, now);
+                    osc.frequency.exponentialRampToValueAtTime(15, now + 0.35);
+                    
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(200, now);
+                    
+                    osc.disconnect(gain);
+                    osc.connect(filter);
+                    filter.connect(gain);
+
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'gong') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(140, now);
+                    
+                    const overtone = audioCtx.createOscillator();
+                    const overtoneGain = audioCtx.createGain();
+                    overtone.type = 'triangle';
+                    overtone.frequency.setValueAtTime(210, now);
+                    overtone.connect(overtoneGain);
+                    overtoneGain.connect(audioCtx.destination);
+                    
+                    overtoneGain.gain.setValueAtTime(0.04, now);
+                    overtoneGain.gain.exponentialRampToValueAtTime(0.001, now + 1.0);
+
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+                    
+                    osc.start(now);
+                    overtone.start(now);
+                    osc.stop(now + 1.5);
+                    overtone.stop(now + 1.5);
+                } else if (type === 'success') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(330, now); 
+                    osc.frequency.setValueAtTime(440, now + 0.08); 
+                    osc.frequency.setValueAtTime(554, now + 0.16); 
+                    
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                }
+            } catch (e) {
+                console.log("Audio API pending load...");
+            }
+        }
+
+        // Binaural Frequency Generator (40Hz Focus frequency: Left Channel 200Hz, Right Channel 240Hz)
+        function startBinauralBeat() {
+            try {
+                initAudio();
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                
+                binauralOsc1 = audioCtx.createOscillator();
+                binauralOsc2 = audioCtx.createOscillator();
+                const merger = audioCtx.createChannelMerger(2);
+                binauralGain = audioCtx.createGain();
+
+                // Left ear oscillator
+                binauralOsc1.type = 'sine';
+                binauralOsc1.frequency.setValueAtTime(200, audioCtx.currentTime);
+                
+                // Right ear oscillator (40Hz offset for binaural brainwave focus entrainment)
+                binauralOsc2.type = 'sine';
+                binauralOsc2.frequency.setValueAtTime(240, audioCtx.currentTime);
+
+                // Connect to left/right channels specifically
+                binauralOsc1.connect(merger, 0, 0);
+                binauralOsc2.connect(merger, 0, 1);
+
+                merger.connect(binauralGain);
+                binauralGain.connect(audioCtx.destination);
+
+                binauralGain.gain.setValueAtTime(0.0, audioCtx.currentTime);
+                binauralGain.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + 1.0); // Soft fade-in
+
+                binauralOsc1.start();
+                binauralOsc2.start();
+            } catch (e) {
+                console.log("Failed to start binaural audio context", e);
+            }
+        }
+
+        function stopBinauralBeat() {
+            try {
+                if (binauralGain) {
+                    binauralGain.gain.linearRampToValueAtTime(0.0, audioCtx.currentTime + 0.5);
+                    setTimeout(() => {
+                        if (binauralOsc1) binauralOsc1.stop();
+                        if (binauralOsc2) binauralOsc2.stop();
+                    }, 600);
+                }
+            } catch(e) {}
+        }
+    </script>
+
+    <script>
+        // Pool of core biological requirements for the sovereign body platform
+        const BIO_TASKS_POOL = [
+            { id: 'sleep', title: "Качественный сон вовремя (не менее 7-9 часов)", desc: "Без рваного графика и борьбы с подушкой." },
+            { id: 'water', title: "Гидратация с утра и доступ к чистой воде в течение дня", desc: "Жажда не должна маскироваться кофеином." },
+            { id: 'activity', title: "Движение и нагрузка (минимум 10 000 шагов или тренировка)", desc: "Напомни телу, что оно рождено для усилий." },
+            { id: 'screenTime', title: "Цифровой экран убран за 60 минут до отхода ко сну", desc: "Команда циркадной системе на регенерацию." }
+        ];
+
+        // Gamified badges configuration database
+        const BADGES_POOL = [
+            { id: 'shredder_1', title: "Правдоруб", desc: "Уничтожено первое алиби в шредере", requirement: state => state.shreddedAlibis.length >= 1 },
+            { id: 'shredder_master', title: "Взрослый вождь", desc: "Уничтожены все 6 оправданий", requirement: state => state.shreddedAlibis.length >= 6 },
+            { id: 'focus_first', title: "Свет разума", desc: "Завершен первый сеанс фокуса", requirement: state => state.focusStreakCount >= 1 },
+            { id: 'focus_god', title: "Клинок тишины", desc: "Успешно пройдено 5 часов внимания", requirement: state => state.focusStreakCount >= 5 },
+            { id: 'bio_perfect', title: "Стальная база", desc: "Все 4 био-нормы выполнены вместе", requirement: state => state.dailyBioCheck.sleep && state.dailyBioCheck.water && state.dailyBioCheck.activity && state.dailyBioCheck.screenTime },
+            { id: 'mori_step', title: "Редактор судьбы", desc: "Успешно закрыт шаг недели с дедлайном", requirement: state => state.frontierLocks[4] },
+            { id: 'impact_done', title: "Инженер хаоса", desc: "Зарегистрирован первый отчет о сбое", requirement: state => state.activeImpactReports.length >= 1 },
+            { id: 'decline_master', title: "Хранитель входа", desc: "Скопирован отсекающий отказ", requirement: state => state.frontierLocks[5] },
+            { id: 'friction_master', title: "Эстетика шрама", desc: "Утвержден первый контракт трения", requirement: state => state.activeF7Contract !== null || state.frontierLocks[6] },
+            { id: 'project_sealed', title: "Запуск Касты", desc: "Проект «X» переведен из черновика в жизнь", requirement: state => state.activeProjectX !== null }
+        ];
+
+        // Persistent State Module with XP Integration
+        const DEFAULT_STATE = {
+            theme: 'dark',
+            userAge: 28,
+            frontierLocks: [true, false, false, false, false, false, false],
+            shreddedAlibis: [],
+            dailyBioCheck: {
+                sleep: false,
+                water: false,
+                activity: false,
+                screenTime: false,
+                lastChecked: ''
+            },
+            moriActiveTask: null,
+            activeImpactReports: [],
+            activeF7Contract: null,
+            activeProjectX: null,
+            focusStreakCount: 0,
+            xp: 0,
+            level: 1,
+            unlockedBadges: []
+        };
+
+        let appState = {};
+
+        // Hardcoded Excuses
+        const ALIBI_POOL = [
+            { id: 1, raw: "«Я пока слишком сырой, надо еще подучиться»", author: "Я откладываю шаг из-за страха проверки. Я выбираю бездействие сегодня." },
+            { id: 2, raw: "«Мне сначала нужно до конца доисцелиться»", author: "Я использую прошлые травмы как официальное алиби, чтобы не строить будущее." },
+            { id: 3, raw: "«У меня сейчас совершенно нет ресурса»", author: "Я развалил свою базу и режим дня. Снимаю с себя сегодняшнюю ответственность." },
+            { id: 4, raw: "«Сейчас неподходящее время на рынке»", author: "Я ищу внешние оправдания, чтобы избежать риска публичной проверки." },
+            { id: 5, raw: "«Меня слишком сильно триггернуло окружение»", author: "Я отдал управление своей реакцией и фокусом внешнему шуму." },
+            { id: 6, raw: "«Я боюсь сделать не идеально»", author: "Я прячусь в перфекционизме от риска получить честный проигрыш." }
+        ];
+
+        // Custom Gatekeeper Shortcuts
+        const DECLINE_SHORTCUTS = [
+            { title: "Запрос «Срочно созвониться»", text: "Сегодня занят своим блоком работы. Вернусь с ответом завтра." },
+            { title: "Мутная/Бесплатная просьба", text: "Мой фокус на этой неделе жестко лимитирован. Не смогу включиться." },
+            { title: "Ответ на требование мгновенной повестки", text: "Я увидел твой запрос. Сформулирую ответ к завтрашнему утру." },
+            { title: "Вежливое отрезание лишних людей", text: "В моем расписании сейчас нет окон для пустых разговоров. Давай по делу." }
+        ];
+
+        // Frontiers Directory
+        const FRONTIER_INFO = [
+            { num: "I", title: "Шредер оправданий", tagline: "Алиби", returnText: "Поступок сегодня", desc: "Старая легенда снимает сегодняшний спрос. Перестань просить моральную скидку за старую историю.", path: 'frontier1' },
+            { num: "II", title: "Защита внимания", tagline: "Фокус", returnText: "Свое дело до мира", desc: "Первый час уходит чужому потоку. Защити утро от входящего шума и повестки.", path: 'frontier2' },
+            { num: "III", title: "Физическое состояние", tagline: "Тело", returnText: "Телесная опора", desc: "База тянет назад там, где голове ясно. Наведи порядок в воде, сне, шагах.", path: 'frontier3' },
+            { num: "IV", title: "Бюджет жизни", tagline: "Время", returnText: "Срок и адресат", desc: "Дело живет в тумане без даты. Время — тающая энергия. Поставь дедлайны.", path: 'frontier4' },
+            { num: "V", title: "Разбор трудностей", tagline: "Вызов", returnText: "Факты и помощь", desc: "Боль прячет следующий безопасный ход. Раздели сухие факты от драмы.", path: 'frontier5' },
+            { num: "VI", title: "Личные границы", tagline: "Доступ", returnText: "Правило входа", desc: "Открытые двери раздают твой день без закона. Ограничь вход в свою жизнь.", path: 'frontier6' },
+            { num: "VII", title: "Баланс нагрузки", tagline: "Рост", returnText: "Трение и мера", desc: "Культ боли путает силу с самонаказанием. Балансируй нагрузку восстановлением.", path: 'frontier7' }
+        ];
+
+        let focusTimerInterval = null;
+        let focusTimeLeft = 3600; 
+        let isFocusTimerActive = false;
+
+        // Core initializer
+        window.onload = function() {
+            loadState();
+            applyTheme(appState.theme);
+            renderDashboard();
+            renderFrontier1();
+            initBioChecklist();
+            renderMementoMori();
+            renderDeclineShortcuts();
+            renderF7Contract();
+            checkShockLock();
+            renderProjectX();
+            switchTab('dashboard');
+        };
+
+        // Gamified XP system engine
+        function addXp(amount) {
+            appState.xp += amount;
+            let currentLimit = appState.level * 100;
+            let leveledUp = false;
+            
+            while (appState.xp >= currentLimit) {
+                appState.xp -= currentLimit;
+                appState.level++;
+                currentLimit = appState.level * 100;
+                leveledUp = true;
+            }
+
+            if (leveledUp) {
+                playSound('gong');
+                showToast(`ПОВЫШЕНИЕ РАНГА! Теперь ты на уровне ${appState.level}!`);
+            }
+            
+            checkBadgesUnlock();
+            saveState();
+            renderSidebarXp();
+            renderDashboardBadges();
+        }
+
+        function checkBadgesUnlock() {
+            BADGES_POOL.forEach(badge => {
+                if (!appState.unlockedBadges.includes(badge.id) && badge.requirement(appState)) {
+                    appState.unlockedBadges.push(badge.id);
+                    addXp(30); // Award 30 XP for any achievement unlock
+                    showToast(`ОРДЕН РАЗБЛОКИРОВАН: ${badge.title}! (+30 XP)`);
+                    playSound('success');
+                }
+            });
+        }
+
+        function renderSidebarXp() {
+            // Level value
+            document.getElementById('sidebar-lvl-val').innerText = appState.level;
+            // XP texts
+            document.getElementById('sidebar-xp-val').innerText = appState.xp;
+            const currentLimit = appState.level * 100;
+            document.getElementById('sidebar-xp-max').innerText = currentLimit;
+            // Progress Bar
+            const percentage = Math.min(100, Math.floor((appState.xp / currentLimit) * 100));
+            document.getElementById('sidebar-xp-bar').style.width = `${percentage}%`;
+
+            // Titles matching levels
+            const ranks = ["Новобранец", "Свободный Пахарь", "Стражник Рамки", "Рыцарь Дисциплины", "Феодал Внимания", "Повелитель Секунд", "Абсолютный Суверен"];
+            const rankIndex = Math.min(ranks.length - 1, Math.floor(appState.level / 2));
+            document.getElementById('sidebar-rank').innerText = ranks[rankIndex];
+        }
+
+        function renderDashboardBadges() {
+            const container = document.getElementById('badges-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            BADGES_POOL.forEach(badge => {
+                const isUnlocked = appState.unlockedBadges.includes(badge.id);
+                const bgStyle = isUnlocked ? 'bg-gold/10 border-gold/40 text-[color:var(--text-primary)]' : 'bg-neutral-900/10 border-dashed border-neutral-700/30 text-neutral-500 opacity-40';
+                const iconColor = isUnlocked ? 'text-gold' : 'text-neutral-600';
+                
+                const itemHtml = `
+                    <div class="premium-panel ${bgStyle} p-3 rounded flex flex-col items-center justify-center text-center gap-1 transition-all duration-300" title="${badge.desc}">
+                        <svg class="w-6 h-6 ${iconColor}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                        </svg>
+                        <span class="text-[10px] font-bold block truncate max-w-full">${badge.title}</span>
+                        <span class="text-[8px] leading-tight block text-[color:var(--text-secondary)] opacity-80">${isUnlocked ? 'Получен' : 'Заперт'}</span>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', itemHtml);
+            });
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('sovereign_app_state_v2');
+            if (saved) {
+                try {
+                    appState = JSON.parse(saved);
+                    appState = { ...DEFAULT_STATE, ...appState };
+                } catch (e) {
+                    appState = { ...DEFAULT_STATE };
+                }
+            } else {
+                appState = { ...DEFAULT_STATE };
+            }
+            saveState();
+        }
+
+        function saveState() {
+            localStorage.setItem('sovereign_app_state_v2', JSON.stringify(appState));
+            const sidebarDisplay = document.getElementById('sidebar-age-display');
+            if (sidebarDisplay) {
+                sidebarDisplay.innerText = `${appState.userAge} лет`;
+            }
+            const moriInput = document.getElementById('mori-age-input');
+            if (moriInput) {
+                moriInput.value = appState.userAge;
+            }
+            const dashAgeInfo = document.getElementById('dash-age-info');
+            if (dashAgeInfo) {
+                dashAgeInfo.innerText = `${appState.userAge} лет`;
+            }
+            const dashFocusInfo = document.getElementById('dash-focus-info');
+            if (dashFocusInfo) {
+                dashFocusInfo.innerText = `${appState.focusStreakCount} час.`;
+            }
+            const projectBadge = document.getElementById('nav-badge-x');
+            if (projectBadge) {
+                if (appState.activeProjectX) {
+                    projectBadge.innerText = "Активен";
+                    projectBadge.classList.remove('bg-gold/10', 'text-gold');
+                    projectBadge.classList.add('bg-emerald-500/10', 'text-emerald-400');
+                } else {
+                    projectBadge.innerText = "Черновик";
+                    projectBadge.classList.add('bg-gold/10', 'text-gold');
+                    projectBadge.classList.remove('bg-emerald-500/10', 'text-emerald-400');
+                }
+            }
+            renderSidebarXp();
+        }
+
+        // Theme management
+        function applyTheme(theme) {
+            const body = document.body;
+            const iconMob = document.getElementById('theme-icon-mob');
+            const iconDesk = document.getElementById('theme-icon-desk');
+            
+            const sunIcon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>';
+            const moonIcon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>';
+
+            if (theme === 'light') {
+                body.classList.add('light-theme');
+                if (iconMob) iconMob.innerHTML = moonIcon;
+                if (iconDesk) iconDesk.innerHTML = moonIcon;
+            } else {
+                body.classList.remove('light-theme');
+                if (iconMob) iconMob.innerHTML = sunIcon;
+                if (iconDesk) iconDesk.innerHTML = sunIcon;
+            }
+        }
+
+        function toggleTheme() {
+            playSound('click');
+            appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
+            saveState();
+            applyTheme(appState.theme);
+            renderMementoMori(); // Redraw canvas with new theme colors
+        }
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toast-text');
+            if (toast && toastText) {
+                toastText.innerText = text;
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(-20px)';
+                }, 3000);
+            }
+        }
+
+        // Toggle Sidebar on mobile
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar-panel');
+            const hamburger = document.getElementById('hamburger-icon');
+            if (sidebar.classList.contains('hidden')) {
+                sidebar.classList.remove('hidden');
+                sidebar.classList.add('flex', 'w-full', 'fixed', 'left-0');
+                hamburger.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+            } else {
+                sidebar.classList.add('hidden');
+                sidebar.classList.remove('flex', 'w-full', 'fixed', 'left-0');
+                hamburger.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+            }
+        }
+
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.add('hidden'));
+
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            const buttons = document.querySelectorAll('#sidebar-nav button');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-gold/10', 'text-gold', 'font-medium');
+                btn.classList.add('text-neutral-400');
+            });
+
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-neutral-400');
+                activeBtn.classList.add('bg-gold/10', 'text-gold', 'font-medium');
+            }
+
+            // Automatically close mobile menu on tab switch
+            if (window.innerWidth < 768) {
+                const sidebar = document.getElementById('sidebar-panel');
+                const hamburger = document.getElementById('hamburger-icon');
+                sidebar.classList.add('hidden');
+                sidebar.classList.remove('flex', 'w-full', 'fixed', 'left-0');
+                hamburger.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+            }
+
+            if (tabId === 'frontier4') {
+                renderMementoMori();
+            }
+            if (tabId === 'projectX') {
+                checkShockLock();
+            }
+            if (tabId === 'dashboard') {
+                renderDashboardBadges();
+            }
+        }
+
+        function openAgeModal() {
+            const ageInput = document.getElementById('user-age-input');
+            if (ageInput) ageInput.value = appState.userAge;
+            const ageModal = document.getElementById('age-modal');
+            if (ageModal) ageModal.classList.remove('hidden');
+        }
+
+        function closeAgeModal() {
+            const ageModal = document.getElementById('age-modal');
+            if (ageModal) ageModal.classList.add('hidden');
+        }
+
+        function saveUserAge() {
+            const ageInput = document.getElementById('user-age-input');
+            if (ageInput) {
+                const newAge = parseInt(ageInput.value);
+                if (newAge >= 12 && newAge <= 100) {
+                    appState.userAge = newAge;
+                    addXp(15);
+                    closeAgeModal();
+                    showToast(`Возраст обновлен: ${newAge} лет. Карта Memento Mori перестроена.`);
+                    renderMementoMori();
+                } else {
+                    showToast("Укажите реальный биологический возраст.");
+                }
+            }
+        }
+
+        function updateAgeDirectly(val) {
+            const newAge = parseInt(val);
+            if (newAge >= 12 && newAge <= 100) {
+                playSound('success');
+                appState.userAge = newAge;
+                addXp(10);
+                showToast(`Возраст изменен: ${newAge} лет. Резервуар пересчитан.`);
+                renderMementoMori();
+            }
+        }
+
+        // --- DASHBOARD: LOCKS MAP RENDERER ---
+        function renderDashboard() {
+            const container = document.getElementById('frontiers-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            FRONTIER_INFO.forEach((f, idx) => {
+                const isUnlocked = appState.frontierLocks[idx];
+                const borderClass = isUnlocked ? 'glow-gold hover:border-gold/30' : 'opacity-50';
+
+                const cardHtml = `
+                    <div class="premium-panel ${borderClass} p-5 rounded flex flex-col justify-between gap-4 transition-all duration-300">
+                        <div class="flex flex-col gap-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[9px] text-neutral-500 uppercase tracking-widest font-bold">Шаг ${f.num} · ${f.tagline}</span>
+                                ${isUnlocked ? 
+                                    `<span class="text-[9px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded font-semibold">Удержан</span>` :
+                                    `<span class="text-[9px] px-2 py-0.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded font-semibold flex items-center gap-1">
+                                        <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Заперт
+                                     </span>`
+                                }
+                            </div>
+                            <h3 class="text-base font-bold text-[color:var(--text-primary)] mt-1">${f.title}</h3>
+                            <p class="text-[11px] text-[color:var(--text-secondary)] leading-relaxed">${f.desc}</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-[color:var(--border-color)] pt-3 text-[11px] mt-2">
+                            <span class="text-[9px] uppercase text-gold font-bold tracking-wider">Действие: ${f.returnText}</span>
+                            <button onclick="playSound('click'); switchTab('${f.path}')" class="text-gold font-semibold hover:underline flex items-center gap-1">
+                                Перейти
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+            renderDashboardBadges();
+        }
+
+        // --- FRONTIER I: ALIBI MECHANICAL ---
+        function renderFrontier1() {
+            const listContainer = document.getElementById('alibi-selection-box');
+            if (!listContainer) return;
+            listContainer.innerHTML = '';
+
+            ALIBI_POOL.forEach(a => {
+                const itemHtml = `
+                    <button onclick="shredAlibi(${a.id})" class="w-full text-left p-3.5 bg-neutral-900/5 hover:bg-neutral-900/20 border border-[color:var(--border-color)] hover:border-red-500/30 rounded text-xs text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-all flex items-center justify-between gap-3 group">
+                        <span class="font-medium">${a.raw}</span>
+                        <svg class="w-4 h-4 text-neutral-500 group-hover:text-red-500 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    </button>
+                `;
+                listContainer.insertAdjacentHTML('beforeend', itemHtml);
+            });
+
+            const logContainer = document.getElementById('shredded-log');
+            if (!logContainer) return;
+            logContainer.innerHTML = '';
+
+            if (appState.shreddedAlibis.length === 0) {
+                logContainer.innerHTML = `<tr><td colspan="3" class="text-center py-6 text-neutral-500 text-xs italic">Реестр авторитетных решений пуст. Сокрушите свое первое алиби.</td></tr>`;
+            } else {
+                appState.shreddedAlibis.forEach(item => {
+                    const row = `
+                        <tr class="border-b border-[color:var(--border-color)] text-xs">
+                            <td class="py-3 pr-4 text-red-400 font-medium">${item.raw}</td>
+                            <td class="py-3 pr-4 text-emerald-500 font-semibold font-serif italic">"${item.author}"</td>
+                            <td class="py-3 text-neutral-500 text-[10px]">${item.timestamp}</td>
+                        </tr>
+                    `;
+                    logContainer.insertAdjacentHTML('afterbegin', row);
+                });
+            }
+        }
+
+        function shredAlibi(id) {
+            const target = ALIBI_POOL.find(a => a.id === id);
+            if (!target) return;
+
+            playSound('anvil');
+            const shredderBox = document.getElementById('shredder-box');
+            if (shredderBox) shredderBox.classList.add('shredding-active');
+            const shredderIdle = document.getElementById('shredder-idle');
+            if (shredderIdle) shredderIdle.classList.add('hidden');
+            const shredderActive = document.getElementById('shredder-active');
+            if (shredderActive) shredderActive.classList.remove('hidden');
+
+            setTimeout(() => {
+                const alreadyExist = appState.shreddedAlibis.find(x => x.id === id);
+                if (!alreadyExist) {
+                    const now = new Date();
+                    const timestampStr = `${now.toLocaleDateString()} ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+                    appState.shreddedAlibis.push({
+                        id: target.id,
+                        raw: target.raw,
+                        author: target.author,
+                        timestamp: timestampStr
+                    });
+
+                    appState.frontierLocks[0] = true;
+                    appState.frontierLocks[1] = true; 
+                    addXp(20); // Award 20 XP for crushing an excuse
+                    renderDashboard();
+                }
+
+                if (shredderBox) shredderBox.classList.remove('shredding-active');
+                if (shredderIdle) shredderIdle.classList.remove('hidden');
+                if (shredderActive) shredderActive.classList.add('hidden');
+
+                showToast(`Алиби деконструировано. Взгляд обращен на факты. (+20 XP)`);
+                renderFrontier1();
+            }, 1500);
+        }
+
+        // --- FRONTIER II: FOCUS TIMER MECHANICAL ---
+        function setFocusPreset(minutes) {
+            if (isFocusTimerActive) {
+                showToast("Нельзя менять время запертого шлюза.");
+                return;
+            }
+            playSound('click');
+            focusTimeLeft = minutes * 60;
+            
+            // Render active button visually
+            const presets = [15, 25, 45, 60];
+            presets.forEach(p => {
+                const el = document.getElementById(`preset-${p}`);
+                if (el) {
+                    if (p === minutes) {
+                        el.classList.add('bg-gold/10', 'border-gold');
+                    } else {
+                        el.classList.remove('bg-gold/10', 'border-gold');
+                    }
+                }
+            });
+
+            document.getElementById('focus-timer-display').innerText = `${minutes.toString().padStart(2, '0')}:00`;
+            showToast(`Установлен предел фокуса: ${minutes} мин.`);
+        }
+
+        function playMorningAudio() {
+            playSound('gong');
+            const daySelected = document.getElementById('audio-day').value;
+            const playerSim = document.getElementById('audio-player-sim');
+            const quoteEl = document.getElementById('audio-quote');
+            
+            if (playerSim) playerSim.classList.remove('hidden');
+
+            const dailyQuotes = {
+                "1": `"Взросление — потеря выгоды от алиби. Ты перестаешь получать моральную скидку за старую историю."`,
+                "2": `"Если ты начинаешь утро с входящего потока, ты допускаешь в штаб чужие задачи до того, как назначил свои."`,
+                "3": `"Биологическая правда неприятна: часть 'сложных экзистенциальных состояний' оказывается обычной энергетической бедностью."`,
+                "4": `"Memento Mori делает вопрос короче: что ты снова перенесешь, если будешь вести себя так, будто времени бесконечно?"`,
+                "5": `"Удар не обязан делать тебя сильнее. Сначала назови факт, учти ущерб, найди опору и сделай следующий безопасный ход."`,
+                "6": `"Кто получает доступ в твою жизнь без закона, тот начинает участвовать в архитектуре твоего дня."`,
+                "7": `"Трансформация редко выглядит уютно. Качественная дисциплина требует регулярного трения."`
+            };
+
+            if (quoteEl) quoteEl.innerText = dailyQuotes[daySelected] || "";
+            addXp(5);
+            showToast("Запущен утренний приказ Суверена.");
+        }
+
+        function toggleFocusTimer() {
+            const displayBtn = document.getElementById('focus-timer-btn');
+            
+            if (isFocusTimerActive) {
+                playSound('anvil');
+                clearInterval(focusTimerInterval);
+                stopBinauralBeat(); // Turn off focusing audio hum
+                isFocusTimerActive = false;
+                
+                // Get selected preset default back
+                document.getElementById('focus-timer-display').innerText = "60:00";
+                focusTimeLeft = 3600;
+                
+                if (displayBtn) {
+                    displayBtn.innerText = "Запереть Шлюз";
+                    displayBtn.className = "px-8 py-3 bg-neutral-900 text-gold border border-gold hover:bg-gold hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all";
+                }
+                showToast("Внимание: фокус-шлюз сорван. Рассеянность одержала верх.");
+            } else {
+                playSound('gong');
+                startBinauralBeat(); // Ignite meditative focus hum!
+                isFocusTimerActive = true;
+                if (displayBtn) {
+                    displayBtn.innerText = "Сорвать Фокус (Срыв)";
+                    displayBtn.className = "px-8 py-3 bg-red-950/20 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white text-xs uppercase font-bold tracking-wider rounded transition-all animate-pulse";
+                }
+                
+                showToast("Фокус-шлюз заперт. Бинауральный ритм фокуса активирован.");
+
+                focusTimerInterval = setInterval(() => {
+                    focusTimeLeft--;
+                    
+                    const mins = Math.floor(focusTimeLeft / 60);
+                    const secs = focusTimeLeft % 60;
+                    document.getElementById('focus-timer-display').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+                    if (focusTimeLeft <= 0) {
+                        playSound('success');
+                        stopBinauralBeat();
+                        clearInterval(focusTimerInterval);
+                        isFocusTimerActive = false;
+                        
+                        document.getElementById('focus-timer-display').innerText = "60:00";
+                        focusTimeLeft = 3600;
+                        
+                        if (displayBtn) {
+                            displayBtn.innerText = "Запереть Шлюз";
+                            displayBtn.className = "px-8 py-3 bg-neutral-900 text-gold border border-gold hover:bg-gold hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all";
+                        }
+                        
+                        appState.focusStreakCount++;
+                        appState.frontierLocks[2] = true; 
+                        addXp(40); // Award 40 XP for a finished focus block
+                        
+                        const streakInfo = document.getElementById('focus-streak-info');
+                        if (streakInfo) streakInfo.innerText = `Часов суверенности зафиксировано: ${appState.focusStreakCount}/7`;
+                        showToast("Безупречно. Сессия внимания закрыта в пользу твоей траектории. (+40 XP)");
+                    }
+                }, 1000);
+            }
+        }
+
+        // --- FRONTIER III: BIOLOGY SYSTEM ---
+        function initBioChecklist() {
+            const container = document.getElementById('bio-checklist-box');
+            if (!container) return;
+            container.innerHTML = '';
+
+            BIO_TASKS_POOL.forEach(task => {
+                const checked = appState.dailyBioCheck[task.id];
+                const activeBorder = checked ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-[color:var(--border-color)]';
+                const activeCheck = checked ? 
+                    `<div class="w-5 h-5 rounded border border-emerald-500 bg-emerald-500 flex items-center justify-center text-black">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                     </div>` : 
+                    `<div class="w-5 h-5 rounded border border-neutral-500"></div>`;
+
+                const taskHtml = `
+                    <div onclick="toggleBioTask('${task.id}')" class="p-4 bg-neutral-900/5 border ${activeBorder} rounded flex items-center justify-between gap-4 cursor-pointer hover:border-gold/30 transition-all">
+                        <div class="flex flex-col gap-1">
+                            <h4 class="text-xs font-bold text-[color:var(--text-primary)]">${task.title}</h4>
+                            <p class="text-[10px] text-neutral-500">${task.desc}</p>
+                        </div>
+                        <div class="shrink-0">${activeCheck}</div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', taskHtml);
+            });
+
+            calculateBioScore();
+        }
+
+        function toggleBioTask(id) {
+            playSound('click');
+            appState.dailyBioCheck[id] = !appState.dailyBioCheck[id];
+            appState.dailyBioCheck.lastChecked = new Date().toLocaleDateString();
+            
+            let checkCount = 0;
+            if (appState.dailyBioCheck.sleep) checkCount++;
+            if (appState.dailyBioCheck.water) checkCount++;
+            if (appState.dailyBioCheck.activity) checkCount++;
+            if (appState.dailyBioCheck.screenTime) checkCount++;
+
+            if (checkCount >= 3) {
+                appState.frontierLocks[3] = true; 
+            }
+
+            if (appState.dailyBioCheck[id]) {
+                addXp(10); // 10 XP for checking off positive biology norms
+            }
+
+            saveState();
+            initBioChecklist();
+            checkShockLock();
+            renderDashboard();
+        }
+
+        function calculateBioScore() {
+            let score = 0;
+            if (appState.dailyBioCheck.sleep) score += 25;
+            if (appState.dailyBioCheck.water) score += 25;
+            if (appState.dailyBioCheck.activity) score += 25;
+            if (appState.dailyBioCheck.screenTime) score += 25;
+
+            const display = document.getElementById('bio-score');
+            const dashBioInfo = document.getElementById('dash-bio-info');
+            if (display) {
+                display.innerText = `Прочность: ${score}%`;
+                
+                if (score <= 50) {
+                    display.className = "text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1 rounded font-bold";
+                    if (dashBioInfo) {
+                        dashBioInfo.innerText = "Изношено";
+                        dashBioInfo.className = "text-2xl font-bold text-red-500 mt-1 block";
+                    }
+                } else if (score < 100) {
+                    display.className = "text-xs bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-3 py-1 rounded font-bold";
+                    if (dashBioInfo) {
+                        dashBioInfo.innerText = "Внимание";
+                        dashBioInfo.className = "text-2xl font-bold text-yellow-500 mt-1 block";
+                    }
+                } else {
+                    display.className = "text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded font-bold";
+                    if (dashBioInfo) {
+                        dashBioInfo.innerText = "Собрана";
+                        dashBioInfo.className = "text-2xl font-bold text-emerald-400 mt-1 block";
+                    }
+                }
+            }
+        }
+
+        function checkShockLock() {
+            let failedCount = 0;
+            if (!appState.dailyBioCheck.sleep) failedCount++;
+            if (!appState.dailyBioCheck.water) failedCount++;
+            if (!appState.dailyBioCheck.activity) failedCount++;
+            if (!appState.dailyBioCheck.screenTime) failedCount++;
+
+            const isShockLocked = failedCount >= 2;
+            const shockOverlay = document.getElementById('shock-lock-overlay');
+            const shockStatusTitle = document.getElementById('shock-status-title');
+            const shockStatusDesc = document.getElementById('shock-status-desc');
+            const shockIndicator = document.getElementById('shock-lock-indicator');
+
+            if (isShockLocked) {
+                if (shockOverlay) shockOverlay.classList.remove('hidden');
+                if (shockStatusTitle) {
+                    shockStatusTitle.innerText = "Базовый Саботаж!";
+                    shockStatusTitle.className = "text-lg font-bold text-red-500";
+                }
+                if (shockStatusDesc) {
+                    shockStatusDesc.innerText = "Твоя биологическая база разрушена. Сорвано 2 или более пунктов жизнеобеспечения. Планирование заблокировано.";
+                }
+                if (shockIndicator) {
+                    shockIndicator.innerText = "Шоковый Барьер Активен";
+                    shockIndicator.className = "p-4 bg-red-950/10 border border-red-500/20 rounded text-center text-xs text-red-400 font-bold uppercase tracking-wider animate-pulse";
+                }
+            } else {
+                if (shockOverlay) shockOverlay.classList.add('hidden');
+                if (shockStatusTitle) {
+                    shockStatusTitle.innerText = "База Безопасна";
+                    shockStatusTitle.className = "text-lg font-bold text-[color:var(--text-primary)]";
+                }
+                if (shockStatusDesc) {
+                    shockStatusDesc.innerText = "Твоя физическая опора в норме. Проекты и стратегические контракты открыты для работы.";
+                }
+                if (shockIndicator) {
+                    shockIndicator.innerText = "Шоковый барьер чист";
+                    shockIndicator.className = "p-4 bg-emerald-950/10 border border-emerald-500/20 rounded text-center text-xs text-emerald-400 font-bold uppercase tracking-wider";
+                }
+            }
+        }
+
+        // --- FRONTIER IV: MEMENTO MORI CANVAS ---
+        function renderMementoMori() {
+            const spentWeeks = appState.userAge * 52;
+            const limitWeeks = 80 * 52; 
+            const remainingWeeks = limitWeeks - spentWeeks;
+
+            const spentEl = document.getElementById('mori-spent');
+            if (spentEl) spentEl.innerText = spentWeeks;
+            const remEl = document.getElementById('mori-rem');
+            if (remEl) remEl.innerText = remainingWeeks;
+
+            const canvas = document.getElementById('lifespan-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            // Handle high-DPI (Retina) scaling
+            const devicePixelRatio = window.devicePixelRatio || 1;
+            const backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
+                                    ctx.mozBackingStorePixelRatio ||
+                                    ctx.msBackingStorePixelRatio ||
+                                    ctx.oBackingStorePixelRatio ||
+                                    ctx.backingStorePixelRatio || 1;
+            const ratio = devicePixelRatio / backingStoreRatio;
+
+            if (devicePixelRatio !== backingStoreRatio) {
+                const oldWidth = canvas.width;
+                const oldHeight = canvas.height;
+                canvas.width = oldWidth * ratio;
+                canvas.height = oldHeight * ratio;
+                canvas.style.width = oldWidth + 'px';
+                canvas.style.height = oldHeight + 'px';
+                ctx.scale(ratio, ratio);
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const cols = 52; 
+            const rows = 80; 
+            const dotSize = 1.6;
+            const spacingX = 14;
+            const spacingY = 2.9;
+            const padLeft = 45;
+            const padTop = 15;
+
+            // Draw underlying color bands for epochs
+            // Youth: years 0-20 (rows 0-20)
+            ctx.fillStyle = 'rgba(16, 185, 129, 0.03)';
+            ctx.fillRect(padLeft - 5, padTop - 5, cols * spacingX, 20 * spacingY);
+            // Peak Active: years 20-40 (rows 20-40)
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.03)';
+            ctx.fillRect(padLeft - 5, padTop + 20 * spacingY - 5, cols * spacingX, 20 * spacingY);
+            // Mastery: years 40-60 (rows 40-60)
+            ctx.fillStyle = 'rgba(234, 179, 8, 0.03)';
+            ctx.fillRect(padLeft - 5, padTop + 40 * spacingY - 5, cols * spacingX, 20 * spacingY);
+            // Wisdom: years 60-80 (rows 60-80)
+            ctx.fillStyle = 'rgba(156, 163, 175, 0.03)';
+            ctx.fillRect(padLeft - 5, padTop + 60 * spacingY - 5, cols * spacingX, 20 * spacingY);
+
+            ctx.font = '500 7px Inter';
+            
+            // Theme-based canvas styling
+            const darkTheme = !document.body.classList.contains('light-theme');
+            ctx.fillStyle = darkTheme ? '#888888' : '#444444';
+            
+            for (let y = 10; y <= rows; y += 10) {
+                ctx.fillText(`${y} лет`, 8, padTop + y * spacingY + 2);
+            }
+
+            for (let year = 0; year < rows; year++) {
+                for (let week = 0; week < cols; week++) {
+                    const currentWeekNum = year * 52 + week;
+                    const x = padLeft + week * spacingX;
+                    const y = padTop + year * spacingY;
+
+                    ctx.beginPath();
+                    if (currentWeekNum < spentWeeks) {
+                        ctx.fillStyle = darkTheme ? '#1e1e1e' : '#d1ceb8'; 
+                        ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+                    } else if (currentWeekNum === spentWeeks) {
+                        ctx.fillStyle = darkTheme ? '#c5a880' : '#8e7250'; 
+                        ctx.arc(x, y, dotSize + 1.2, 0, Math.PI * 2);
+                    } else {
+                        // High contrast future budget weeks
+                        ctx.fillStyle = darkTheme ? '#4c3f2d' : '#8e7250'; 
+                        ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+                    }
+                    ctx.fill();
+                }
+            }
+
+            const activeBox = document.getElementById('mori-active-task-box');
+            if (activeBox) {
+                if (appState.moriActiveTask) {
+                    activeBox.classList.remove('hidden');
+                    const moriTitle = document.getElementById('active-mori-title');
+                    if (moriTitle) moriTitle.innerText = appState.moriActiveTask.title;
+                    const moriDeadline = document.getElementById('active-mori-deadline');
+                    if (moriDeadline) moriDeadline.innerText = appState.moriActiveTask.deadline;
+                } else {
+                    activeBox.classList.add('hidden');
+                }
+            }
+        }
+
+        function saveMoriTask() {
+            const titleInput = document.getElementById('mori-task-title');
+            const deadlineInput = document.getElementById('mori-task-deadline');
+
+            if (!titleInput || !deadlineInput || !titleInput.value || !deadlineInput.value) {
+                showToast("Укажите описание дела и точный дедлайн.");
+                return;
+            }
+
+            playSound('success');
+            appState.moriActiveTask = {
+                title: titleInput.value,
+                deadline: deadlineInput.value
+            };
+
+            appState.frontierLocks[4] = true;
+            addXp(15);
+            saveState();
+            renderMementoMori();
+            renderDashboard();
+
+            titleInput.value = '';
+            deadlineInput.value = '';
+            showToast("Срок недели жестко зафиксирован в бюджете времени. (+15 XP)");
+        }
+
+        function completeMoriTask() {
+            playSound('success');
+            appState.moriActiveTask = null;
+            addXp(25); // Award 25 XP for overcoming procrastination week step
+            saveState();
+            renderMementoMori();
+            showToast("Взрослый шаг зафиксирован в реальности. Неделя спасена. (+25 XP)");
+        }
+
+        // --- FRONTIER V: AMOR FATI ---
+        function submitImpactReport() {
+            const fact = document.getElementById('f5-fact').value;
+            const control = document.getElementById('f5-control').value;
+            const uncontrol = document.getElementById('f5-uncontrol').value;
+            const nextStep = document.getElementById('f5-next-step').value;
+
+            if (!fact || !control || !uncontrol || !nextStep) {
+                showToast("Заполните полностью все шаги инженерного протокола.");
+                return;
+            }
+
+            playSound('anvil');
+            const now = new Date();
+            const dateStr = `${now.toLocaleDateString()} в ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+
+            const report = {
+                date: dateStr,
+                fact,
+                control,
+                uncontrol,
+                nextStep
+            };
+
+            appState.activeImpactReports.push(report);
+            appState.frontierLocks[5] = true;
+            addXp(20);
+            saveState();
+
+            document.getElementById('f5-fact').value = '';
+            document.getElementById('f5-control').value = '';
+            document.getElementById('f5-uncontrol').value = '';
+            document.getElementById('f5-next-step').value = '';
+
+            renderImpactReports();
+            renderDashboard();
+            showToast("Протокол Amor Fati сохранен. Драма утилизирована. (+20 XP)");
+        }
+
+        function renderImpactReports() {
+            const box = document.getElementById('impact-logs-box');
+            const container = document.getElementById('impact-logs-container');
+
+            if (!box || !container) return;
+
+            if (appState.activeImpactReports.length === 0) {
+                box.classList.add('hidden');
+                return;
+            }
+
+            box.classList.remove('hidden');
+            container.innerHTML = '';
+
+            appState.activeImpactReports.forEach((r, idx) => {
+                const itemHtml = `
+                    <div class="p-4 bg-neutral-900/5 border border-[color:var(--border-color)] rounded flex flex-col gap-3 relative">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[9px] text-gold font-bold uppercase tracking-wider">Отчет #${idx + 1} — ${r.date}</span>
+                            <button onclick="deleteImpactReport(${idx})" class="text-neutral-500 hover:text-red-500 text-xs font-semibold">Удалить</button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <span class="text-neutral-500 block font-medium uppercase tracking-wider text-[9px]">ФАКТ СОБЫТИЯ:</span>
+                                <p class="text-[color:var(--text-primary)] mt-1 leading-relaxed">${r.fact}</p>
+                            </div>
+                            <div>
+                                <span class="text-emerald-500 block font-medium uppercase tracking-wider text-[9px]">ЗОНА СОБСТВЕННОЙ ВЛАСТИ:</span>
+                                <p class="text-[color:var(--text-primary)] mt-1 leading-relaxed">${r.control}</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs border-t border-[color:var(--border-color)] pt-2">
+                            <div>
+                                <span class="text-neutral-500 block font-medium uppercase tracking-wider text-[9px]">ВНЕ МОЕГО КОНТРОЛЯ:</span>
+                                <p class="text-[color:var(--text-primary)] mt-1 leading-relaxed">${r.uncontrol}</p>
+                            </div>
+                            <div>
+                                <span class="text-gold block font-medium uppercase tracking-wider text-[9px]">БЛИЖАЙШИЙ БЕЗОПАСНЫЙ ХОД ЗА 24 ЧАСА:</span>
+                                <p class="text-[color:var(--text-primary)] mt-1 leading-relaxed">${r.nextStep}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('afterbegin', itemHtml);
+            });
+        }
+
+        function deleteImpactReport(idx) {
+            playSound('anvil');
+            appState.activeImpactReports.splice(idx, 1);
+            saveState();
+            renderImpactReports();
+            showToast("Протокол перемещен в историю.");
+        }
+
+        // --- FRONTIER VI: ACCESS MASTER ---
+        function renderDeclineShortcuts() {
+            const container = document.getElementById('decline-shortcuts-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            DECLINE_SHORTCUTS.forEach((item, idx) => {
+                const itemHtml = `
+                    <div class="p-4 bg-neutral-900/5 border border-[color:var(--border-color)] rounded flex items-center justify-between gap-4">
+                        <div class="flex flex-col gap-0.5">
+                            <span class="text-[9px] text-neutral-500 uppercase tracking-widest font-bold">${item.title}</span>
+                            <p class="text-xs text-[color:var(--text-primary)] font-serif italic mt-1" id="shortcut-text-${idx}">"${item.text}"</p>
+                        </div>
+                        <button onclick="copyDeclineShortcut(${idx})" class="px-3.5 py-2 bg-neutral-900/5 hover:bg-gold hover:text-black border border-gold/40 hover:border-gold text-[10px] text-gold uppercase font-bold tracking-wider rounded transition-all shrink-0">
+                            Копировать шлюз
+                        </button>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', itemHtml);
+            });
+        }
+
+        function copyDeclineShortcut(idx) {
+            playSound('success');
+            const textToCopy = DECLINE_SHORTCUTS[idx].text;
+            
+            const el = document.createElement('textarea');
+            el.value = textToCopy;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            appState.frontierLocks[6] = true;
+            addXp(5);
+            saveState();
+            renderDashboard();
+
+            showToast("Отсекающий ответ скопирован. Доступ закрыт. (+5 XP)");
+        }
+
+        // --- FRONTIER VII: SCARS SYSTEM ---
+        function commitFrictionContract() {
+            const fSelect = document.getElementById('f7-friction-type');
+            const rSelect = document.getElementById('f7-recovery-type');
+
+            if (!fSelect || !rSelect) return;
+
+            const frictionText = fSelect.options[fSelect.selectedIndex].text;
+            const recoveryText = rSelect.options[rSelect.selectedIndex].text;
+
+            playSound('success');
+            appState.activeF7Contract = {
+                friction: frictionText,
+                recovery: recoveryText,
+                timestamp: new Date().toLocaleDateString()
+            };
+
+            addXp(15);
+            saveState();
+            renderF7Contract();
+            showToast("Контракт трения и регенерации жестко утвержден. (+15 XP)");
+        }
+
+        function renderF7Contract() {
+            const box = document.getElementById('f7-contract-box');
+            if (!box) return;
+
+            if (!appState.activeF7Contract) {
+                box.innerHTML = `
+                    <div class="flex flex-col items-center justify-center text-center gap-4 py-8 h-full">
+                        <svg class="w-12 h-12 text-neutral-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        <div>
+                            <h4 class="font-bold text-sm">Свободных контрактов нет</h4>
+                            <p class="text-xs text-neutral-500 max-w-xs mt-2 leading-relaxed">Организм быстро хрупчает в условиях постоянной тепличной мягкости. Введите сбалансированное сопротивление.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            box.innerHTML = `
+                <div class="flex flex-col justify-between h-full gap-6">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center justify-between border-b border-[color:var(--border-color)] pb-2">
+                            <span class="text-[9px] text-gold font-bold uppercase tracking-wider">Действующий Контракт Силы</span>
+                            <span class="text-[9px] text-neutral-500 font-bold">${appState.activeF7Contract.timestamp}</span>
+                        </div>
+                        
+                        <div class="p-3.5 bg-neutral-900/5 border border-[color:var(--border-color)] rounded mt-2">
+                            <span class="text-[9px] text-red-400 font-bold uppercase tracking-wider block">ТРЕНИЕ (НАГРУЗКА):</span>
+                            <p class="text-xs text-[color:var(--text-primary)] font-medium mt-1 leading-relaxed">${appState.activeF7Contract.friction}</p>
+                        </div>
+
+                        <div class="p-3.5 bg-neutral-900/5 border border-[color:var(--border-color)] rounded">
+                            <span class="text-[9px] text-emerald-400 font-bold uppercase tracking-wider block">РЕГЕНЕРАЦИЯ (ОТКАТ):</span>
+                            <p class="text-xs text-[color:var(--text-primary)] font-medium mt-1 leading-relaxed">${appState.activeF7Contract.recovery}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2 mt-4">
+                        <button onclick="completeFrictionContract(true)" class="w-full py-3 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500 hover:text-black text-[10px] text-emerald-400 uppercase font-bold tracking-wider rounded transition-all">
+                            Закрыть Контракт (ФАКТ ВЫПОЛНЕНИЯ)
+                        </button>
+                        <button onclick="completeFrictionContract(false)" class="w-full py-3 bg-red-500/10 border border-red-500/30 hover:bg-red-500 hover:text-white text-[10px] text-red-400 uppercase font-bold tracking-wider rounded transition-all">
+                            Я Сорвался (Зафиксировать Срыв)
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function completeFrictionContract(success) {
+            appState.activeF7Contract = null;
+            saveState();
+            renderF7Contract();
+            
+            if (success) {
+                playSound('success');
+                addXp(25); // Award 25 XP for a finished self-constraint contract
+                showToast("Безупречно. Твой рубеж удержан. На шраме нарастает плотность. (+25 XP)");
+            } else {
+                playSound('anvil');
+                showToast("Срыв зафиксирован в локальном реестре. Делай выводы по биологии.");
+            }
+        }
+
+        // --- FINAL STAGE: PROJECT X MASTER ---
+        function commitProjectX() {
+            const title = document.getElementById('px-title').value;
+            const version = document.getElementById('px-version').value;
+            const recipient = document.getElementById('px-recipient').value;
+            const deadline = document.getElementById('px-deadline').value;
+            const forbiddenAlibi = document.getElementById('px-forbidden-alibi').value;
+
+            if (!title || !version || !recipient || !deadline) {
+                showToast("Необходимо полностью замерить и заполнить карту Проекта «X».");
+                return;
+            }
+
+            playSound('success');
+            appState.activeProjectX = {
+                title,
+                version,
+                recipient,
+                deadline,
+                forbiddenAlibi,
+                status: 'Активен'
+            };
+
+            addXp(30);
+            saveState();
+            renderProjectX();
+            showToast("Главный контракт Проекта «X» скреплен. Время пошло. (+30 XP)");
+        }
+
+        function renderProjectX() {
+            const builder = document.getElementById('project-x-builder');
+            const card = document.getElementById('project-x-active-card');
+
+            if (!builder || !card) return;
+
+            if (!appState.activeProjectX) {
+                builder.classList.remove('hidden');
+                card.classList.add('hidden');
+                return;
+            }
+
+            builder.classList.add('hidden');
+            card.classList.remove('hidden');
+
+            let statusColorClass = "text-gold bg-gold/10 border-gold/20";
+            if (appState.activeProjectX.status === 'Выполнен') statusColorClass = "text-emerald-400 bg-emerald-500/10 border-emerald-500/20";
+            if (appState.activeProjectX.status === 'Срыв') statusColorClass = "text-red-400 bg-red-500/10 border-red-500/20";
+
+            card.innerHTML = `
+                <div class="flex flex-col justify-between h-full gap-6">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center justify-between border-b border-[color:var(--border-color)] pb-2">
+                            <span class="text-[9px] text-neutral-500 uppercase tracking-wider font-bold">Действующий контракт проекта</span>
+                            <span class="text-[10px] px-2 py-0.5 border ${statusColorClass} rounded font-semibold font-accent">${appState.activeProjectX.status}</span>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-[color:var(--text-primary)] tracking-tight mt-2 font-accent">${appState.activeProjectX.title}</h4>
+                        
+                        <div class="flex flex-col gap-1.5 mt-2">
+                            <span class="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">МИНИМАЛЬНАЯ ВЕРСИЯ НАРУЖУ:</span>
+                            <p class="text-xs text-[color:var(--text-primary)] leading-relaxed font-serif italic">"${appState.activeProjectX.version}"</p>
+                        </div>
+
+                        <div class="flex flex-col gap-1.5">
+                            <span class="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">ПРОВЕРЯЮЩИЙ АДРЕСАТ:</span>
+                            <p class="text-xs text-[color:var(--text-primary)]">${appState.activeProjectX.recipient}</p>
+                        </div>
+
+                        <div class="flex flex-col gap-1.5">
+                            <span class="text-[9px] text-neutral-500 font-bold uppercase tracking-wider">ДЕДЛАЙН:</span>
+                            <p class="text-xs text-gold font-semibold">${appState.activeProjectX.deadline}</p>
+                        </div>
+
+                        <div class="flex flex-col gap-1.5 border-t border-[color:var(--border-color)] pt-3 mt-1">
+                            <span class="text-[9px] text-red-400/80 font-bold uppercase tracking-wider">ЗАПРЕЩЕННОЕ АЛИБИ:</span>
+                            <p class="text-xs text-neutral-400">${appState.activeProjectX.forbiddenAlibi}</p>
+                        </div>
+                    </div>
+
+                    ${appState.activeProjectX.status === 'Активен' ? `
+                        <div class="flex flex-col gap-2 mt-4">
+                            <button onclick="resolveProjectX(true)" class="w-full py-4 bg-emerald-500 text-black text-[10px] uppercase font-bold tracking-wider rounded hover:bg-emerald-600 transition-all">
+                                Зафиксировать ФАКТ выполнения
+                            </button>
+                            <button onclick="resolveProjectX(false)" class="w-full py-3.5 bg-neutral-900 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white text-[10px] uppercase font-bold tracking-wider rounded transition-all">
+                                Сдать шаг (Зарегистрировать Срыв)
+                            </button>
+                        </div>
+                    ` : `
+                        <button onclick="resetProjectX()" class="w-full py-3.5 border border-[#262626] hover:border-gold/30 text-[10px] text-neutral-400 uppercase font-bold tracking-wider rounded hover:bg-neutral-900 transition-all">
+                            Начать новый проект
+                        </button>
+                    `}
+                </div>
+            `;
+        }
+
+        function resolveProjectX(isSuccess) {
+            if (isSuccess) {
+                playSound('success');
+                appState.activeProjectX.status = 'Выполнен';
+                addXp(100); // Massive 100 XP award for finishing Project X
+                showToast("Безупречно. Проект выведен наружу. Теперь это неоспоримый факт. (+100 XP)");
+            } else {
+                playSound('anvil');
+                appState.activeProjectX.status = 'Срыв';
+                showToast("Контракт проекта нарушен. Срыв записан в твой вечный реестр.");
+            }
+            saveState();
+            renderProjectX();
+        }
+
+        function resetProjectX() {
+            playSound('click');
+            appState.activeProjectX = null;
+            saveState();
+            renderProjectX();
+            showToast("Черновик готов к новому созиданию. Назначь новый проект.");
+        }
+
+        // EXPORT DATA (Commercially Viable Reporting Functionality)
+        function exportSovereignData() {
+            playSound('success');
+            let content = "ОТЧЕТ СУВЕРЕНА — ЖУРНАЛ КАРТЫ ДИСЦИПЛИНЫ\n";
+            content += "========================================\n\n";
+            content += `Возраст Суверена: ${appState.userAge} лет\n`;
+            content += `Текущий Ранг: уровень ${appState.level} (${appState.xp} XP)\n`;
+            content += `Успешных сессий фокуса: ${appState.focusStreakCount}\n\n`;
+
+            content += "--- УТИЛИЗИРОВАННЫЕ ОПРАВДАНИЯ ---\n";
+            if (appState.shreddedAlibis.length === 0) {
+                content += "Нет записей.\n";
+            } else {
+                appState.shreddedAlibis.forEach(a => {
+                    content += `[${a.timestamp}] Сорвано оправдание: "${a.raw}" -> Вердикт: "${a.author}"\n`;
+                });
+            }
+            content += "\n";
+
+            content += "--- АКТИВНЫЕ ФОРС-МАЖОРЫ И РАЗБОРЫ ---\n";
+            if (appState.activeImpactReports.length === 0) {
+                content += "Нет записей.\n";
+            } else {
+                appState.activeImpactReports.forEach(r => {
+                    content += `Дата: ${r.date}\n`;
+                    content += `Факты: ${r.fact}\n`;
+                    content += `Зона власти: ${r.control}\n`;
+                    content += `Вне контроля: ${r.uncontrol}\n`;
+                    content += `Ближайший шаг (24ч): ${r.nextStep}\n`;
+                    content += "--------------------------------------\n";
+                });
+            }
+            content += "\n";
+
+            content += "--- ТЕКУЩИЙ ПРОЕКТ Х ---\n";
+            if (appState.activeProjectX) {
+                content += `Название: ${appState.activeProjectX.title}\n`;
+                content += `Минимальная версия: ${appState.activeProjectX.version}\n`;
+                content += `Проверяющий: ${appState.activeProjectX.recipient}\n`;
+                content += `Срок: ${appState.activeProjectX.deadline}\n`;
+                content += `Статус: ${appState.activeProjectX.status}\n`;
+            } else {
+                content += "Проект в состоянии черновика.\n";
+            }
+
+            const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `sovereign-report-${new Date().toLocaleDateString()}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("Отчеты сохранены на твое устройство.");
+        }
+
+        // CUSTOM MODAL RESETS
+        function openResetModal() {
+            playSound('click');
+            const modal = document.getElementById('reset-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeResetModal() {
+            const modal = document.getElementById('reset-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function resetAppState() {
+            localStorage.removeItem('sovereign_app_state_v2');
+            appState = { ...DEFAULT_STATE };
+            saveState();
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>
