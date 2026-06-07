@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Штаб Суверена — Анти-Психология</title>
+    <title>Штаб Суверена — Анти-Психология & Управление Волей</title>
     <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -31,30 +31,32 @@
             --text-secondary: #9ca3af;
             --text-muted: #6b7280;
             --text-high-contrast: #ffffff;
-            --gold-accent: #c5a880; /* Bright gold for Dark Mode */
+            --gold-accent: #c5a880; /* Яркое золото для темной темы */
             --gold-hover: #9d7f58;
             --card-hover: rgba(197, 168, 128, 0.05);
             --shadow-color: rgba(0, 0, 0, 0.7);
             --nav-text: #9ca3af;
             --nav-hover-text: #ffffff;
             --nav-hover-bg: rgba(255, 255, 255, 0.04);
+            --subpanel-bg: #161616; /* Слегка выделенный фон для карточек списка */
         }
         
         body.light-theme {
-            --bg-color: #faf9f5; /* Warm parchment look */
+            --bg-color: #faf9f5; /* Теплый пергаментный оттенок */
             --panel-color: #ffffff;
             --border-color: #c5c2b0;
-            --text-primary: #050505; /* Deep black readability */
-            --text-secondary: #1a1a1a; /* Dark charcoal */
-            --text-muted: #2d3748; /* Highly readable dark gray */
+            --text-primary: #050505; /* Абсолютная читаемость */
+            --text-secondary: #1a1a1a; /* Темно-угольный */
+            --text-muted: #4a5568; /* Высококонтрастный серый */
             --text-high-contrast: #000000;
-            --gold-accent: #785830; /* Heavy, deep bronze-gold for Light Mode (passes WCAG AAA) */
+            --gold-accent: #785830; /* Благородная темная бронза (соответствует WCAG AAA) */
             --gold-hover: #5d401a;
             --card-hover: rgba(120, 88, 48, 0.06);
             --shadow-color: rgba(120, 88, 48, 0.08);
             --nav-text: #1a1a1a;
             --nav-hover-text: #000000;
             --nav-hover-bg: rgba(120, 88, 48, 0.1);
+            --subpanel-bg: #eae7da; /* Заметный контрастный фон для списков в светлой теме */
         }
 
         body {
@@ -68,11 +70,18 @@
             font-family: 'Playfair Display', serif;
         }
 
+        /* Премиальные адаптивные стили */
         .premium-panel {
             background-color: var(--panel-color);
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 20px var(--shadow-color);
             transition: background-color 0.25s, border-color 0.25s, box-shadow 0.25s;
+        }
+
+        .premium-subpanel {
+            background-color: var(--subpanel-bg);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.25s, border-color 0.25s;
         }
 
         .premium-input {
@@ -87,7 +96,18 @@
             outline: none;
         }
 
-        /* Dynamic adaptive gold utility classes */
+        .premium-input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        /* Системные адаптивные классы */
+        .bg-premium-panel { background-color: var(--panel-color) !important; }
+        .bg-premium-bg { background-color: var(--bg-color) !important; }
+        .border-premium-border { border-color: var(--border-color) !important; }
+        .border-premium-gold { border-color: var(--gold-accent) !important; }
+        .bg-premium-gold { background-color: var(--gold-accent) !important; }
+
         .c-text-gold {
             color: var(--gold-accent) !important;
         }
@@ -101,7 +121,6 @@
             background-color: rgba(120, 88, 48, 0.1);
         }
 
-        /* Nav buttons layout rules */
         .nav-btn {
             color: var(--nav-text) !important;
             background-color: transparent;
@@ -154,24 +173,25 @@
 </head>
 <body class="min-h-screen flex flex-col md:flex-row overflow-x-hidden">
 
-    <div id="toast" class="fixed top-6 right-6 z-50 premium-panel border-[color:var(--gold-accent)] px-6 py-4 rounded shadow-2xl opacity-0 translate-y-[-20px] transition-all duration-300 pointer-events-none max-w-sm">
+    <!-- Уведомления системы -->
+    <div id="toast" class="fixed top-6 right-6 z-50 premium-panel border-premium-gold px-6 py-4 rounded shadow-2xl opacity-0 translate-y-[-20px] transition-all duration-300 pointer-events-none max-w-sm">
         <p id="toast-text" class="text-sm font-semibold c-text-high"></p>
     </div>
 
-    <!-- MOBILE COMMAND HEADER -->
-    <header class="md:hidden w-full bg-[color:var(--panel-color)] border-b border-[color:var(--border-color)] px-6 py-4 flex items-center justify-between z-40 shrink-0">
+    <!-- Мобильное навигационное меню -->
+    <header class="md:hidden w-full bg-premium-panel border-b border-premium-border px-6 py-4 flex items-center justify-between z-40 shrink-0">
         <div class="flex flex-col">
             <h1 class="text-lg font-bold c-text-gold tracking-tight" id="header-logo-mobile">СУВЕРЕН</h1>
             <span class="text-[8px] uppercase tracking-wider c-text-muted" id="mob-logo-tagline">Каста Феодалов · 2026</span>
         </div>
         <div class="flex items-center gap-3">
-            <button onclick="toggleLanguage()" class="p-1 px-1.5 text-[9px] c-text-gold font-bold rounded border border-[color:var(--border-color)]" id="lang-btn-mob">EN</button>
-            <button onclick="toggleTheme()" class="p-1 c-text-gold rounded border border-[color:var(--border-color)]" title="Change Theme">
+            <button onclick="toggleLanguage()" class="p-1 px-1.5 text-[9px] c-text-gold font-bold rounded border border-premium-border" id="lang-btn-mob">EN</button>
+            <button onclick="toggleTheme()" class="p-1 c-text-gold rounded border border-premium-border" title="Сменить тему">
                 <svg id="theme-icon-mob" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
                 </svg>
             </button>
-            <button onclick="toggleMobileSidebar()" class="p-1 c-text-gold" title="Menu">
+            <button onclick="toggleMobileSidebar()" class="p-1 c-text-gold" title="Меню">
                 <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
@@ -179,15 +199,16 @@
         </div>
     </header>
 
-    <aside id="sidebar-panel" class="hidden md:flex w-full md:w-80 bg-[color:var(--panel-color)] border-b md:border-b-0 md:border-r border-[color:var(--border-color)] flex-col justify-between shrink-0 z-30 fixed md:sticky top-0 md:top-auto h-[calc(100vh-65px)] md:h-screen overflow-y-auto">
+    <!-- Боковая панель управления (Сайдбар) -->
+    <aside id="sidebar-panel" class="hidden md:flex w-full md:w-80 bg-premium-panel border-b md:border-b-0 md:border-r border-premium-border flex-col justify-between shrink-0 z-30 fixed md:sticky top-0 md:top-auto h-[calc(100vh-65px)] md:h-screen overflow-y-auto">
         <div>
-            <!-- Sovereign Brand Header -->
-            <div class="p-6 border-b border-[color:var(--border-color)] flex flex-col gap-1 hidden md:flex">
+            <!-- Логотип и Бренд -->
+            <div class="p-6 border-b border-premium-border flex flex-col gap-1 hidden md:flex">
                 <div class="flex items-center justify-between mb-1">
                     <span class="text-[9px] uppercase tracking-[0.25em] c-text-gold font-bold" data-i18n="sidebar_subtitle">Каста Феодалов · 2026</span>
                     <div class="flex items-center gap-1.5">
-                        <button onclick="toggleLanguage()" class="p-1 px-1.5 text-[9px] c-text-gold font-bold rounded border border-[color:var(--border-color)] hover:border-gold/30 transition-all focus:outline-none" id="lang-btn-desk" title="Switch Language">EN</button>
-                        <button onclick="toggleTheme()" class="p-1 c-text-gold hover:text-white rounded border border-[color:var(--border-color)] hover:border-gold/30 transition-all focus:outline-none" title="Сменить тему">
+                        <button onclick="toggleLanguage()" class="p-1 px-1.5 text-[9px] c-text-gold font-bold rounded border border-premium-border hover:border-gold/30 transition-all focus:outline-none" id="lang-btn-desk" title="Сменить язык">EN</button>
+                        <button onclick="toggleTheme()" class="p-1 c-text-gold hover:text-white rounded border border-premium-border hover:border-gold/30 transition-all focus:outline-none" title="Сменить тему">
                             <svg id="theme-icon-desk" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                             </svg>
@@ -202,10 +223,10 @@
                 </span>
             </div>
 
-            <!-- Dynamic Tactical Clock & Week Tracker Widget -->
-            <div class="px-6 py-4 border-b border-[color:var(--border-color)] bg-neutral-900/5 flex items-center justify-between gap-3">
+            <!-- Тактические часы и статус синхронизации -->
+            <div class="px-6 py-4 border-b border-premium-border bg-neutral-900/5 flex items-center justify-between gap-3">
                 <div id="tactical-clock" class="flex-1">
-                    <!-- Loaded dynamically via JS -->
+                    <!-- Загружается динамически -->
                 </div>
                 <div class="flex flex-col items-center justify-center shrink-0">
                     <div id="sync-pulse" class="w-2.5 h-2.5 rounded-full bg-emerald-500 breathing-indicator" title="Данные запечатаны локально"></div>
@@ -213,46 +234,45 @@
                 </div>
             </div>
 
-            <!-- Gamification Sidebar Widget -->
-            <div class="px-6 py-4 border-b border-[color:var(--border-color)] bg-neutral-900/5 flex flex-col gap-2">
+            <!-- Геймификация: уровень и ранг -->
+            <div class="px-6 py-4 border-b border-premium-border bg-neutral-900/5 flex flex-col gap-2">
                 <div class="flex justify-between items-center text-xs">
                     <span class="c-text-muted font-semibold uppercase tracking-wider text-[9px]" data-i18n="sidebar_rank_lbl">Текущий ранг:</span>
                     <span class="c-text-gold font-bold font-serif italic text-xs" id="sidebar-rank">Новобранец</span>
                 </div>
-                <!-- Experience bar slider -->
                 <div class="flex flex-col gap-1 mt-1">
                     <div class="flex justify-between text-[10px] font-bold c-text-secondary">
                         <span>Lvl <span id="sidebar-lvl-val">1</span></span>
                         <span><span id="sidebar-xp-val">0</span> / <span id="sidebar-xp-max">100</span> XP</span>
                     </div>
-                    <div class="w-full bg-neutral-900/40 border border-[color:var(--border-color)] h-1.5 rounded-full overflow-hidden">
-                        <div id="sidebar-xp-bar" class="bg-[color:var(--gold-accent)] h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                    <div class="w-full bg-neutral-900/40 border border-premium-border h-1.5 rounded-full overflow-hidden">
+                        <div id="sidebar-xp-bar" class="bg-premium-gold h-full rounded-full transition-all duration-300" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Interactive Navigation Items -->
+            <!-- Навигационная панель -->
             <nav class="p-4 flex flex-col gap-1" id="sidebar-nav">
-                <!-- Dynamically built via JS -->
+                <!-- Заполняется динамически -->
             </nav>
         </div>
 
-        <!-- Persistent Footprint controls -->
-        <div class="p-6 border-t border-[color:var(--border-color)] flex flex-col gap-4">
+        <!-- Управление данными штаба -->
+        <div class="p-6 border-t border-premium-border flex flex-col gap-4">
             <div class="flex items-center justify-between text-xs c-text-secondary">
                 <span data-i18n="sidebar_age_lbl">Возраст в системе:</span>
-                <button onclick="playSound('click'); openAgeModal();" class="c-text-gold font-bold hover:underline" id="sidebar-age-display">28 лет</button>
+                <button onclick="playSound('click'); openAgeModal();" class="c-text-gold font-bold hover:underline" id="sidebar-age-display">29 лет</button>
             </div>
             <div class="flex flex-col gap-2">
-                <button onclick="exportSovereignData()" class="w-full py-2 bg-neutral-900/10 dark:bg-neutral-900/40 hover:bg-gold/10 text-[10px] uppercase font-bold tracking-wider rounded border border-[color:var(--border-color)] transition-all flex items-center justify-center gap-2 c-text-primary">
+                <button onclick="exportSovereignData()" class="w-full py-2.5 bg-neutral-900/10 hover:bg-gold/10 text-[10px] uppercase font-bold tracking-wider rounded border border-premium-border transition-all flex items-center justify-center gap-2 c-text-primary">
                     <svg class="w-3.5 h-3.5 c-text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     <span data-i18n="btn_export">Экспортировать отчеты</span>
                 </button>
                 <div class="grid grid-cols-2 gap-2">
-                    <button onclick="backupSovereignState()" class="py-1.5 bg-neutral-900/10 dark:bg-neutral-900/40 hover:bg-gold/10 text-[8px] uppercase font-bold tracking-wider rounded border border-[color:var(--border-color)] transition-all c-text-secondary text-center">
+                    <button onclick="backupSovereignState()" class="py-1.5 bg-neutral-900/10 hover:bg-gold/10 text-[8px] uppercase font-bold tracking-wider rounded border border-premium-border transition-all c-text-secondary text-center">
                         Скачать бэкап
                     </button>
-                    <label class="py-1.5 bg-neutral-900/10 dark:bg-neutral-900/40 hover:bg-gold/10 text-[8px] uppercase font-bold tracking-wider rounded border border-[color:var(--border-color)] transition-all c-text-secondary text-center cursor-pointer">
+                    <label class="py-1.5 bg-neutral-900/10 hover:bg-gold/10 text-[8px] uppercase font-bold tracking-wider rounded border border-premium-border transition-all text-center cursor-pointer c-text-secondary">
                         Загрузить бэкап
                         <input type="file" id="backup-file-input" onchange="restoreSovereignState(event)" class="hidden">
                     </label>
@@ -262,35 +282,37 @@
                 </button>
             </div>
             <div class="text-[8px] uppercase tracking-widest c-text-muted text-center pt-1 font-bold">
-                markovmade · ver 2.0
+                markovmade · ver 2.5
             </div>
         </div>
     </aside>
 
+    <!-- Основной контент -->
     <main class="flex-1 min-h-screen overflow-y-auto p-6 md:p-10 relative">
 
-        <!-- TAB: DASHBOARD -->
+        <!-- ВКЛАДКА: ПАНЕЛЬ УПРАВЛЕНИЯ -->
         <section id="tab-dashboard" class="tab-content flex flex-col gap-8 max-w-5xl">
-            <!-- Strategic Welcome and Callsign settings -->
-            <div class="premium-panel p-6 rounded-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
+            <!-- Приветственный блок -->
+            <div class="premium-panel p-6 rounded-lg flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 relative overflow-hidden">
                 <div class="flex flex-col gap-1.5">
                     <span class="text-[10px] uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="dash_welcome_sub">Каста Феодалов · Опора воли</span>
                     <h2 class="text-2xl md:text-3xl font-bold tracking-tight c-text-high" id="dashboard-welcome-heading">
-                        Штаб управления: Феодал Александр
+                        Штаб управления: Феодал Павел Марков
                     </h2>
                     <p class="text-xs c-text-secondary max-w-xl" data-i18n="dash_welcome_desc">
                         Здесь хаос отступает перед выстроенным порядком. Изменяй окружение, утилизируй оправдания и двигай свой Проект «X» вперед.
                     </p>
                 </div>
-                <!-- Profile Customization mini-widget -->
-                <div class="bg-neutral-900/5 dark:bg-neutral-900/30 border border-[color:var(--border-color)] p-4 rounded flex flex-col gap-3 shrink-0 w-full md:w-64">
+                
+                <!-- Профиль / Калибровка роли -->
+                <div class="premium-subpanel p-4 rounded flex flex-col gap-3 shrink-0 w-full lg:w-64">
                     <div class="flex flex-col gap-1">
                         <label class="text-[8px] uppercase font-bold tracking-widest c-text-gold" data-i18n="profile_callsign_lbl">Ваш Позывной</label>
-                        <input type="text" id="user-profile-title" onchange="updateProfileTitle(this.value)" value="Феодал Александр" class="premium-input px-2.5 py-1.5 text-xs font-semibold rounded w-full">
+                        <input type="text" id="user-profile-title" onchange="updateProfileTitle(this.value)" value="Феодал Павел Марков" class="premium-input px-2.5 py-1.5 text-xs font-semibold rounded w-full">
                     </div>
                     <div class="flex flex-col gap-1">
                         <label class="text-[8px] uppercase font-bold tracking-widest c-text-gold" data-i18n="profile_gender_lbl">Роль в системе</label>
-                        <select id="user-profile-gender" onchange="updateProfileGender(this.value)" class="premium-input px-2.5 py-1 text-xs font-semibold rounded w-full">
+                        <select id="user-profile-gender" onchange="updateProfileGender(this.value)" class="premium-input px-2.5 py-1.5 text-xs font-semibold rounded w-full">
                             <option value="m">Мужчина (Феодал)</option>
                             <option value="f">Девушка (Аристократка)</option>
                         </select>
@@ -298,24 +320,46 @@
                 </div>
             </div>
 
-            <!-- Achievements board -->
-            <div class="flex flex-col gap-3">
-                <h3 class="text-sm uppercase tracking-widest font-extrabold c-text-gold" data-i18n="dash_achievements_title">Ордена и Достижения Суверена</h3>
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="badges-container">
-                    <!-- Populated via JS -->
+            <!-- ИНТЕРАКТИВНЫЙ ПЛАНЕР: ТРИ ШАГА ВОЛИ НА СЕГОДНЯ -->
+            <div class="premium-panel p-6 rounded-lg flex flex-col gap-4">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                    <div>
+                        <h3 class="text-base font-bold c-text-gold uppercase tracking-wider">Три Шага Воли на Сегодня</h3>
+                        <p class="text-xs c-text-secondary">Зафиксируйте 3 критически важных дела. За выполнение каждого начисляется опыт (+10 XP + бонус за закрытие всех трех).</p>
+                    </div>
+                    <button onclick="resetWillSteps()" class="px-3 py-1 bg-neutral-900/10 hover:bg-gold/10 border border-premium-border rounded text-[10px] uppercase font-bold c-text-secondary transition-all">Сбросить шаги</button>
+                </div>
+
+                <div id="will-steps-builder" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <input type="text" id="will-step-input-0" placeholder="Шаг Воли №1" class="premium-input p-3 text-xs rounded select-placeholder-will-1">
+                    <input type="text" id="will-step-input-1" placeholder="Шаг Воли №2" class="premium-input p-3 text-xs rounded select-placeholder-will-2">
+                    <input type="text" id="will-step-input-2" placeholder="Шаг Воли №3" class="premium-input p-3 text-xs rounded select-placeholder-will-3">
+                    <button onclick="sealWillSteps()" class="md:col-span-3 py-2.5 bg-premium-gold hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Утвердить Шаги на Сегодня</button>
+                </div>
+
+                <div id="will-steps-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 hidden">
+                    <!-- Будет загружено динамически -->
                 </div>
             </div>
 
-            <!-- Dynamic grid of 7 frontiers -->
+            <!-- Достижения суверена -->
+            <div class="flex flex-col gap-3">
+                <h3 class="text-sm uppercase tracking-widest font-extrabold c-text-gold" data-i18n="dash_achievements_title">Ордена и Достижения Суверена</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="badges-container">
+                    <!-- Заполняется динамически -->
+                </div>
+            </div>
+
+            <!-- Карта твоего порядка (7 рубежей) -->
             <div class="flex flex-col gap-3">
                 <h3 class="text-sm uppercase tracking-widest font-extrabold c-text-gold" data-i18n="dash_frontiers_title">Карта Твоего Порядка</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="frontiers-grid">
-                    <!-- Populated dynamically via JS -->
+                    <!-- Заполняется динамически -->
                 </div>
             </div>
         </section>
 
-        <!-- TAB: FRONTIER I (Excuse Destroyer / Уничтожитель оправданий) -->
+        <!-- РУБЕЖ I: УНИЧТОЖИТЕЛЬ ОПРАВДАНИЙ -->
         <section id="tab-frontier1" class="tab-content hidden flex flex-col gap-8 max-w-4xl">
             <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="f1_sub">Рубеж I · Оправдания</span>
@@ -326,16 +370,14 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Select Alibi panel -->
                 <div class="premium-panel p-6 rounded flex flex-col gap-4">
                     <h3 class="text-base font-bold c-text-gold" data-i18n="f1_panel_title">Выбери свое оправдание</h3>
                     <p class="text-xs c-text-secondary" data-i18n="f1_panel_subtitle">Кликни на оправдание, которым прикрываешь свой отложенный шаг, для утилизации:</p>
                     <div class="flex flex-col gap-2 mt-2" id="alibi-selection-box">
-                        <!-- Populated dynamically via JS -->
+                        <!-- Заполняется динамически -->
                     </div>
                 </div>
 
-                <!-- Shredder Animation visual block -->
                 <div class="premium-panel p-6 rounded flex flex-col items-center justify-center text-center min-h-[300px] relative overflow-hidden" id="shredder-box">
                     <div id="shredder-idle" class="flex flex-col items-center gap-4 transition-all duration-300">
                         <svg class="w-16 h-16 text-neutral-600 dark:text-neutral-800 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -348,34 +390,34 @@
                     </div>
                     <div id="shredder-active" class="hidden flex flex-col items-center gap-4 animate-bounce">
                         <div class="text-red-500 font-bold text-sm uppercase tracking-wider animate-pulse" data-i18n="f1_shredder_active_title">Идет уничтожение оправдания...</div>
-                        <div class="w-full bg-neutral-900/60 h-1.5 rounded-full overflow-hidden max-w-xs border border-[color:var(--border-color)]">
-                            <div class="bg-[color:var(--gold-accent)] h-full animate-[shred_2s_ease-in-out_infinite]" style="width: 30%"></div>
+                        <div class="w-full bg-neutral-900/60 h-1.5 rounded-full overflow-hidden max-w-xs border border-premium-border">
+                            <div class="bg-premium-gold h-full animate-[shred_2s_ease-in-out_infinite]" style="width: 30%"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Shredded history table -->
+            <!-- Реестр закрытых оправданий -->
             <div class="premium-panel p-6 rounded flex flex-col gap-4">
                 <h3 class="text-base font-bold c-text-high" data-i18n="f1_history_title">Реестр закрытых оправданий</h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
                         <thead>
-                            <tr class="border-b border-[color:var(--border-color)] c-text-muted">
+                            <tr class="border-b border-premium-border c-text-muted">
                                 <th class="pb-3 font-semibold uppercase tracking-wider" data-i18n="tbl_col_excuse">Утилизированное алиби</th>
                                 <th class="pb-3 font-semibold uppercase tracking-wider" data-i18n="tbl_col_action">Реальный перевод Суверена</th>
                                 <th class="pb-3 font-semibold uppercase tracking-wider" data-i18n="tbl_col_time">Временная метка</th>
                             </tr>
                         </thead>
                         <tbody id="shredded-log" class="c-text-primary">
-                            <!-- Populated dynamically via JS -->
+                            <!-- Заполняется динамически -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- TAB: FRONTIER II (Focus / Защита утреннего внимания) -->
+        <!-- РУБЕЖ II: ЗАЩИТА УТРЕННЕГО ВНИМАНИЯ -->
         <section id="tab-frontier2" class="tab-content hidden flex flex-col gap-8 max-w-4xl">
             <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="f2_sub">Рубеж II · Внимание</span>
@@ -386,47 +428,45 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Podcasting audio instructions -->
+                <!-- Панель утреннего настроя -->
                 <div class="lg:col-span-1 premium-panel p-6 rounded flex flex-col gap-4">
                     <h3 class="text-base font-bold c-text-gold" data-i18n="f2_audio_title">Утренний настрой автора</h3>
                     <p class="text-xs c-text-secondary" data-i18n="f2_audio_desc">Выбери день недели и запусти звуковой регламент Павла Маркова в тишине.</p>
                     <div class="flex flex-col gap-3 mt-2">
                         <select id="audio-day" class="premium-input p-3 text-xs rounded font-semibold focus:border-gold outline-none w-full">
-                            <!-- Loaded via JS -->
+                            <!-- Подгружается из JS -->
                         </select>
-                        <button onclick="playSound('gong'); playMorningAudio();" class="w-full py-3 bg-[color:var(--gold-accent)] hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all flex items-center justify-center gap-2 font-semibold">
+                        <button onclick="playSound('gong'); playMorningAudio();" class="w-full py-3 bg-premium-gold hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all flex items-center justify-center gap-2 font-semibold">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
                             <span data-i18n="f2_btn_play_audio">Слушать настрой</span>
                         </button>
                     </div>
 
-                    <!-- Audio waveform simulator -->
+                    <!-- Визуализатор волны -->
                     <div id="audio-player-sim" class="hidden border border-gold/20 p-4 rounded bg-neutral-900/50 flex flex-col gap-3">
                         <span class="text-[9px] c-text-gold uppercase tracking-wider font-bold animate-pulse" data-i18n="f2_audio_playing">Проигрывание настройки...</span>
                         <div class="text-xs c-text-primary font-serif italic" id="audio-quote"></div>
                         <div class="flex gap-1 h-6 items-center justify-center">
-                            <span class="w-1 bg-[color:var(--gold-accent)] h-4 rounded animate-[bounce_1s_infinite]"></span>
-                            <span class="w-1 bg-[color:var(--gold-accent)] h-6 rounded animate-[bounce_1.2s_infinite]"></span>
-                            <span class="w-1 bg-[color:var(--gold-accent)] h-2 rounded animate-[bounce_0.8s_infinite]"></span>
-                            <span class="w-1 bg-[color:var(--gold-accent)] h-5 rounded animate-[bounce_1.4s_infinite]"></span>
+                            <span class="w-1 bg-premium-gold h-4 rounded animate-[bounce_1s_infinite]"></span>
+                            <span class="w-1 bg-premium-gold h-6 rounded animate-[bounce_1.2s_infinite]"></span>
+                            <span class="w-1 bg-premium-gold h-2 rounded animate-[bounce_0.8s_infinite]"></span>
+                            <span class="w-1 bg-premium-gold h-5 rounded animate-[bounce_1.4s_infinite]"></span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Deep focus timer -->
+                <!-- Таймер фокуса -->
                 <div class="lg:col-span-2 premium-panel p-8 rounded flex flex-col items-center justify-center text-center gap-6 relative overflow-hidden">
                     <span class="text-xs uppercase tracking-[0.2em] text-neutral-500 font-bold" data-i18n="f2_timer_title">Калибровка фокус-сессии</span>
                     <div class="text-6xl md:text-8xl font-light tracking-widest c-text-high font-accent" id="focus-timer-display">25:00</div>
                     
-                    <!-- Time config sliders -->
                     <div class="grid grid-cols-4 gap-2 w-full max-w-sm">
-                        <button onclick="setFocusPreset(15)" class="py-1.5 bg-neutral-900/20 hover:bg-gold/10 border border-[color:var(--border-color)] rounded text-xs c-text-gold font-bold">15m</button>
-                        <button onclick="setFocusPreset(25)" class="py-1.5 bg-neutral-900/20 hover:bg-gold/10 border border-[color:var(--border-color)] rounded text-xs c-text-gold font-bold">25m</button>
-                        <button onclick="setFocusPreset(45)" class="py-1.5 bg-neutral-900/20 hover:bg-gold/10 border border-[color:var(--border-color)] rounded text-xs c-text-gold font-bold">45m</button>
-                        <button onclick="setFocusPreset(60)" class="py-1.5 bg-neutral-900/20 hover:bg-gold/10 border border-[color:var(--border-color)] rounded text-xs c-text-gold font-bold">60m</button>
+                        <button onclick="setFocusPreset(15)" class="py-1.5 bg-neutral-900/20 hover:bg-gold/10 border border-premium-border rounded text-xs c-text-gold font-bold">15m</button>
+                        <button onclick="setFocusPreset(25)" class="py-1.5 bg-neutral-900/20 hover:bg-gold/10 border border-premium-border rounded text-xs c-text-gold font-bold">25m</button>
+                        <button onclick="setFocusPreset(45)" class="py-1.5 bg-neutral-900/20 hover:bg-gold/10 border border-premium-border rounded text-xs c-text-gold font-bold">45m</button>
+                        <button onclick="setFocusPreset(60)" class="py-1.5 bg-neutral-900/20 hover:bg-gold/10 border border-premium-border rounded text-xs c-text-gold font-bold">60m</button>
                     </div>
 
-                    <!-- Audio delta controller -->
                     <div class="flex flex-col gap-2 w-full max-w-xs">
                         <label class="text-[9px] uppercase font-bold tracking-widest c-text-gold text-center" data-i18n="f2_delta_lbl">Спектр бинауральной сонастройки</label>
                         <select id="binaural-freq-select" onchange="changeBinauralFrequency(this.value)" class="premium-input p-2.5 text-xs font-semibold rounded w-full text-center">
@@ -442,12 +482,12 @@
                         <p class="text-xs c-text-muted mt-1" data-i18n="f2_instruct_desc">При активации запустится мягкая бинауральная волна сонастройки. Не покидайте вкладку до полного закрытия таймера.</p>
                     </div>
 
-                    <button onclick="toggleFocusTimer()" id="focus-timer-btn" class="px-8 py-3 bg-neutral-900/30 hover:bg-gold hover:text-black border border-[color:var(--gold-accent)] c-text-gold hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all">Запереть Шлюз</button>
+                    <button onclick="toggleFocusTimer()" id="focus-timer-btn" class="px-8 py-3 bg-neutral-900/30 hover:bg-gold hover:text-black border border-premium-gold c-text-gold hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all">Запереть Шлюз</button>
                     <div class="text-[10px] c-text-muted uppercase tracking-widest font-bold" id="focus-streak-info">Часов суверенности зафиксировано: 0/7</div>
                 </div>
             </div>
 
-            <!-- Breathwork training widget -->
+            <!-- Дыхательные практики -->
             <div class="premium-panel p-6 rounded flex flex-col md:flex-row items-center gap-8">
                 <div class="flex flex-col gap-3 flex-1">
                     <span class="text-[9px] uppercase tracking-widest c-text-gold font-bold" data-i18n="f2_breath_subtitle">Физиологическая сонастройка</span>
@@ -462,13 +502,13 @@
                             <option value="coherent">Резонансное дыхание (5-5) — Выравнивание</option>
                         </select>
                         <div class="flex gap-2 mt-2">
-                            <button onclick="startBreathwork()" class="px-4 py-2 border border-[color:var(--gold-accent)] hover:bg-[color:var(--gold-accent)] hover:text-black c-text-gold text-[10px] uppercase font-bold tracking-wider rounded transition-all flex-1 font-semibold" id="breath-action-btn" data-i18n="btn_breath_start">Запустить сферу</button>
+                            <button onclick="startBreathwork()" class="px-4 py-2 border border-premium-gold hover:bg-premium-gold hover:text-black c-text-gold text-[10px] uppercase font-bold tracking-wider rounded transition-all flex-1 font-semibold" id="breath-action-btn" data-i18n="btn_breath_start">Запустить сферу</button>
                             <button onclick="stopBreathwork()" class="px-4 py-2 border border-red-500 hover:bg-red-500 hover:text-white text-red-500 text-[10px] uppercase font-bold tracking-wider rounded transition-all hidden font-semibold" id="breath-stop-btn" data-i18n="btn_breath_stop">Остановить</button>
                         </div>
                     </div>
                 </div>
-                <!-- Animated Pulsing sphere -->
-                <div class="w-48 h-48 bg-neutral-900/5 dark:bg-neutral-900/40 border border-[color:var(--border-color)] rounded-full flex flex-col items-center justify-center shrink-0 relative overflow-hidden">
+                <!-- Анимированная сфера дыхания -->
+                <div class="w-48 h-48 bg-neutral-900/5 dark:bg-neutral-900/40 border border-premium-border rounded-full flex flex-col items-center justify-center shrink-0 relative overflow-hidden">
                     <div id="breath-sphere" class="w-16 h-16 rounded-full bg-gold/10 border border-gold/40 transition-all duration-1000 flex items-center justify-center relative z-10">
                         <span id="breath-timer-val" class="text-xs font-extrabold c-text-gold font-accent">0</span>
                     </div>
@@ -479,7 +519,7 @@
             </div>
         </section>
 
-        <!-- TAB: FRONTIER III (Body / Биологический строй) -->
+        <!-- РУБЕЖ III: БИОЛОГИЧЕСКИЙ СТРОЙ (ТЕЛО) -->
         <section id="tab-frontier3" class="tab-content hidden flex flex-col gap-8 max-w-4xl">
             <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="f3_sub">Рубеж III · Тело</span>
@@ -490,30 +530,80 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Checklists framework -->
-                <div class="lg:col-span-2 premium-panel p-6 rounded flex flex-col gap-5">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-base font-bold c-text-gold" data-i18n="f3_checklist_title">Ежедневный учет биологической рамки</h3>
-                        <span id="bio-score" class="text-xs bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-1 rounded font-bold">Оценка: 0%</span>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-[color:var(--border-color)] pb-3">
-                        <p class="text-xs c-text-secondary" data-i18n="f3_checklist_sub">Управляйте базой трезво. Отметьте выполнение сегодняшних нормативов:</p>
-                        <!-- Weekend Mode Switcher -->
-                        <div class="flex items-center gap-2">
-                            <span class="text-[9px] uppercase font-bold tracking-wider c-text-muted" data-i18n="f3_weekend_switch">Режим Выходных</span>
-                            <label class="relative inline-flex items-center cursor-pointer select-none">
-                                <input type="checkbox" id="weekend-switch-input" onchange="toggleWeekendMode()" class="sr-only peer">
-                                <div class="w-7 h-4 bg-neutral-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-neutral-400 after:border-neutral-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-[color:var(--gold-accent)]"></div>
-                            </label>
+                <!-- Чек-лист здоровья -->
+                <div class="lg:col-span-2 flex flex-col gap-5">
+                    <div class="premium-panel p-6 rounded flex flex-col gap-5">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-base font-bold c-text-gold" data-i18n="f3_checklist_title">Ежедневный учет биологической рамки</h3>
+                            <span id="bio-score" class="text-xs bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-1 rounded font-bold">Оценка: 0%</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-premium-border pb-3">
+                            <p class="text-xs c-text-secondary" data-i18n="f3_checklist_sub">Управляйте базой трезво. Отметьте выполнение сегодняшних нормативов:</p>
+                            <!-- Свитчер выходных -->
+                            <div class="flex items-center gap-2">
+                                <span class="text-[9px] uppercase font-bold tracking-wider c-text-muted" data-i18n="f3_weekend_switch">Режим Выходных</span>
+                                <label class="relative inline-flex items-center cursor-pointer select-none">
+                                    <input type="checkbox" id="weekend-switch-input" onchange="toggleWeekendMode()" class="sr-only peer">
+                                    <div class="w-7 h-4 bg-neutral-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-neutral-400 after:border-neutral-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-premium-gold"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-3" id="bio-checklist-box">
+                            <!-- Загружается динамически -->
                         </div>
                     </div>
 
-                    <div class="flex flex-col gap-3" id="bio-checklist-box">
-                        <!-- Loaded dynamically via JS -->
+                    <!-- ЭКСКЛЮЗИВНЫЙ ФУНКЦИОНАЛ: БИОМЕТРИЧЕСКИЙ АУДИТ ТЕЛА -->
+                    <div class="premium-panel p-6 rounded flex flex-col gap-4">
+                        <h3 class="text-base font-bold c-text-gold uppercase tracking-wider">Биометрический Аудит Тела</h3>
+                        <p class="text-xs c-text-secondary">Учитывайте метрики организма для оптимального когнитивного и физического тонуса.</p>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-1">
+                            <div class="flex flex-col gap-1">
+                                <label class="text-[9px] uppercase tracking-wider c-text-muted font-bold">Вес (кг)</label>
+                                <input type="number" step="0.1" id="metric-weight" placeholder="0.0" class="premium-input p-2.5 text-xs rounded font-semibold text-center">
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <label class="text-[9px] uppercase tracking-wider c-text-muted font-bold">Шаги (кол-во)</label>
+                                <input type="number" id="metric-steps" placeholder="8000" class="premium-input p-2.5 text-xs rounded font-semibold text-center">
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <label class="text-[9px] uppercase tracking-wider c-text-muted font-bold">Калории (ккал)</label>
+                                <input type="number" id="metric-calories" placeholder="2500" class="premium-input p-2.5 text-xs rounded font-semibold text-center">
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <label class="text-[9px] uppercase tracking-wider c-text-muted font-bold">Вода (мл)</label>
+                                <input type="number" id="metric-water" placeholder="2000" class="premium-input p-2.5 text-xs rounded font-semibold text-center">
+                            </div>
+                        </div>
+                        <button onclick="savePhysicalMetrics()" class="w-full py-2 bg-premium-gold hover:bg-gold-dark text-black text-xs uppercase font-bold rounded font-semibold transition-all">Зафиксировать показатели дня</button>
+
+                        <!-- Лог метрик -->
+                        <div class="mt-4 border-t border-premium-border pt-4">
+                            <span class="text-[10px] uppercase tracking-widest c-text-gold font-bold block mb-2">Хроника био-аудита</span>
+                            <div class="overflow-x-auto max-h-48 overflow-y-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="border-b border-premium-border c-text-muted">
+                                            <th class="pb-2 font-semibold">Дата</th>
+                                            <th class="pb-2 font-semibold">Вес</th>
+                                            <th class="pb-2 font-semibold">Шаги</th>
+                                            <th class="pb-2 font-semibold">Калории</th>
+                                            <th class="pb-2 font-semibold">Вода</th>
+                                            <th class="pb-2 font-semibold text-right">Действие</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="metrics-log-table" class="c-text-primary">
+                                        <!-- Заполняется динамически -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Dynamic Shock Lock indicator -->
+                <!-- Блокировки базы и индикаторы -->
                 <div class="lg:col-span-1 flex flex-col gap-6">
                     <div class="premium-panel border-red-900/20 p-6 rounded flex flex-col justify-between gap-6" id="shock-lock-widget">
                         <div class="flex flex-col gap-4">
@@ -531,7 +621,6 @@
                         </div>
                     </div>
                     
-                    <!-- Weekend focus card -->
                     <div class="premium-panel p-6 rounded flex flex-col gap-3 hidden" id="weekend-focus-card">
                         <span class="text-[9px] uppercase tracking-widest text-emerald-400 font-bold" data-i18n="f3_weekend_active_badge">Выходные активны</span>
                         <h4 class="font-bold c-text-primary text-sm" data-i18n="f3_weekend_active_title">Время регенерации</h4>
@@ -541,7 +630,7 @@
             </div>
         </section>
 
-        <!-- TAB: FRONTIER IV (Time / Memento Mori) -->
+        <!-- РУБЕЖ IV: MEMENTO MORI -->
         <section id="tab-frontier4" class="tab-content hidden flex flex-col gap-8 max-w-5xl">
             <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="f4_sub">Рубеж IV · Время</span>
@@ -551,33 +640,32 @@
                 </p>
             </div>
 
-            <!-- Canvas representation of mortality -->
+            <!-- Интерактивная карта Memento Mori -->
             <div class="premium-panel p-6 rounded flex flex-col gap-4">
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div class="flex flex-col gap-1">
                         <h3 class="text-base font-bold c-text-gold" data-i18n="f4_mori_title">Резервуар Твоего Времени</h3>
                         <p class="text-xs c-text-muted" data-i18n="f4_mori_sub">Сетка отображает сезоны: Сборка (0-20), Сила (20-40), Мастерство (40-60), Наследие (60-80).</p>
                     </div>
-                    <div class="flex gap-4 text-xs bg-neutral-900/10 dark:bg-neutral-900/30 p-3 rounded border border-[color:var(--border-color)]">
+                    <div class="flex gap-4 text-xs premium-subpanel p-3 rounded">
                         <div class="c-text-secondary"><span data-i18n="f4_mori_spent">Пройдено</span>: <span class="font-bold c-text-high" id="mori-spent">0</span> нед.</div>
                         <div class="c-text-secondary"><span data-i18n="f4_mori_rem">Осталось</span>: <span class="font-bold c-text-gold" id="mori-rem">0</span> нед.</div>
                     </div>
                 </div>
                 
-                <!-- High-DPI canvas wrapper -->
-                <div class="relative w-full bg-neutral-900/10 dark:bg-cyberblack rounded border border-[color:var(--border-color)] p-4 flex items-center justify-center overflow-x-auto">
+                <div class="relative w-full premium-subpanel rounded p-4 flex items-center justify-center overflow-x-auto">
                     <canvas id="lifespan-canvas" width="840" height="260" class="max-w-full block"></canvas>
                 </div>
             </div>
 
-            <!-- Week deadline connector -->
+            <!-- Дедлайн недели -->
             <div class="premium-panel p-6 rounded flex flex-col gap-4">
                 <h3 class="text-base font-bold c-text-high" data-i18n="f4_task_title">Шаг текущей недели</h3>
                 <p class="text-xs c-text-secondary" data-i18n="f4_task_desc">Введите просроченное дело из черновика. Назначьте жесткий дедлайн.</p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-1">
                     <input type="text" id="mori-task-title" class="premium-input p-3 text-xs rounded select-placeholder">
                     <input type="text" id="mori-task-deadline" class="premium-input p-3 text-xs rounded select-placeholder2">
-                    <button onclick="saveMoriTask()" class="px-5 py-3 bg-[color:var(--gold-accent)] hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Привязать Срок</button>
+                    <button onclick="saveMoriTask()" class="px-5 py-3 bg-premium-gold hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Привязать Срок</button>
                 </div>
                 <div id="mori-active-task-box" class="hidden mt-4 p-4 border border-gold/20 rounded bg-neutral-900/20 flex items-center justify-between">
                     <div>
@@ -590,7 +678,7 @@
             </div>
         </section>
 
-        <!-- TAB: FRONTIER V (Amor Fati / Удар) -->
+        <!-- РУБЕЖ V: AMOR FATI (УДАР) -->
         <section id="tab-frontier5" class="tab-content hidden flex flex-col gap-8 max-w-4xl">
             <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="f5_sub">Рубеж V · Удар</span>
@@ -600,7 +688,7 @@
                 </p>
             </div>
 
-            <!-- Engineering incident report form -->
+            <!-- Протокол сбоя -->
             <div class="premium-panel p-6 rounded flex flex-col gap-5">
                 <div class="flex items-center gap-2 c-text-gold">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -621,7 +709,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="flex flex-col gap-1.5">
-                        <label class="text-[9px] uppercase font-bold tracking-widest c-text-gold" data-i18n="f5_lbl_uncontrol">Что вне моего контроля?</label>
+                        <label class="text-[9px] uppercase font-bold tracking-widest c-text-gold" data-i18n="f5_lbl_uncontrol">What is out of my control?</label>
                         <input type="text" id="f5-uncontrol" class="premium-input p-3 text-xs rounded select-placeholder5">
                     </div>
                     <div class="flex flex-col gap-1.5">
@@ -630,19 +718,19 @@
                     </div>
                 </div>
 
-                <button onclick="submitImpactReport()" class="w-full py-3.5 bg-[color:var(--gold-accent)] hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Сохранить Протокол</button>
+                <button onclick="submitImpactReport()" class="w-full py-3.5 bg-premium-gold hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Сохранить Протокол</button>
             </div>
 
-            <!-- List of impact records -->
+            <!-- Реестр сбоев -->
             <div id="impact-logs-box" class="hidden premium-panel p-6 rounded flex flex-col gap-4">
                 <h3 class="text-base font-bold c-text-high" data-i18n="f5_archive_title">Архив переработанных ударов</h3>
                 <div class="flex flex-col gap-4" id="impact-logs-container">
-                    <!-- Loaded dynamically via JS -->
+                    <!-- Загружается динамически -->
                 </div>
             </div>
         </section>
 
-        <!-- TAB: FRONTIER VI (Access / Храм и доступ) -->
+        <!-- РУБЕЖ VI: ХРАМ И ДОСТУП -->
         <section id="tab-frontier6" class="tab-content hidden flex flex-col gap-8 max-w-4xl">
             <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="f6_sub">Рубеж VI · Доступ</span>
@@ -653,36 +741,36 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Access laws template -->
+                <!-- Законы Храма -->
                 <div class="lg:col-span-1 premium-panel p-6 rounded flex flex-col gap-4">
                     <h3 class="text-base font-bold c-text-gold" data-i18n="f6_law_title">Закон твоего храма</h3>
                     <p class="text-xs c-text-secondary" data-i18n="f6_law_desc">Сформируй неприкасаемые слоты времени, которые никто не имеет права взламывать.</p>
                     
                     <div class="flex flex-col gap-3 mt-1">
-                        <div class="p-3 bg-neutral-900/10 dark:bg-neutral-900/30 border border-[color:var(--border-color)] rounded">
+                        <div class="p-3 premium-subpanel rounded">
                             <span class="text-[9px] c-text-gold font-bold uppercase tracking-wider" data-i18n="f6_law_slot1">Неприкосновенный слот</span>
                             <p class="text-xs c-text-primary font-semibold mt-0.5">Ежедневно: 08:00 — 10:00</p>
                         </div>
-                        <div class="p-3 bg-neutral-900/10 dark:bg-neutral-900/30 border border-[color:var(--border-color)] rounded">
+                        <div class="p-3 premium-subpanel rounded">
                             <span class="text-[9px] c-text-muted font-bold uppercase tracking-wider" data-i18n="f6_law_slot2">Порог неуважения</span>
                             <p class="text-xs c-text-secondary mt-0.5">Вторжение без согласования = бан доступа</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Fast refusal templates -->
+                <!-- Шаблоны отказов -->
                 <div class="lg:col-span-2 premium-panel p-6 rounded flex flex-col gap-4">
                     <h3 class="text-base font-bold c-text-high" data-i18n="f6_shortcuts_title">Шлюз Мгновенных Отказов</h3>
                     <p class="text-xs c-text-secondary" data-i18n="f6_shortcuts_desc">Копируй лаконичные фразы для защиты своего внимания прямо в клавиатуру:</p>
 
                     <div class="flex flex-col gap-3 mt-1" id="decline-shortcuts-container">
-                        <!-- Loaded dynamically via JS -->
+                        <!-- Загружается динамически -->
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- TAB: FRONTIER VII (Scar / Эстетика шрама) -->
+        <!-- РУБЕЖ VII: БАЛАНС НАГРУЗКИ И ОТДЫХА (ШРАМ) -->
         <section id="tab-frontier7" class="tab-content hidden flex flex-col gap-8 max-w-4xl">
             <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="f7_sub">Рубеж VII · Шрам</span>
@@ -693,7 +781,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Contract builder -->
+                <!-- Конструктор контракта -->
                 <div class="premium-panel p-6 rounded flex flex-col gap-4">
                     <h3 class="text-base font-bold c-text-gold" data-i18n="f7_contract_title">Конструктор контракта силы</h3>
                     <p class="text-xs c-text-secondary" data-i18n="f7_contract_desc">Свяжите добровольный дискомфорт с актом полноценной регенерации.</p>
@@ -702,27 +790,27 @@
                         <div class="flex flex-col gap-1.5">
                             <label class="text-[9px] uppercase font-bold tracking-widest c-text-gold" data-i18n="f7_lbl_friction">Осознанное трение (Нагрузка)</label>
                             <select id="f7-friction-type" class="premium-input p-3 text-xs font-semibold rounded w-full outline-none">
-                                <!-- Loaded dynamically via JS -->
+                                <!-- Заполняется динамически -->
                             </select>
                         </div>
                         <div class="flex flex-col gap-1.5">
                             <label class="text-[9px] uppercase font-bold tracking-widest c-text-gold" data-i18n="f7_lbl_recovery">Качественная регенерация (Откат)</label>
                             <select id="f7-recovery-type" class="premium-input p-3 text-xs font-semibold rounded w-full outline-none">
-                                <!-- Loaded dynamically via JS -->
+                                <!-- Заполняется динамически -->
                             </select>
                         </div>
-                        <button onclick="commitFrictionContract()" class="px-5 py-3.5 bg-neutral-900/30 border border-[color:var(--gold-accent)] hover:bg-[color:var(--gold-accent)] hover:text-black c-text-gold text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Утвердить Контракт</button>
+                        <button onclick="commitFrictionContract()" class="px-5 py-3.5 bg-neutral-900/30 border border-premium-gold hover:bg-premium-gold hover:text-black c-text-gold text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Утвердить Контракт</button>
                     </div>
                 </div>
 
-                <!-- Active F7 Contract display -->
+                <!-- Активный контракт -->
                 <div class="premium-panel p-6 rounded flex flex-col justify-between min-h-[300px]" id="f7-contract-box">
-                    <!-- Loaded dynamically via JS -->
+                    <!-- Заполняется динамически -->
                 </div>
             </div>
         </section>
 
-        <!-- TAB: PROJECT X -->
+        <!-- ВКЛАДКА: ПРОЕКТ Х -->
         <section id="tab-projectX" class="tab-content hidden flex flex-col gap-8 max-w-4xl relative">
             <div class="flex flex-col gap-2">
                 <span class="text-xs uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="px_sub">Проект «X»</span>
@@ -732,7 +820,7 @@
                 </p>
             </div>
 
-            <!-- UN-OBSTRUCTIVE SHOCK LOCK NOTIFICATION BANNER -->
+            <!-- Баннер блокировки базы -->
             <div id="shock-lock-overlay" class="premium-panel border-red-500/30 p-5 rounded-lg bg-red-500/5 flex flex-col md:flex-row items-center justify-between gap-4 hidden transition-all duration-300">
                 <div class="flex items-center gap-3">
                     <svg class="w-8 h-8 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
@@ -745,7 +833,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Register active template -->
+                <!-- Конструктор проекта -->
                 <div class="lg:col-span-2 flex flex-col gap-5 premium-panel p-6 rounded" id="project-x-builder">
                     <h3 class="text-base font-bold c-text-gold" data-i18n="px_builder_title">Создание Контракта Проекта</h3>
                     
@@ -774,19 +862,19 @@
                     <div class="flex flex-col gap-1.5">
                         <label class="text-[9px] uppercase font-bold tracking-widest c-text-gold" data-i18n="px_lbl_alibi">Алиби, которое запрещено использовать</label>
                         <select id="px-forbidden-alibi" class="premium-input p-3 text-xs font-semibold rounded w-full outline-none">
-                            <!-- Loaded dynamically via JS -->
+                            <!-- Заполняется динамически -->
                         </select>
                     </div>
 
-                    <button onclick="commitProjectX()" class="w-full py-3.5 bg-[color:var(--gold-accent)] hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Привязать Проект «X»</button>
+                    <button onclick="commitProjectX()" class="w-full py-3.5 bg-premium-gold hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Привязать Проект «X»</button>
                 </div>
 
-                <!-- Active Project dashboard display -->
-                <div class="lg:col-span-2 bg-panelgray border border-[color:var(--border-color)] p-6 rounded flex flex-col justify-between hidden" id="project-x-active-card">
-                    <!-- Populated dynamically via JS -->
+                <!-- Карточка активного проекта -->
+                <div class="lg:col-span-2 premium-panel p-6 rounded flex flex-col justify-between hidden" id="project-x-active-card">
+                    <!-- Заполняется динамически -->
                 </div>
 
-                <!-- Manifesto side-block -->
+                <!-- Манифест дисциплины -->
                 <div class="lg:col-span-1 premium-panel p-6 rounded flex flex-col gap-4 h-fit">
                     <h3 class="text-xs font-bold c-text-high uppercase tracking-wider" data-i18n="px_manifesto_title">Договор Дисциплины</h3>
                     <p class="text-xs c-text-secondary leading-relaxed" data-i18n="px_manifesto_desc">
@@ -797,7 +885,7 @@
         </section>
     </main>
 
-    <!-- CUSTOM USER AGE SELECTION MODAL -->
+    <!-- МОДАЛЬНОЕ ОКНО: НАСТРОЙКА ВОЗРАСТА -->
     <div id="age-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 z-50 hidden transition-all">
         <div class="premium-panel p-8 rounded-lg max-w-sm w-full flex flex-col gap-6">
             <div>
@@ -809,13 +897,13 @@
                 <input type="number" id="user-age-input" min="12" max="100" class="premium-input p-3 text-lg font-bold rounded focus:border-gold outline-none w-full">
             </div>
             <div class="flex gap-3">
-                <button onclick="closeAgeModal()" class="flex-1 py-3 border border-[color:var(--border-color)] hover:bg-neutral-900/10 text-xs uppercase font-bold tracking-wider rounded transition-all c-text-secondary">Отмена</button>
-                <button onclick="saveUserAge()" class="flex-1 py-3 bg-[color:var(--gold-accent)] hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Сохранить</button>
+                <button onclick="closeAgeModal()" class="flex-1 py-3 border border-premium-border hover:bg-neutral-900/10 text-xs uppercase font-bold tracking-wider rounded transition-all c-text-secondary">Отмена</button>
+                <button onclick="saveUserAge()" class="flex-1 py-3 bg-premium-gold hover:bg-gold-dark text-black text-xs uppercase font-bold tracking-wider rounded transition-all font-semibold">Сохранить</button>
             </div>
         </div>
     </div>
 
-    <!-- CUSTOM DATA RESET CONFIRM MODAL -->
+    <!-- МОДАЛЬНОЕ ОКНО: ОЧИСТКА ДАННЫХ -->
     <div id="reset-modal" class="fixed inset-0 bg-black/85 flex items-center justify-center p-4 z-50 hidden transition-all">
         <div class="premium-panel border-red-500/30 p-8 rounded-lg max-w-sm w-full flex flex-col gap-6">
             <div class="text-center flex flex-col items-center gap-3">
@@ -824,23 +912,23 @@
                 <p class="text-xs c-text-secondary leading-relaxed" data-i18n="modal_reset_desc">Внимание: это действие полностью и безвозвратно сотрет ваш накопленный опыт, ранги, проекты и утилизированные оправдания из локального кокона.</p>
             </div>
             <div class="flex gap-3">
-                <button onclick="closeResetModal()" class="flex-1 py-3 border border-[color:var(--border-color)] hover:bg-neutral-900/10 text-xs uppercase font-bold tracking-wider rounded transition-all c-text-secondary">Отмена</button>
+                <button onclick="closeResetModal()" class="flex-1 py-3 border border-premium-border hover:bg-neutral-900/10 text-xs uppercase font-bold tracking-wider rounded transition-all c-text-secondary">Отмена</button>
                 <button onclick="confirmResetSovereignState()" class="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white text-xs uppercase font-bold tracking-wider rounded transition-all">Уничтожить</button>
             </div>
         </div>
     </div>
 
-    <!-- AUDIO ENGINE (Self-Contained Web Audio Synthesizer with Delta Binaural frequency engine) -->
+    <!-- АУДИОДВИЖОК СИНТЕЗА ЗВУКА И БИНАУРАЛЬНЫХ ВОЛН -->
     <script>
         let audioCtx = null;
         let binauralOsc1 = null;
         let binauralOsc2 = null;
         let binauralGain = null;
-        let activeBinauralDelta = 40; // Default gamma frequency
-        let isFocusTimerActive = false; // Declared here globally to prevent ReferenceError
-        let focusTimerInterval = null;  // Timer interval reference
-        let focusTimeLeft = 3600;       // Default focus time left
-        let breathSoundInterval = null; // Breath haptic sound interval
+        let activeBinauralDelta = 40; // Гамма-ритм по умолчанию
+        let isFocusTimerActive = false;
+        let focusTimerInterval = null;
+        let focusTimeLeft = 1500; // 25 минут по умолчанию
+        let breathSoundInterval = null;
 
         function initAudio() {
             if (!audioCtx) {
@@ -919,11 +1007,10 @@
                     osc.stop(now + 0.35);
                 }
             } catch (e) {
-                console.log("Audio API pending user interaction...", e);
+                console.log("Audio API ожидает взаимодействия с пользователем...", e);
             }
         }
 
-        // Binaural Frequency Generator with dynamic frequency offsets (Alpha/Beta/Gamma/Theta)
         function startBinauralBeat() {
             try {
                 initAudio();
@@ -936,8 +1023,8 @@
                 const merger = audioCtx.createChannelMerger(2);
                 binauralGain = audioCtx.createGain();
 
-                const carrierFreq = 200; // Left ear base frequency
-                const rightFreq = carrierFreq + activeBinauralDelta; // Dynamic right ear beat
+                const carrierFreq = 200; // Базовая частота левого уха
+                const rightFreq = carrierFreq + activeBinauralDelta; // Модуляция правого уха
 
                 binauralOsc1.type = 'sine';
                 binauralOsc1.frequency.setValueAtTime(carrierFreq, audioCtx.currentTime);
@@ -952,19 +1039,19 @@
                 binauralGain.connect(audioCtx.destination);
 
                 binauralGain.gain.setValueAtTime(0.0, audioCtx.currentTime);
-                binauralGain.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + 1.0); // Soft fade-in
+                binauralGain.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + 1.0); // Плавный запуск
 
                 binauralOsc1.start();
                 binauralOsc2.start();
             } catch (e) {
-                console.log("Failed to start binaural audio context", e);
+                console.log("Не удалось запустить бинауральные волны", e);
             }
         }
 
         function changeBinauralFrequency(delta) {
             activeBinauralDelta = parseInt(delta);
             showToast(appState.lang === 'ru' ? 
-                `Частота изменена на ${delta} Гц.` : 
+                `Частота сонастройки изменена на ${delta} Гц.` : 
                 `Frequency adjusted to ${delta} Hz.`);
             
             if (isFocusTimerActive) {
@@ -987,7 +1074,6 @@
             } catch(e) {}
         }
 
-        // Periodic soft breathing haptic synth guide (modulates tone on inhale/exhale)
         function playBreathPitch(freq, duration, state) {
             try {
                 initAudio();
@@ -1001,17 +1087,14 @@
                 osc.frequency.setValueAtTime(freq, now);
                 
                 if (state === 'in') {
-                    // Slide pitch up dynamically
                     osc.frequency.exponentialRampToValueAtTime(freq * 1.5, now + duration);
                     gain.gain.setValueAtTime(0.001, now);
                     gain.gain.linearRampToValueAtTime(0.04, now + duration);
                 } else if (state === 'out') {
-                    // Slide pitch down dynamically
                     osc.frequency.exponentialRampToValueAtTime(freq / 1.5, now + duration);
                     gain.gain.setValueAtTime(0.04, now);
                     gain.gain.linearRampToValueAtTime(0.001, now + duration);
                 } else {
-                    // Flat steady pitch for holds
                     gain.gain.setValueAtTime(0.015, now);
                     gain.gain.exponentialRampToValueAtTime(0.015, now + duration);
                 }
@@ -1021,7 +1104,6 @@
             } catch(e) {}
         }
 
-        // TACTICAL CLOCK RUNNER WITH ACTUAL WEEK CALCULATION
         function updateTacticalClock() {
             const now = new Date();
             const startYear = new Date(now.getFullYear(), 0, 1);
@@ -1047,7 +1129,7 @@
         }
     </script>
 
-    <!-- TRANSLATION SYSTEM ENGINE (Bilingual JSON strings) -->
+    <!-- СИСТЕМА ЛОКАЛИЗАЦИИ (ДВУЯЗЫЧНЫЙ СЛОВАРЬ) -->
     <script>
         const TRANSLATIONS = {
             ru: {
@@ -1175,7 +1257,7 @@
                 btn_reset: "Reset Data",
                 
                 dash_welcome_sub: "Feudal Caste · Support of Will",
-                dash_welcome_heading: "Sovereign Command: Lord Alexander",
+                dash_welcome_heading: "Sovereign Command: Pavel Markov",
                 dash_welcome_desc: "Here chaos surrenders to absolute order. Clean your environment, shred old alibis, and push your Project 'X' forward.",
                 profile_callsign_lbl: "Your Callsign",
                 profile_gender_lbl: "Persona Role",
@@ -1258,7 +1340,7 @@
                 
                 f7_sub: "Frontier VII · Scar",
                 f7_title: "Challenge & Recovery",
-                f7_desc: "Will is hardened by resistance. But chronic pressure erodes tissue. Balance conscious friction with recovery.",
+                f7_desc: "Will is hardened by resistance. But chronic pressure erodes tissue. Balance controlled challenges with rest.",
                 f7_contract_title: "Will Contract Builder",
                 f7_contract_desc: "Bind daily voluntary discomfort with deep regenerative rest.",
                 f7_lbl_friction: "Conscious Friction (Load)",
@@ -1286,9 +1368,8 @@
         };
     </script>
 
-    <!-- MAIN APPLICATION STATE AND CONSTANTS -->
+    <!-- СИСТЕМНЫЕ НАСТРОЙКИ И ДАННЫЕ ПО УМОЛЧАНИЮ -->
     <script>
-        // Pool of core biological requirements
         const BIO_TASKS_POOL = {
             ru: [
                 { id: 'sleep', title: "Реалистичный сон (6-8 часов качественного сна)", desc: "Команда нервной системе на полную регенерацию." },
@@ -1477,11 +1558,11 @@
         };
 
         const DEFAULT_STATE = {
-            lang: 'ru', // 'ru' | 'en'
-            theme: 'dark', // 'dark' | 'light'
-            userAge: 28,
-            userTitle: 'Феодал Александр', 
-            gender: 'm', // 'm' for Feodal, 'f' for Aristocrat
+            lang: 'ru',
+            theme: 'dark',
+            userAge: 29, // Возраст Павла Маркова на 2026 год
+            userTitle: 'Феодал Павел Марков',
+            gender: 'm',
             frontierLocks: [true, false, false, false, false, false, false],
             shreddedAlibis: [],
             dailyBioCheck: {
@@ -1499,19 +1580,28 @@
             focusStreakCount: 0,
             xp: 0,
             level: 1,
-            unlockedBadges: []
+            unlockedBadges: [],
+            willSteps: [
+                { text: '', done: false },
+                { text: '', done: false },
+                { text: '', done: false }
+            ],
+            isWillStepsSealed: false,
+            bodyMetricsLog: []
         };
 
         let appState = {};
 
-        // MAIN BOOTSTRAP INITIALIZATION ON LOAD
+        // ЗАПУСК И ИНИЦИАЛИЗАЦИЯ ШТАБА
         window.onload = function() {
             loadAppState();
             applyTheme(appState.theme);
             applyLanguageTranslations();
             renderDashboard();
+            renderWillSteps();
             renderFrontier1();
             initBioChecklist();
+            initPhysicalAudit();
             renderMementoMori();
             renderDeclineShortcuts();
             renderF7Contract();
@@ -1519,14 +1609,13 @@
             renderProjectX();
             switchTab('dashboard');
             
-            // Start Clock Interval
             updateTacticalClock();
             setInterval(updateTacticalClock, 1000);
         };
 
-        // STATE LOGISTICS ENGINE
+        // ЛОГИСТИКА СОСТОЯНИЯ
         function loadAppState() {
-            const saved = localStorage.getItem('sovereign_final_state_ver2026');
+            const saved = localStorage.getItem('sovereign_final_state_ver2026_v25');
             if (saved) {
                 try {
                     appState = JSON.parse(saved);
@@ -1540,7 +1629,69 @@
             saveAppState();
         }
 
-        // BACKUP & RESTORE UTILITY FUNCTIONS
+        function saveAppState() {
+            localStorage.setItem('sovereign_final_state_ver2026_v25', JSON.stringify(appState));
+            
+            // Синхронизация возраста на панели и в модальном окне
+            const ageDisplay = document.getElementById('sidebar-age-display');
+            if (ageDisplay) ageDisplay.innerText = `${appState.userAge} ${appState.lang === 'ru' ? 'лет' : 'years'}`;
+            const moriAgeInput = document.getElementById('user-age-input');
+            if (moriAgeInput) moriAgeInput.value = appState.userAge;
+            
+            // Синхронизация позывного в профиле
+            const profileInput = document.getElementById('user-profile-title');
+            if (profileInput) profileInput.value = appState.userTitle;
+
+            // Изменение приветственного заголовка
+            const welcomeHeading = document.getElementById('dashboard-welcome-heading');
+            if (welcomeHeading) {
+                welcomeHeading.innerText = appState.lang === 'ru' ? 
+                    `Штаб управления: ${appState.userTitle}` : 
+                    `Sovereign Command: ${appState.userTitle}`;
+            }
+
+            // Снятие показаний со счетчиков удержания фокуса
+            const focusStreakInfo = document.getElementById('focus-streak-info');
+            if (focusStreakInfo) {
+                focusStreakInfo.innerText = appState.lang === 'ru' ? 
+                    `Часов суверенности зафиксировано: ${appState.focusStreakCount}/7` :
+                    `Sovereignty focus hours recorded: ${appState.focusStreakCount}/7`;
+            }
+            
+            // Бейдж проекта Х
+            const projectBadge = document.getElementById('nav-badge-x');
+            if (projectBadge) {
+                if (appState.activeProjectX) {
+                    projectBadge.innerText = appState.lang === 'ru' ? "Активен" : "Active";
+                    projectBadge.classList.remove('bg-gold/10', 'text-gold');
+                    projectBadge.classList.add('bg-emerald-500/10', 'text-emerald-400');
+                } else {
+                    projectBadge.innerText = appState.lang === 'ru' ? "Черновик" : "Draft";
+                    projectBadge.classList.add('bg-gold/10', 'text-gold');
+                    projectBadge.classList.remove('bg-emerald-500/10', 'text-emerald-400');
+                }
+            }
+
+            const genderSelect = document.getElementById('user-profile-gender');
+            if (genderSelect) {
+                genderSelect.value = appState.gender;
+            }
+
+            renderSidebarRankAndXp();
+
+            // Импульс синхронизации
+            const pulse = document.getElementById('sync-pulse');
+            if (pulse) {
+                pulse.classList.remove('bg-emerald-500');
+                pulse.classList.add('bg-gold');
+                setTimeout(() => {
+                    pulse.classList.remove('bg-gold');
+                    pulse.classList.add('bg-emerald-500');
+                }, 600);
+            }
+        }
+
+        // РЕЗЕРВИРОВАНИЕ И ВОССТАНОВЛЕНИЕ
         function backupSovereignState() {
             playSound('success');
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState));
@@ -1577,76 +1728,13 @@
             reader.readAsText(file);
         }
 
-        function saveAppState() {
-            localStorage.setItem('sovereign_final_state_ver2026', JSON.stringify(appState));
-            
-            // Sync ages & titles
-            const ageDisplay = document.getElementById('sidebar-age-display');
-            if (ageDisplay) ageDisplay.innerText = `${appState.userAge} ${appState.lang === 'ru' ? 'лет' : 'years'}`;
-            const moriAgeInput = document.getElementById('user-age-input');
-            if (moriAgeInput) moriAgeInput.value = appState.userAge;
-            
-            // Sync Callsign input
-            const profileInput = document.getElementById('user-profile-title');
-            if (profileInput) profileInput.value = appState.userTitle;
-
-            // Welcome messages
-            const welcomeHeading = document.getElementById('dashboard-welcome-heading');
-            if (welcomeHeading) {
-                welcomeHeading.innerText = appState.lang === 'ru' ? 
-                    `Штаб управления: ${appState.userTitle}` : 
-                    `Sovereign Command: ${appState.userTitle}`;
-            }
-
-            // Focus streak info
-            const focusStreakInfo = document.getElementById('focus-streak-info');
-            if (focusStreakInfo) {
-                focusStreakInfo.innerText = appState.lang === 'ru' ? 
-                    `Часов суверенности зафиксировано: ${appState.focusStreakCount}/7` :
-                    `Sovereignty focus hours recorded: ${appState.focusStreakCount}/7`;
-            }
-            
-            // Project badge text
-            const projectBadge = document.getElementById('nav-badge-x');
-            if (projectBadge) {
-                if (appState.activeProjectX) {
-                    projectBadge.innerText = appState.lang === 'ru' ? "Активен" : "Active";
-                    projectBadge.classList.remove('bg-gold/10', 'text-gold');
-                    projectBadge.classList.add('bg-emerald-500/10', 'text-emerald-400');
-                } else {
-                    projectBadge.innerText = appState.lang === 'ru' ? "Черновик" : "Draft";
-                    projectBadge.classList.add('bg-gold/10', 'text-gold');
-                    projectBadge.classList.remove('bg-emerald-500/10', 'text-emerald-400');
-                }
-            }
-
-            // Sync gender select UI element
-            const genderSelect = document.getElementById('user-profile-gender');
-            if (genderSelect) {
-                genderSelect.value = appState.gender;
-            }
-
-            renderSidebarRankAndXp();
-
-            // Highlight sync confirmation
-            const pulse = document.getElementById('sync-pulse');
-            if (pulse) {
-                pulse.classList.remove('bg-emerald-500');
-                pulse.classList.add('bg-gold');
-                setTimeout(() => {
-                    pulse.classList.remove('bg-gold');
-                    pulse.classList.add('bg-emerald-500');
-                }, 600);
-            }
-        }
-
         function updateProfileTitle(val) {
             if (val.trim() !== '') {
                 appState.userTitle = val;
                 addSovereigntyXp(10);
                 saveAppState();
                 showToast(appState.lang === 'ru' ? 
-                    `Позывной профиля успешно изменен на "${val}"` : 
+                    `Позывной профиля изменен на "${val}"` : 
                     `Callsign adjusted to "${val}"`);
             }
         }
@@ -1655,11 +1743,10 @@
             playSound('success');
             appState.gender = val;
             
-            // Adapt default placeholder name if name is generic Feodal placeholder
-            if (appState.userTitle === 'Феодал Александр' && val === 'f') {
+            if (appState.userTitle === 'Феодал Павел Марков' && val === 'f') {
                 appState.userTitle = 'Аристократка Александра';
             } else if (appState.userTitle === 'Аристократка Александра' && val === 'm') {
-                appState.userTitle = 'Феодал Александр';
+                appState.userTitle = 'Феодал Павел Марков';
             }
 
             addSovereigntyXp(15);
@@ -1668,13 +1755,12 @@
                 `Статус персоны обновлен. Ранги и кодекс адаптированы.` : 
                 `Sovereign persona updated. Ranks and protocols adapted.`);
             
-            // Re-render language & state structures
             applyLanguageTranslations();
             renderDashboard();
             renderFrontier1();
         }
 
-        // DYNAMIC XP AND RANKS ENGINE
+        // СИСТЕМА РАНГОВ И ОПЫТА (XP)
         function addSovereigntyXp(amount) {
             appState.xp += amount;
             let limit = appState.level * 100;
@@ -1705,7 +1791,7 @@
             list.forEach(badge => {
                 if (!appState.unlockedBadges.includes(badge.id) && badge.requirement(appState)) {
                     appState.unlockedBadges.push(badge.id);
-                    addSovereigntyXp(30); // Award XP
+                    addSovereigntyXp(30);
                     showToast(appState.lang === 'ru' ? 
                         `ОРДЕН РАЗБЛОКИРОВАН: ${badge.title}! (+30 XP)` : 
                         `ORDER UNLOCKED: ${badge.title}! (+30 XP)`);
@@ -1740,12 +1826,11 @@
             }
         }
 
-        // TRANSLATIONS COMPILER - Applying dynamic translations across DOM
+        // ЛОКАЛИЗАЦИЯ И ПЕРЕВОДЫ
         function applyLanguageTranslations() {
             const currentLang = appState.lang;
             const strings = TRANSLATIONS[currentLang];
 
-            // Render i18n items
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (strings[key]) {
@@ -1753,13 +1838,11 @@
                 }
             });
 
-            // Local language buttons
             const mobBtn = document.getElementById('lang-btn-mob');
             if (mobBtn) mobBtn.innerText = currentLang === 'ru' ? 'EN' : 'RU';
             const deskBtn = document.getElementById('lang-btn-desk');
             if (deskBtn) deskBtn.innerText = currentLang === 'ru' ? 'EN' : 'RU';
 
-            // Placeholder adapters for forms
             const placeholdersRu = {
                 "select-placeholder": "Какое дело лежит в «потом»?",
                 "select-placeholder2": "Точный срок (Например: Пятница, 18:00)",
@@ -1770,7 +1853,10 @@
                 "select-placeholder7": "Например: Запуск рекламы в Telegram",
                 "select-placeholder8": "Один пост, ссылка на форму, звонок 5 клиентам",
                 "select-placeholder9": "Подписчики, партнер по бизнесу, друг",
-                "select-placeholder10": "Пятница, 18:00"
+                "select-placeholder10": "Пятница, 18:00",
+                "select-placeholder-will-1": "Шаг Воли №1",
+                "select-placeholder-will-2": "Шаг Воли №2",
+                "select-placeholder-will-3": "Шаг Воли №3"
             };
 
             const placeholdersEn = {
@@ -1783,7 +1869,10 @@
                 "select-placeholder7": "e.g. Launch Telegram/Google Ad set",
                 "select-placeholder8": "One brief post, link to form, cold-call 5 leads",
                 "select-placeholder9": "Subscribers, business partner, close friend",
-                "select-placeholder10": "Friday, 18:00"
+                "select-placeholder10": "Friday, 18:00",
+                "select-placeholder-will-1": "Step of Will №1",
+                "select-placeholder-will-2": "Step of Will №2",
+                "select-placeholder-will-3": "Step of Will №3"
             };
 
             const dict = currentLang === 'ru' ? placeholdersRu : placeholdersEn;
@@ -1793,7 +1882,6 @@
                 });
             });
 
-            // Re-render language-specific dropdowns
             renderDynamicDropdowns();
             renderSidebarNav();
         }
@@ -1804,8 +1892,10 @@
             saveAppState();
             applyLanguageTranslations();
             renderDashboard();
+            renderWillSteps();
             renderFrontier1();
             initBioChecklist();
+            initPhysicalAudit();
             renderDeclineShortcuts();
             renderF7Contract();
             renderProjectX();
@@ -1847,7 +1937,7 @@
             }
         }
 
-        // THEME MANAGEMENT ENGINE
+        // АДАПТИВНОЕ УПРАВЛЕНИЕ ЦВЕТОВЫМИ ТЕМАМИ
         function applyTheme(theme) {
             const body = document.body;
             const iconMob = document.getElementById('theme-icon-mob');
@@ -1872,8 +1962,10 @@
             appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
             saveAppState();
             applyTheme(appState.theme);
-            renderMementoMori(); // Redraw Canvas dots to match theme colors
-            renderSidebarNav(); // Update navigation active states
+            renderMementoMori(); // Перерисовка сетки Memento Mori с новыми контрастами
+            renderSidebarNav();
+            initBioChecklist();
+            initPhysicalAudit();
         }
 
         function showToast(text) {
@@ -1891,7 +1983,7 @@
             }
         }
 
-        // DYNAMIC SIDEBAR NAV GENERATOR WITH REVOLUTIONARY CONTRAST SYSTEM
+        // САЙДБАР: НАВИГАЦИЯ С АДАПТИВНЫМ ЦВЕТОМ И КОНТРАСТОМ
         function renderSidebarNav() {
             const nav = document.getElementById('sidebar-nav');
             if (!nav) return;
@@ -1910,7 +2002,7 @@
 
             const activeTabId = document.querySelector('.tab-content:not(.hidden)')?.id.replace('tab-', '') || 'dashboard';
 
-            // Base Dashboard link
+            // Настройка главного линка
             const activeDashClass = activeTabId === 'dashboard' ? 'nav-btn-active' : '';
             let navHtml = `
                 <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn ${activeDashClass} w-full text-left px-4 py-2.5 rounded transition-all flex items-center gap-3 font-medium text-xs">
@@ -1934,10 +2026,10 @@
             const activeProjXClass = activeTabId === 'projectX' ? 'nav-btn-active' : '';
             navHtml += `
                 <div class="text-[9px] font-extrabold c-text-muted uppercase tracking-[0.2em] px-4 pt-4 pb-1">${outwardHeader}</div>
-                <button onclick="switchTab('projectX')" id="nav-projectX" class="nav-btn ${activeProjXClass} w-full text-left px-4 py-2 rounded border border-[color:var(--border-color)] hover:border-gold/30 hover:bg-neutral-800/10 transition-all flex items-center justify-between text-xs font-bold">
+                <button onclick="switchTab('projectX')" id="nav-projectX" class="nav-btn ${activeProjXClass} w-full text-left px-4 py-2 rounded border border-premium-border hover:border-gold/30 hover:bg-neutral-800/10 transition-all flex items-center justify-between text-xs font-bold">
                     <span class="flex items-center gap-2 font-semibold">
                         <svg class="w-4 h-4 c-text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                        Проект «X» / Project «X»
+                        Проект «X»
                     </span>
                     <span id="nav-badge-x" class="text-[9px] px-1.5 py-0.5 ${btnXBadgeClass} rounded font-bold uppercase tracking-wider">${btnXBadge}</span>
                 </button>
@@ -1946,7 +2038,6 @@
             nav.innerHTML = navHtml;
         }
 
-        // MOBILE SIDEBAR SLIDE
         function toggleMobileSidebar() {
             const sidebar = document.getElementById('sidebar-panel');
             const hamburger = document.getElementById('hamburger-icon');
@@ -1970,7 +2061,6 @@
 
             renderSidebarNav();
 
-            // Safe mobile close
             if (window.innerWidth < 768) {
                 const sidebar = document.getElementById('sidebar-panel');
                 const hamburger = document.getElementById('hamburger-icon');
@@ -1987,6 +2077,7 @@
             }
             if (tabId === 'dashboard') {
                 renderDashboardBadges();
+                renderWillSteps();
             }
         }
 
@@ -2020,7 +2111,103 @@
             }
         }
 
-        // ACHIEVEMENT ORDEN BOARD
+        // ИНТЕРАКТИВНЫЕ ШАГИ ВОЛИ НА СЕГОДНЯ
+        function renderWillSteps() {
+            const container = document.getElementById('will-steps-container');
+            const builder = document.getElementById('will-steps-builder');
+            if (!container || !builder) return;
+
+            if (appState.isWillStepsSealed) {
+                builder.classList.add('hidden');
+                container.classList.remove('hidden');
+                container.innerHTML = '';
+
+                appState.willSteps.forEach((step, idx) => {
+                    const activeBorder = step.done ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-premium-border';
+                    const activeCheck = step.done ? 
+                        `<div class="w-5 h-5 rounded border border-emerald-500 bg-emerald-500 flex items-center justify-center text-black shrink-0">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                         </div>` : 
+                        `<div class="w-5 h-5 rounded border border-premium-border shrink-0"></div>`;
+
+                    const html = `
+                        <div onclick="toggleWillStep(${idx})" class="p-4 premium-subpanel ${activeBorder} rounded flex items-center justify-between gap-4 cursor-pointer hover:border-gold/30 transition-all">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-[8px] uppercase tracking-wider c-text-gold font-bold">${appState.lang === 'ru' ? 'Шаг' : 'Step'} №${idx + 1}</span>
+                                <h4 class="text-xs font-bold c-text-primary ${step.done ? 'line-through opacity-60' : ''}">${step.text}</h4>
+                            </div>
+                            <div class="shrink-0">${activeCheck}</div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', html);
+                });
+            } else {
+                builder.classList.remove('hidden');
+                container.classList.add('hidden');
+            }
+        }
+
+        function sealWillSteps() {
+            const s1 = document.getElementById('will-step-input-0').value.trim();
+            const s2 = document.getElementById('will-step-input-1').value.trim();
+            const s3 = document.getElementById('will-step-input-2').value.trim();
+
+            if (!s1 || !s2 || !s3) {
+                showToast(appState.lang === 'ru' ? "Заполните все три шага воли на сегодня." : "Fill all three steps of will for today.");
+                return;
+            }
+
+            appState.willSteps = [
+                { text: s1, done: false },
+                { text: s2, done: false },
+                { text: s3, done: false }
+            ];
+            appState.isWillStepsSealed = true;
+            addSovereigntyXp(15);
+            saveAppState();
+            renderWillSteps();
+            playSound('gong');
+            showToast(appState.lang === 'ru' ? "Шаги воли на сегодня запечатаны дедлайном. Действуйте!" : "Will steps sealed. Execute!");
+        }
+
+        function toggleWillStep(idx) {
+            playSound('click');
+            appState.willSteps[idx].done = !appState.willSteps[idx].done;
+            
+            if (appState.willSteps[idx].done) {
+                addSovereigntyXp(10);
+            }
+
+            // Награда за закрытие всех трех
+            const allDone = appState.willSteps.every(s => s.done);
+            if (allDone) {
+                addSovereigntyXp(15);
+                showToast(appState.lang === 'ru' ? "Абсолютная победа за сегодня! Все 3 шага воли закрыты! (+15 XP бонус)" : "Absolute victory today! All 3 steps of will resolved! (+15 XP bonus)");
+                playSound('success');
+            }
+
+            saveAppState();
+            renderWillSteps();
+        }
+
+        function resetWillSteps() {
+            playSound('click');
+            appState.willSteps = [
+                { text: '', done: false },
+                { text: '', done: false },
+                { text: '', done: false }
+            ];
+            appState.isWillStepsSealed = false;
+            saveAppState();
+            renderWillSteps();
+
+            document.getElementById('will-step-input-0').value = '';
+            document.getElementById('will-step-input-1').value = '';
+            document.getElementById('will-step-input-2').value = '';
+            showToast(appState.lang === 'ru' ? "Шаги воли сброшены. Готовы к новой разметке дня." : "Will steps reset. Ready for next daily roadmap.");
+        }
+
+        // ОРДЕНА СУВЕРЕНА
         function renderDashboardBadges() {
             const container = document.getElementById('badges-container');
             if (!container) return;
@@ -2046,7 +2233,7 @@
             });
         }
 
-        // FRONT CONTROLLER DASHBOARD BOARD
+        // КАРТА 7 РУБЕЖЕЙ НА ПАНЕЛИ
         function renderDashboard() {
             const container = document.getElementById('frontiers-grid');
             if (!container) return;
@@ -2075,7 +2262,7 @@
                             <h3 class="text-base font-bold c-text-high mt-1">${f.title}</h3>
                             <p class="text-[11px] c-text-secondary leading-relaxed">${f.desc}</p>
                         </div>
-                        <div class="flex items-center justify-between border-t border-[color:var(--border-color)] pt-3 text-[11px] mt-2">
+                        <div class="flex items-center justify-between border-t border-premium-border pt-3 text-[11px] mt-2">
                             <span class="text-[9px] uppercase c-text-gold font-bold tracking-wider">${actionTextLabel}: ${f.returnText}</span>
                             <button onclick="playSound('click'); switchTab('${f.path}')" class="c-text-gold font-semibold hover:underline flex items-center gap-1">
                                 ${btnActionLabel}
@@ -2089,7 +2276,7 @@
             renderDashboardBadges();
         }
 
-        // --- FRONTIER I: ALIBI MECHANICAL ---
+        // РУБЕЖ I: АЛИБИ И УТИЛИЗАЦИЯ
         function renderFrontier1() {
             const listContainer = document.getElementById('alibi-selection-box');
             if (!listContainer) return;
@@ -2100,7 +2287,7 @@
 
             alibis.forEach(a => {
                 const itemHtml = `
-                    <button onclick="shredAlibi(${a.id})" class="w-full text-left p-3.5 bg-neutral-900/10 dark:bg-neutral-900/30 border border-[color:var(--border-color)] hover:border-red-500/30 rounded text-xs c-text-secondary hover:c-text-primary transition-all flex items-center justify-between gap-3 group">
+                    <button onclick="shredAlibi(${a.id})" class="w-full text-left p-3.5 premium-subpanel hover:border-red-500/30 rounded text-xs c-text-secondary hover:c-text-primary transition-all flex items-center justify-between gap-3 group">
                         <span class="font-medium">${a.raw}</span>
                         <svg class="w-4 h-4 text-neutral-600 group-hover:text-red-500 transition-all shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     </button>
@@ -2117,14 +2304,14 @@
             } else {
                 appState.shreddedAlibis.forEach(item => {
                     const row = `
-                        <tr class="border-b border-[color:var(--border-color)] text-xs">
+                        <tr class="border-b border-premium-border text-xs">
                             <td class="py-3 pr-4 text-red-500 dark:text-red-400 font-medium">${item.raw}</td>
                             <td class="py-3 pr-4 text-emerald-500 dark:text-emerald-400 font-serif italic">"${item.author}"</td>
                             <td class="py-3 c-text-muted text-[10px]">${item.timestamp}</td>
                         </tr>
                     `;
                     logContainer.insertAdjacentHTML('afterbegin', row);
-                } );
+                });
             }
         }
 
@@ -2165,7 +2352,7 @@
             }, 1200);
         }
 
-        // --- FRONTIER II: FOCUS TIMER MECHANICAL ---
+        // РУБЕЖ II: КАЛИБРОВКА НАСТРОЯ И СЕАНС ФОКУСА
         function playMorningAudio() {
             const daySelected = document.getElementById('audio-day').value;
             const playerSim = document.getElementById('audio-player-sim');
@@ -2179,7 +2366,7 @@
                 "2": `"Если ты начинаешь утро с входящего потока, ты допускаешь в штаб чужие задачи до того, как назначил свои."`,
                 "3": `"Биологическая правда неприятна: часть 'сложных экзистенциальных состояний' оказывается обычной энергетической бедностью."`,
                 "4": `"Memento Mori делает вопрос короче: что ты снова перенесешь, если будешь вести себя так, будто времени бесконечно?"`,
-                "5": `"Удар не обязан делать тебя сильнее. Сначала назови факт, учти ущерб, найди опора и сделай следующий безопасный ход."`,
+                "5": `"Удар не обязан делать тебя сильнее. Сначала назови факт, учти ущерб, найди опору и сделай следующий безопасный ход."`,
                 "6": `"Кто получает доступ в твою жизнь без закона, тот начинает участвовать в архитектуре твоего дня."`,
                 "7": `"Трансформация редко выглядит уютно. Качественная дисциплина требует регулярного трения."`
             };
@@ -2215,11 +2402,11 @@
                 clearInterval(focusTimerInterval);
                 stopBinauralBeat();
                 isFocusTimerActive = false;
-                focusTimeLeft = 1500; // Reset default to 25m
+                focusTimeLeft = 1500; 
                 document.getElementById('focus-timer-display').innerText = "25:00";
                 
                 displayBtn.innerText = appState.lang === 'ru' ? "Запереть Шлюз" : "Lock Focus Gate";
-                displayBtn.className = "px-8 py-3 bg-neutral-900/30 hover:bg-gold hover:text-black border border-[color:var(--gold-accent)] c-text-gold hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all";
+                displayBtn.className = "px-8 py-3 bg-neutral-900/30 hover:bg-gold hover:text-black border border-premium-gold c-text-gold hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all";
                 
                 showToast(appState.lang === 'ru' ? "Шлюз внимания открыт досрочно. Рассеянность победила." : "Focus aborted prematurely. Interruption won.");
             } else {
@@ -2230,7 +2417,7 @@
                 displayBtn.innerText = appState.lang === 'ru' ? "Сорвать сессию (Сбой)" : "Abort Focus (Flaw)";
                 displayBtn.className = "px-8 py-3 bg-red-600 hover:bg-red-700 text-white border border-red-600 text-xs uppercase font-bold tracking-wider rounded transition-all";
                 
-                showToast(appState.lang === 'ru' ? `Сессия заблокирована на ${Math.floor(focusTimeLeft / 60)} мин. Сонастройка 200Гц + ${activeBinauralDelta}Гц запущена.` : `Session locked for ${Math.floor(focusTimeLeft / 60)} mins. 200Hz + ${activeBinauralDelta}Hz binaural engine running.`);
+                showToast(appState.lang === 'ru' ? `Сессия заблокирована на ${Math.floor(focusTimeLeft / 60)} мин. Сонастройка 200Гц + ${activeBinauralDelta}Гц запечатана.` : `Session locked for ${Math.floor(focusTimeLeft / 60)} mins. 200Hz + ${activeBinauralDelta}Hz binaural engine running.`);
 
                 focusTimerInterval = setInterval(() => {
                     focusTimeLeft--;
@@ -2248,7 +2435,7 @@
                         if (display) display.innerText = "25:00";
                         
                         displayBtn.innerText = appState.lang === 'ru' ? "Запереть Шлюз" : "Lock Focus Gate";
-                        displayBtn.className = "px-8 py-3 bg-neutral-900/30 hover:bg-gold hover:text-black border border-[color:var(--gold-accent)] c-text-gold hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all";
+                        displayBtn.className = "px-8 py-3 bg-neutral-900/30 hover:bg-gold hover:text-black border border-premium-gold c-text-gold hover:text-black text-xs uppercase font-bold tracking-wider rounded transition-all";
                         
                         appState.focusStreakCount++;
                         addSovereigntyXp(35);
@@ -2263,7 +2450,7 @@
             }
         }
 
-        // BREATHWORK CONTROLLER (Dynamic physical sphere synchronization with multisensory audio synth feedback)
+        // ДЫХАТЕЛЬНЫЕ ПРАКТИКИ
         let breathInterval = null;
         let breathTimerSec = 0;
         let breathPhaseIdx = 0;
@@ -2315,7 +2502,6 @@
                 breathTimerSec--;
                 document.getElementById('breath-timer-val').innerText = breathTimerSec;
 
-                // Modulate smooth periodic synth on each second to guide breathing
                 const currentPhase = config.phases[breathPhaseIdx];
                 if (currentPhase.state === 'in') {
                     playBreathPitch(120, 1.0, 'in');
@@ -2385,7 +2571,7 @@
             }
         }
 
-        // --- FRONTIER III: BIOLOGICAL COCOON (Sober platform maintenance) ---
+        // РУБЕЖ III: УПРАВЛЕНИЕ БИОЛОГИЕЙ И ЧЕК-ЛИСТЫ
         function toggleWeekendMode() {
             playSound('success');
             const switcher = document.getElementById('weekend-switch-input');
@@ -2405,6 +2591,7 @@
             saveAppState();
             initBioChecklist();
             checkShockLock();
+            renderDashboard();
         }
 
         function initBioChecklist() {
@@ -2429,15 +2616,15 @@
 
             currentPool.forEach(task => {
                 const checked = appState.dailyBioCheck[task.id];
-                const activeBorder = checked ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-[color:var(--border-color)]';
+                const activeBorder = checked ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-premium-border';
                 const activeCheck = checked ? 
                     `<div class="w-5 h-5 rounded border border-emerald-500 bg-emerald-500 flex items-center justify-center text-black shrink-0">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                      </div>` : 
-                    `<div class="w-5 h-5 rounded border border-neutral-700 shrink-0"></div>`;
+                    `<div class="w-5 h-5 rounded border border-premium-border shrink-0"></div>`;
 
                 const taskHtml = `
-                    <div onclick="toggleBioTask('${task.id}')" class="p-4 bg-neutral-900/5 dark:bg-cyberblack border ${activeBorder} rounded flex items-center justify-between gap-4 cursor-pointer hover:border-gold/30 transition-all">
+                    <div onclick="toggleBioTask('${task.id}')" class="p-4 premium-subpanel ${activeBorder} rounded flex items-center justify-between gap-4 cursor-pointer hover:border-gold/30 transition-all">
                         <div class="flex flex-col gap-1">
                             <h4 class="text-xs font-bold c-text-primary">${task.title}</h4>
                             <p class="text-[10px] c-text-muted">${task.desc}</p>
@@ -2540,7 +2727,78 @@
             }
         }
 
-        // --- FRONTIER IV: MEMENTO MORI CANVAS ---
+        // БИОМЕТРИЧЕСКИЙ АУДИТ ТЕЛА (ЛОГИКА)
+        function initPhysicalAudit() {
+            const tableBody = document.getElementById('metrics-log-table');
+            if (!tableBody) return;
+            tableBody.innerHTML = '';
+
+            if (!appState.bodyMetricsLog || appState.bodyMetricsLog.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 c-text-muted italic">${appState.lang === 'ru' ? 'Летопись пуста. Запишите метрики сегодня.' : 'Audit logs empty. Seal today\'s metrics.'}</td></tr>`;
+                return;
+            }
+
+            appState.bodyMetricsLog.forEach((item, idx) => {
+                const row = `
+                    <tr class="border-b border-premium-border text-xs">
+                        <td class="py-2.5 font-medium c-text-primary">${item.date}</td>
+                        <td class="py-2.5 c-text-secondary">${item.weight ? item.weight + ' кг' : '—'}</td>
+                        <td class="py-2.5 c-text-secondary">${item.steps ? item.steps.toLocaleString() : '—'}</td>
+                        <td class="py-2.5 c-text-secondary">${item.calories ? item.calories + ' ккал' : '—'}</td>
+                        <td class="py-2.5 c-text-secondary">${item.water ? item.water + ' мл' : '—'}</td>
+                        <td class="py-2.5 text-right">
+                            <button onclick="deletePhysicalMetric(${idx})" class="text-red-500 hover:underline text-[10px] font-bold uppercase">${appState.lang === 'ru' ? 'Стереть' : 'Delete'}</button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('afterbegin', row);
+            });
+        }
+
+        // ФУНКЦИЯ СОХРАНЕНИЯ ФИЗИОЛОГИЧЕСКИХ МЕТРИК
+        function savePhysicalMetrics() {
+            const weight = document.getElementById('metric-weight').value;
+            const steps = document.getElementById('metric-steps').value;
+            const calories = document.getElementById('metric-calories').value;
+            const water = document.getElementById('metric-water').value;
+
+            if (!weight && !steps && !calories && !water) {
+                showToast(appState.lang === 'ru' ? "Заполните хотя бы один показатель." : "Provide at least one organic metric.");
+                return;
+            }
+
+            const now = new Date();
+            const dateStr = `${now.toLocaleDateString()} ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+
+            appState.bodyMetricsLog.push({
+                date: dateStr,
+                weight: weight || null,
+                steps: steps ? parseInt(steps) : null,
+                calories: calories ? parseInt(calories) : null,
+                water: water ? parseInt(water) : null
+            });
+
+            addSovereigntyXp(15);
+            saveAppState();
+            initPhysicalAudit();
+
+            document.getElementById('metric-weight').value = '';
+            document.getElementById('metric-steps').value = '';
+            document.getElementById('metric-calories').value = '';
+            document.getElementById('metric-water').value = '';
+
+            showToast(appState.lang === 'ru' ? "Биометрические показатели запечатаны! (+15 XP)" : "Biological metrics successfully logged! (+15 XP)");
+        }
+
+        function deletePhysicalMetric(idx) {
+            playSound('click');
+            appState.bodyMetricsLog.splice(idx, 1);
+            saveAppState();
+            initPhysicalAudit();
+            showToast(appState.lang === 'ru' ? "Запись удалена." : "Organic log entry removed.");
+        }
+
+        // РУБЕЖ IV: MEMENTO MORI CANVAS
         function renderMementoMori() {
             const spentWeeks = appState.userAge * 52;
             const limitWeeks = 80 * 52; 
@@ -2557,10 +2815,10 @@
             
             const devicePixelRatio = window.devicePixelRatio || 1;
             const backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
-                                    ctx.mozBackingStorePixelRatio ||
-                                    ctx.msBackingStorePixelRatio ||
-                                    ctx.oBackingStorePixelRatio ||
-                                    ctx.backingStorePixelRatio || 1;
+                                      ctx.mozBackingStorePixelRatio ||
+                                      ctx.msBackingStorePixelRatio ||
+                                      ctx.oBackingStorePixelRatio ||
+                                      ctx.backingStorePixelRatio || 1;
             const ratio = devicePixelRatio / backingStoreRatio;
 
             if (devicePixelRatio !== backingStoreRatio) {
@@ -2583,7 +2841,7 @@
             const padLeft = 45;
             const padTop = 15;
 
-            // Draw visual seasonal underlying segments (Extremely readable & vibrant)
+            // Сетки сезонов
             ctx.fillStyle = 'rgba(16, 185, 129, 0.05)';
             ctx.fillRect(padLeft - 5, padTop - 5, cols * spacingX, 20 * spacingY);
             ctx.fillStyle = 'rgba(59, 130, 246, 0.05)';
@@ -2670,7 +2928,7 @@
             showToast(appState.lang === 'ru' ? "Шаг закрыт в фактах! Неделя спасена от черновиков. (+30 XP)" : "Task closed in actions! Current week saved from being a draft. (+30 XP)");
         }
 
-        // --- FRONTIER V: AMOR FATI PROTOCOLS ---
+        // РУБЕЖ V: AMOR FATI
         function submitImpactReport() {
             const fact = document.getElementById('f5-fact').value;
             const control = document.getElementById('f5-control').value;
@@ -2722,8 +2980,8 @@
 
             appState.activeImpactReports.forEach((r, idx) => {
                 const itemHtml = `
-                    <div class="p-4 bg-neutral-900/5 dark:bg-cyberblack border border-[color:var(--border-color)] rounded flex flex-col gap-3 relative text-xs">
-                        <div class="flex items-center justify-between border-b border-[color:var(--border-color)] pb-2">
+                    <div class="p-4 premium-subpanel rounded flex flex-col gap-3 relative text-xs">
+                        <div class="flex items-center justify-between border-b border-premium-border pb-2">
                             <span class="text-[9px] c-text-gold font-bold uppercase tracking-wider">${appState.lang === 'ru' ? 'Сбой' : 'Incident'} #${idx + 1} — ${r.date}</span>
                             <button onclick="deleteImpactReport(${idx})" class="text-red-500 hover:underline text-[9px] uppercase font-bold tracking-wider">${appState.lang === 'ru' ? 'Убрать' : 'Remove'}</button>
                         </div>
@@ -2737,7 +2995,7 @@
                                 <p class="c-text-primary mt-0.5">${r.control}</p>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-[color:var(--border-color)] pt-3">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-premium-border pt-3">
                             <div>
                                 <span class="c-text-muted font-bold block text-[9px] uppercase tracking-wider">${appState.lang === 'ru' ? 'ВНЕ МОЕГО КОНТРОЛЯ' : 'OUT OF MY CONTROL'}:</span>
                                 <p class="c-text-primary mt-0.5">${r.uncontrol}</p>
@@ -2757,10 +3015,10 @@
             appState.activeImpactReports.splice(idx, 1);
             saveAppState();
             renderImpactReports();
-            showToast(appState.lang === 'ru' ? "Отчет архивирован." : "Incident log relocated to history.");
+            showToast(appState.lang === 'ru' ? "Отчет перемещен в архив." : "Incident log relocated to history.");
         }
 
-        // --- FRONTIER VI: ACCESS MASTER ---
+        // РУБЕЖ VI: ХРАМ И ДОСТУП
         function renderDeclineShortcuts() {
             const container = document.getElementById('decline-shortcuts-container');
             if (!container) return;
@@ -2771,12 +3029,12 @@
 
             shortcuts.forEach((item, idx) => {
                 const itemHtml = `
-                    <div class="p-4 bg-neutral-900/5 dark:bg-cyberblack border border-[color:var(--border-color)] rounded flex items-center justify-between gap-4">
+                    <div class="p-4 premium-subpanel rounded flex items-center justify-between gap-4">
                         <div class="flex flex-col gap-0.5">
                             <span class="text-[9px] c-text-gold font-bold uppercase tracking-wider">${item.title}</span>
                             <p class="text-xs c-text-primary font-serif italic mt-1">"${item.text}"</p>
                         </div>
-                        <button onclick="copyDeclineShortcut(${idx})" class="px-3.5 py-2 bg-neutral-900/10 dark:bg-neutral-900/40 hover:bg-gold hover:text-black border border-gold/40 hover:border-gold text-[9px] c-text-gold uppercase font-bold tracking-wider rounded transition-all shrink-0">
+                        <button onclick="copyDeclineShortcut(${idx})" class="px-3.5 py-2 bg-neutral-900/10 hover:bg-gold hover:text-black border border-gold/40 hover:border-gold text-[9px] c-text-gold uppercase font-bold tracking-wider rounded transition-all shrink-0">
                             ${appState.lang === 'ru' ? 'Копировать' : 'Copy'}
                         </button>
                     </div>
@@ -2805,7 +3063,7 @@
             showToast(lang === 'ru' ? "Шаблон отсекающего отказа скопирован. Доступ закрыт. (+25 XP)" : "Refusal template copied to clipboard. Temple protected. (+25 XP)");
         }
 
-        // --- FRONTIER VII: CHALLENGE & RECOVERY SCARS ---
+        // РУБЕЖ VII: КОНТРАКТ СИЛЫ
         function commitFrictionContract() {
             const fSelect = document.getElementById('f7-friction-type');
             const rSelect = document.getElementById('f7-recovery-type');
@@ -2848,17 +3106,17 @@
             box.innerHTML = `
                 <div class="flex flex-col justify-between h-full gap-5">
                     <div class="flex flex-col gap-3">
-                        <div class="flex items-center justify-between border-b border-[color:var(--border-color)] pb-2">
+                        <div class="flex items-center justify-between border-b border-premium-border pb-2">
                             <span class="text-[9px] c-text-gold font-bold uppercase tracking-wider">${isRu ? 'Активный контракт силы' : 'Active Will Contract'}</span>
                             <span class="text-[9px] c-text-muted font-bold">${appState.activeF7Contract.timestamp}</span>
                         </div>
                         
-                        <div class="p-3 bg-neutral-900/5 dark:bg-cyberblack border border-[color:var(--border-color)] rounded mt-1">
+                        <div class="p-3 premium-subpanel rounded mt-1">
                             <span class="text-[9px] text-red-500 font-bold uppercase tracking-wider block">${isRu ? 'ТРЕНИЕ (НАГРУЗКА)' : 'FRICTION (LOAD)'}:</span>
                             <p class="text-xs c-text-primary font-medium mt-1 leading-relaxed">${appState.activeF7Contract.friction}</p>
                         </div>
 
-                        <div class="p-3 bg-neutral-900/5 dark:bg-cyberblack border border-[color:var(--border-color)] rounded">
+                        <div class="p-3 premium-subpanel rounded">
                             <span class="text-[9px] text-emerald-500 font-bold uppercase tracking-wider block">${isRu ? 'РЕГЕНЕРАЦИЯ (ОТКАТ)' : 'RESTORATION (RECOVERY)'}:</span>
                             <p class="text-xs c-text-primary font-medium mt-1 leading-relaxed">${appState.activeF7Contract.recovery}</p>
                         </div>
@@ -2888,7 +3146,7 @@
             renderF7Contract();
         }
 
-        // --- FINAL STAGE: DEPLOYING PROJECT X ---
+        // ПРОЕКТ Х
         function commitProjectX() {
             const title = document.getElementById('px-title').value;
             const version = document.getElementById('px-version').value;
@@ -2945,7 +3203,7 @@
             card.innerHTML = `
                 <div class="flex flex-col justify-between h-full gap-5">
                     <div class="flex flex-col gap-3">
-                        <div class="flex items-center justify-between border-b border-[color:var(--border-color)] pb-2">
+                        <div class="flex items-center justify-between border-b border-premium-border pb-2">
                             <span class="text-[9px] c-text-muted font-bold uppercase tracking-wider">${isRu ? 'Главный Контракт Проекта' : 'Master Project Contract'}</span>
                             <span class="text-[9px] px-2 py-0.5 border ${badgeClass} rounded font-bold">${badgeText}</span>
                         </div>
@@ -2967,7 +3225,7 @@
                             <p class="text-xs c-text-gold font-bold">${appState.activeProjectX.deadline}</p>
                         </div>
 
-                        <div class="flex flex-col gap-0.5 border-t border-[color:var(--border-color)] pt-3 mt-1">
+                        <div class="flex flex-col gap-0.5 border-t border-premium-border pt-3 mt-1">
                             <span class="text-[8px] text-red-500 font-bold uppercase tracking-wider">${isRu ? 'ЗАПРЕЩЕННОЕ АЛИБИ' : 'FORBIDDEN EXCUSE'}:</span>
                             <p class="text-xs c-text-secondary leading-relaxed">${appState.activeProjectX.forbiddenAlibi}</p>
                         </div>
@@ -2983,7 +3241,7 @@
                             </button>
                         </div>
                     ` : `
-                        <button onclick="resetProjectX()" class="w-full py-2.5 border border-[color:var(--border-color)] hover:border-gold/30 text-[10px] c-text-secondary hover:c-text-primary uppercase font-bold tracking-wider rounded transition-all mt-4">
+                        <button onclick="resetProjectX()" class="w-full py-2.5 border border-premium-border hover:border-gold/30 text-[10px] c-text-secondary hover:c-text-primary uppercase font-bold tracking-wider rounded transition-all mt-4">
                             ${isRu ? 'Начать новый контракт' : 'Draft New Project'}
                         </button>
                     `}
@@ -3017,7 +3275,7 @@
             showToast(appState.lang === 'ru' ? "Черновик готов к новому созиданию." : "Draft is ready for next construction.");
         }
 
-        // EXPORT INTEGRATED STRUCTURAL USER LOGS TO TXT
+        // ЭКСПОРТ ДАННЫХ В ОТЧЕТЫ
         function exportSovereignData() {
             playSound('success');
             const isRu = appState.lang === 'ru';
@@ -3069,7 +3327,7 @@
             showToast(isRu ? "Тактический отчет успешно сгенерирован!" : "Tactical report deployed successfully!");
         }
 
-        // RESET CONFIG MODAL CONTROLLERS
+        // ОКНА СБРОСА
         function openResetModal() {
             playSound('click');
             const modal = document.getElementById('reset-modal');
@@ -3082,7 +3340,7 @@
         }
 
         function confirmResetSovereignState() {
-            localStorage.removeItem('sovereign_final_state_ver2026');
+            localStorage.removeItem('sovereign_final_state_ver2026_v25');
             appState = { ...DEFAULT_STATE };
             closeResetModal();
             playSound('gong');
