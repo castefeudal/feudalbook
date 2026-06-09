@@ -282,7 +282,7 @@
                 </button>
             </div>
             <div class="text-[8px] uppercase tracking-widest c-text-muted text-center pt-1 font-bold">
-                markovmade · ver 2.5
+                markovmade · ver 2.6
             </div>
         </div>
     </aside>
@@ -297,7 +297,7 @@
                 <div class="flex flex-col gap-1.5">
                     <span class="text-[10px] uppercase tracking-[0.2em] c-text-gold font-bold" data-i18n="dash_welcome_sub">Каста Феодалов · Опора воли</span>
                     <h2 class="text-2xl md:text-3xl font-bold tracking-tight c-text-high" id="dashboard-welcome-heading">
-                        Штаб управления: Феодал Павел Марков
+                        Штаб управления: Феодал
                     </h2>
                     <p class="text-xs c-text-secondary max-w-xl" data-i18n="dash_welcome_desc">
                         Здесь хаос отступает перед выстроенным порядком. Изменяй окружение, утилизируй оправдания и двигай свой Проект «X» вперед.
@@ -308,7 +308,7 @@
                 <div class="premium-subpanel p-4 rounded flex flex-col gap-3 shrink-0 w-full lg:w-64">
                     <div class="flex flex-col gap-1">
                         <label class="text-[8px] uppercase font-bold tracking-widest c-text-gold" data-i18n="profile_callsign_lbl">Ваш Позывной</label>
-                        <input type="text" id="user-profile-title" onchange="updateProfileTitle(this.value)" value="Феодал Павел Марков" class="premium-input px-2.5 py-1.5 text-xs font-semibold rounded w-full">
+                        <input type="text" id="user-profile-title" onchange="updateProfileTitle(this.value)" value="Феодал" class="premium-input px-2.5 py-1.5 text-xs font-semibold rounded w-full">
                     </div>
                     <div class="flex flex-col gap-1">
                         <label class="text-[8px] uppercase font-bold tracking-widest c-text-gold" data-i18n="profile_gender_lbl">Роль в системе</label>
@@ -645,7 +645,7 @@
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div class="flex flex-col gap-1">
                         <h3 class="text-base font-bold c-text-gold" data-i18n="f4_mori_title">Резервуар Твоего Времени</h3>
-                        <p class="text-xs c-text-muted" data-i18n="f4_mori_sub">Сетка отображает сезоны: Сборка (0-20), Сила (20-40), Мастерство (40-60), Наследие (60-80).</p>
+                        <p class="text-xs c-text-muted" data-i18n="f4_mori_sub">Бюджет разделен на глобальный горизонт и подробное тактическое десятилетие.</p>
                     </div>
                     <div class="flex gap-4 text-xs premium-subpanel p-3 rounded">
                         <div class="c-text-secondary"><span data-i18n="f4_mori_spent">Пройдено</span>: <span class="font-bold c-text-high" id="mori-spent">0</span> нед.</div>
@@ -654,7 +654,8 @@
                 </div>
                 
                 <div class="relative w-full premium-subpanel rounded p-4 flex items-center justify-center overflow-x-auto">
-                    <canvas id="lifespan-canvas" width="840" height="260" class="max-w-full block"></canvas>
+                    <!-- Задаем canvas с адаптивной шириной и авто-масштабированием -->
+                    <canvas id="lifespan-canvas" width="840" height="300" class="max-w-full block"></canvas>
                 </div>
             </div>
 
@@ -702,7 +703,7 @@
                         <textarea id="f5-fact" class="premium-input p-3 text-xs rounded h-32 resize-none select-placeholder3"></textarea>
                     </div>
                     <div class="flex flex-col gap-1.5">
-                        <label class="text-[9px] uppercase font-bold tracking-widest c-text-gold" data-i18n="f5_lbl_action">Что в зоне моей власти?</label>
+                        <label class="text-[9px] uppercase font-bold tracking-widest c-text-gold" data-i18n="f5_lbl_action">What is in my zone of will?</label>
                         <textarea id="f5-control" class="premium-input p-3 text-xs rounded h-32 resize-none select-placeholder4"></textarea>
                     </div>
                 </div>
@@ -1193,7 +1194,7 @@
                 f4_title: "Memento Mori",
                 f4_desc: "Смерть в этой главе — не абстрактный мрак, а редактор твоего календаря. Время не бесконечно. Трать его стратегически.",
                 f4_mori_title: "Резервуар Твоего Времени",
-                f4_mori_sub: "Сетка отображает сезоны: Сборка (0-20), Сила (20-40), Мастерство (40-60), Наследие (60-80).",
+                f4_mori_sub: "Бюджет разделен на глобальный горизонт и подробное тактическое десятилетие.",
                 f4_mori_spent: "Пройдено",
                 f4_mori_rem: "Осталось",
                 f4_task_title: "Шаг текущей недели",
@@ -1310,7 +1311,7 @@
                 f4_title: "Memento Mori",
                 f4_desc: "Death in this chapter is not abstract doom, but your calendar editor. Time is limited. Spend it strategically.",
                 f4_mori_title: "Lifespan Time Reservoir",
-                f4_mori_sub: "Grid represents seasons: Assembly (0-20), Power (20-40), Mastery (40-60), Legacy (60-80).",
+                f4_mori_sub: "Budget is split into global lifespan horizon and close-up tactical decade.",
                 f4_mori_spent: "Spent",
                 f4_mori_rem: "Remaining",
                 f4_task_title: "Step of the current week",
@@ -1424,7 +1425,7 @@
         const BADGES_POOL = {
             ru: [
                 { id: 'shredder_1', title: "Правдоруб", desc: "Уничтожено первое алиби в утилизаторе", requirement: state => state.shreddedAlibis.length >= 1 },
-                { id: 'shredder_master', title: "Взрослый вождь", desc: "Уничтожены все оправдания", requirement: state => state.shreddedAlibis.length >= 5 },
+                { id: 'shredder_master', title: "Взрослый вождь", desc: "Уничтожены все оправдания", requirement: state => state.shreddedAlibis.length >= 7 },
                 { id: 'focus_first', title: "Свет разума", desc: "Завершен первый сеанс фокуса", requirement: state => state.focusStreakCount >= 1 },
                 { id: 'focus_god', title: "Клинок тишины", desc: "Пройдено 5 часов внимания", requirement: state => state.focusStreakCount >= 5 },
                 { id: 'bio_perfect', title: "Стальная база", desc: "Все 4 био-нормы выполнены вместе", requirement: state => state.dailyBioCheck.sleep && state.dailyBioCheck.water && state.dailyBioCheck.activity && state.dailyBioCheck.screenTime },
@@ -1436,7 +1437,7 @@
             ],
             en: [
                 { id: 'shredder_1', title: "Truth Seeker", desc: "Shredded your first mental excuse", requirement: state => state.shreddedAlibis.length >= 1 },
-                { id: 'shredder_master', title: "Sovereign Chief", desc: "Abolished all 5 excuses", requirement: state => state.shreddedAlibis.length >= 5 },
+                { id: 'shredder_master', title: "Sovereign Chief", desc: "Abolished all excuses", requirement: state => state.shreddedAlibis.length >= 7 },
                 { id: 'focus_first', title: "Beam of Light", desc: "Finished your first deep focus session", requirement: state => state.focusStreakCount >= 1 },
                 { id: 'focus_god', title: "Blade of Silence", desc: "Successfully survived 5 focus hours", requirement: state => state.focusStreakCount >= 5 },
                 { id: 'bio_perfect', title: "Steel Platform", desc: "All 4 biology markers completed together", requirement: state => state.dailyBioCheck.sleep && state.dailyBioCheck.water && state.dailyBioCheck.activity && state.dailyBioCheck.screenTime },
@@ -1454,14 +1455,18 @@
                 { id: 2, raw: "«Мне сначала нужно до конца доисцелиться»", author: "Я использую прошлые травмы как официальное алиби, чтобы не строить будущее." },
                 { id: 3, raw: "«У меня сейчас совершенно нет ресурса»", author: "Я развалил свою базу и режим дня. Снимаю с себя сегодняшнюю ответственность." },
                 { id: 4, raw: "«Сейчас неподходящее время на рынке»", author: "Я ищу внешние оправдания, чтобы избежать риска публичной проверки." },
-                { id: 5, raw: "«Меня слишком сильно триггернуло окружение»", author: "Я отдал управление своей реакцией и фокусом внешнему шуму." }
+                { id: 5, raw: "«Меня слишком сильно триггернуло окружение»", author: "Я отдал управление своей реакцией и фокусом внешнему шуму." },
+                { id: 6, raw: "«Мне нужно сначала составить идеальный план»", author: "Я прячусь за бумажным планированием от реального столкновения с миром." },
+                { id: 7, raw: "«Я сделаю это, когда поймаю правильный настрой»", author: "Я делаю свои действия заложником случайных гормональных колебаний вместо волевого решения." }
             ],
             en: [
                 { id: 1, raw: "«I am not ready yet, I need to study more»", author: "I delay the step out of fear. I choose total inaction today." },
                 { id: 2, raw: "«I need to fully heal my past trauma first»", author: "I use past pain as an official alibi to avoid building my future." },
                 { id: 3, raw: "«I have absolutely no energy or resource now»", author: "I destroyed my physical platform. I shift today's responsibility." },
                 { id: 4, raw: "«Market conditions are bad right now»", author: "I look for external excuses to avoid the risk of real-world check." },
-                { id: 5, raw: "«My environment triggered me too much»", author: "I gave away command of my focus to random external noise." }
+                { id: 5, raw: "«My environment triggered me too much»", author: "I gave away command of my focus to random external noise." },
+                { id: 6, raw: "«I need to design a perfect plan first»", author: "I hide behind paper planning to avoid real collision with the market." },
+                { id: 7, raw: "«I will do it when I catch the right mood»", author: "I hold my actions hostage to random hormonal fluctuations instead of making a sovereign choice." }
             ]
         };
 
@@ -1481,13 +1486,19 @@
                 { title: "Запрос «Срочно созвониться»", text: "Сегодня занят своим блоком работы. Вернусь с ответом завтра." },
                 { title: "Мутная/Бесплатная просьба", text: "Мой фокус на этой неделе жестко лимитирован. Не смогу включиться." },
                 { title: "Ответ на требование мгновенной повестки", text: "Я увидел твой запрос. Сформулирую ответ к завтрашнему утру." },
-                { title: "Вежливое отрезание лишних людей", text: "В моем расписании сейчас нет окон для разговоров. Давай коротко по делу." }
+                { title: "Вежливое отрезание лишних людей", text: "В моем расписании сейчас нет окон для разговоров. Давай коротко по делу." },
+                { title: "Защита выходного дня (Регенерация)", text: "В выходные я полностью отключаюсь от рабочих процессов для восстановления биологической базы. Вернусь к делам в понедельник." },
+                { title: "Отказ от бесплатных консультаций / советов", text: "Я не провожу спонтанные консультации в личных сообщениях. Если у тебя есть конкретный проект — давай согласуем полноценную платную сессию." },
+                { title: "Защита глубокого фокус-спринта", text: "У меня сейчас приоритетный спринт. Все сторонние переписки и звонки заморожены. Сформулируй суть дела текстом, я изучу и отвечу в пятницу." }
             ],
             en: [
                 { title: "«Call me urgently» Request", text: "Busy with my focus block today. Will return with an answer tomorrow." },
                 { title: "Vague or Free Request", text: "My focus is heavily constrained this week. Won't be able to step in." },
                 { title: "Response to Instant Agendas", text: "I saw your request. Will formulate a structured answer tomorrow morning." },
-                { title: "Polite Filter for Empty Talks", text: "No open slots for casual talks in my calendar. Let's get straight to business." }
+                { title: "Polite Filter for Empty Talks", text: "No open slots for casual talks in my calendar. Let's get straight to business." },
+                { title: "Weekend Recovery Protection", text: "On weekends I fully disconnect from work processes to restore my biological platform. Back to business on Monday." },
+                { title: "Refusing Free Spontaneous Consulting", text: "I do not conduct spontaneous consultations in private messages. If you have a specific project, let's arrange a proper paid session." },
+                { title: "Defending Deep Focus Sprint", text: "I am currently in a high-priority sprint. All external messages and calls are frozen. Please write the essence of your request, and I will review it on Friday." }
             ]
         };
 
@@ -1560,8 +1571,8 @@
         const DEFAULT_STATE = {
             lang: 'ru',
             theme: 'dark',
-            userAge: 29, // Возраст Павла Маркова на 2026 год
-            userTitle: 'Феодал Павел Марков',
+            userAge: 29, 
+            userTitle: 'Феодал', // Default simple name, editable by user
             gender: 'm',
             frontierLocks: [true, false, false, false, false, false, false],
             shreddedAlibis: [],
@@ -1615,7 +1626,7 @@
 
         // ЛОГИСТИКА СОСТОЯНИЯ
         function loadAppState() {
-            const saved = localStorage.getItem('sovereign_final_state_ver2026_v25');
+            const saved = localStorage.getItem('sovereign_final_state_ver2026_v26');
             if (saved) {
                 try {
                     appState = JSON.parse(saved);
@@ -1630,7 +1641,7 @@
         }
 
         function saveAppState() {
-            localStorage.setItem('sovereign_final_state_ver2026_v25', JSON.stringify(appState));
+            localStorage.setItem('sovereign_final_state_ver2026_v26', JSON.stringify(appState));
             
             // Синхронизация возраста на панели и в модальном окне
             const ageDisplay = document.getElementById('sidebar-age-display');
@@ -1743,17 +1754,16 @@
             playSound('success');
             appState.gender = val;
             
-            if (appState.userTitle === 'Феодал Павел Марков' && val === 'f') {
-                appState.userTitle = 'Аристократка Александра';
-            } else if (appState.userTitle === 'Аристократка Александра' && val === 'm') {
-                appState.userTitle = 'Феодал Павел Марков';
+            // If the title is one of the generic default titles, seamlessly swap it
+            if (appState.userTitle === 'Феодал' || appState.userTitle === 'Аристократка' || appState.userTitle === 'Феодал Павел Марков' || appState.userTitle === 'Аристократка Александра') {
+                appState.userTitle = val === 'm' ? 'Феодал' : 'Аристократка';
             }
 
             addSovereigntyXp(15);
             saveAppState();
             showToast(appState.lang === 'ru' ? 
-                `Статус персоны обновлен. Ранги и кодекс адаптированы.` : 
-                `Sovereign persona updated. Ranks and protocols adapted.`);
+                `Статус персоны обновлен. Кодекс адаптирован.` : 
+                `Sovereign persona updated. Protocols adapted.`);
             
             applyLanguageTranslations();
             renderDashboard();
@@ -2305,9 +2315,9 @@
                 appState.shreddedAlibis.forEach(item => {
                     const row = `
                         <tr class="border-b border-premium-border text-xs">
-                            <td class="py-3 pr-4 text-red-500 dark:text-red-400 font-medium">${item.raw}</td>
-                            <td class="py-3 pr-4 text-emerald-500 dark:text-emerald-400 font-serif italic">"${item.author}"</td>
-                            <td class="py-3 c-text-muted text-[10px]">${item.timestamp}</td>
+                            <td class="py-4 pr-4 text-red-500 dark:text-red-400 font-medium">${item.raw}</td>
+                            <td class="py-4 pr-4 text-emerald-600 dark:text-emerald-400 font-serif font-bold text-[13px] tracking-wide italic">"${item.author}"</td>
+                            <td class="py-4 c-text-muted text-[10px]">${item.timestamp}</td>
                         </tr>
                     `;
                     logContainer.insertAdjacentHTML('afterbegin', row);
@@ -2366,7 +2376,7 @@
                 "2": `"Если ты начинаешь утро с входящего потока, ты допускаешь в штаб чужие задачи до того, как назначил свои."`,
                 "3": `"Биологическая правда неприятна: часть 'сложных экзистенциальных состояний' оказывается обычной энергетической бедностью."`,
                 "4": `"Memento Mori делает вопрос короче: что ты снова перенесешь, если будешь вести себя так, будто времени бесконечно?"`,
-                "5": `"Удар не обязан делать тебя сильнее. Сначала назови факт, учти ущерб, найди опору и сделай следующий безопасный ход."`,
+                "5": `"Удар не обязан делать тебя сильнее. Сначала назови факт, учти ущерб, найди опора и сделай следующий безопасный ход."`,
                 "6": `"Кто получает доступ в твою жизнь без закона, тот начинает участвовать в архитектуре твоего дня."`,
                 "7": `"Трансформация редко выглядит уютно. Качественная дисциплина требует регулярного трения."`
             };
@@ -2798,89 +2808,215 @@
             showToast(appState.lang === 'ru' ? "Запись удалена." : "Organic log entry removed.");
         }
 
-        // РУБЕЖ IV: MEMENTO MORI CANVAS
+        // РУБЕЖ IV: MEMENTO MORI CANVAS (ZOOM-IN DECADE & GLOBAL HORIZON)
         function renderMementoMori() {
-            const spentWeeks = appState.userAge * 52;
+            const age = appState.userAge;
+            const spentWeeks = age * 52;
             const limitWeeks = 80 * 52; 
-            const remainingWeeks = limitWeeks - spentWeeks;
+            const remainingWeeks = Math.max(0, limitWeeks - spentWeeks);
 
             const spentEl = document.getElementById('mori-spent');
-            if (spentEl) spentEl.innerText = spentWeeks;
+            if (spentEl) spentEl.innerText = spentWeeks.toLocaleString();
             const remEl = document.getElementById('mori-rem');
-            if (remEl) remEl.innerText = remainingWeeks;
+            if (remEl) remEl.innerText = remainingWeeks.toLocaleString();
 
             const canvas = document.getElementById('lifespan-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             
-            const devicePixelRatio = window.devicePixelRatio || 1;
-            const backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
-                                      ctx.mozBackingStorePixelRatio ||
-                                      ctx.msBackingStorePixelRatio ||
-                                      ctx.oBackingStorePixelRatio ||
-                                      ctx.backingStorePixelRatio || 1;
-            const ratio = devicePixelRatio / backingStoreRatio;
+            // Настройка высокого разрешения для экранов Retina/DPR
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = 840 * dpr;
+            canvas.height = 300 * dpr;
+            ctx.scale(dpr, dpr);
+            canvas.style.width = '840px';
+            canvas.style.height = '300px';
 
-            if (devicePixelRatio !== backingStoreRatio) {
-                const oldWidth = canvas.width;
-                const oldHeight = canvas.height;
-                canvas.width = oldWidth * ratio;
-                canvas.height = oldHeight * ratio;
-                canvas.style.width = oldWidth + 'px';
-                canvas.style.height = oldHeight + 'px';
-                ctx.scale(ratio, ratio);
+            ctx.clearRect(0, 0, 840, 300);
+
+            const isDark = !document.body.classList.contains('light-theme');
+            const goldColor = isDark ? '#c5a880' : '#785830';
+            const spentColor = isDark ? '#333333' : '#c5c2b0';
+            const textColor = isDark ? '#9ca3af' : '#1a1a1a';
+            const gridBgColor = isDark ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.015)';
+            const activeWeekPulse = goldColor;
+
+            // --- ЗОНА 1: ГЛОБАЛЬНЫЙ ГОРИЗОНТ (ЛЕВАЯ КОЛОНКА) ---
+            const gX = 20;
+            const gY = 25;
+            const gW = 200;
+            const gH = 250;
+
+            // Отрисовка подложки левой панели
+            ctx.fillStyle = gridBgColor;
+            ctx.fillRect(gX, gY, gW, gH);
+            ctx.strokeStyle = isDark ? '#222222' : '#c5c2b0';
+            ctx.strokeRect(gX, gY, gW, gH);
+
+            // Текст заголовка
+            ctx.fillStyle = goldColor;
+            ctx.font = 'bold 10px Inter';
+            ctx.fillText(appState.lang === 'ru' ? 'ГЛОБАЛЬНЫЙ ГОРИЗОНТ' : 'GLOBAL HORIZON', gX + 15, gY + 25);
+            
+            ctx.fillStyle = textColor;
+            ctx.font = '9px Inter';
+            ctx.fillText((appState.lang === 'ru' ? 'Жизненный лимит: ' : 'Ultimate Limit: ') + '80 лет', gX + 15, gY + 45);
+
+            // Построение красивой вертикальной полосы прогресса жизни
+            const barX = gX + 25;
+            const barY = gY + 65;
+            const barW = 22;
+            const barH = 150;
+
+            // Задний фон шкалы
+            ctx.fillStyle = isDark ? '#1a1a1a' : '#eae7da';
+            ctx.fillRect(barX, barY, barW, barH);
+            
+            // Пройденная доля
+            const pctSpent = Math.min(1, age / 80);
+            ctx.fillStyle = spentColor;
+            ctx.fillRect(barX, barY, barW, barH * pctSpent);
+
+            // Границы шкалы
+            ctx.strokeStyle = isDark ? '#444444' : '#999999';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(barX, barY, barW, barH);
+
+            // Риски делений (каждые 10 лет)
+            for (let i = 0; i <= 80; i += 20) {
+                const markerY = barY + (barH * (i / 80));
+                ctx.strokeStyle = goldColor;
+                ctx.beginPath();
+                ctx.moveTo(barX - 4, markerY);
+                ctx.lineTo(barX, markerY);
+                ctx.stroke();
+
+                ctx.fillStyle = textColor;
+                ctx.font = '7px monospace';
+                ctx.fillText(`${i}y`, barX - 22, markerY + 2.5);
             }
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            const cols = 52; 
-            const rows = 80; 
-            const dotSize = 1.6;
-            const spacingX = 14;
-            const spacingY = 2.9;
-            const padLeft = 45;
-            const padTop = 15;
-
-            // Сетки сезонов
-            ctx.fillStyle = 'rgba(16, 185, 129, 0.05)';
-            ctx.fillRect(padLeft - 5, padTop - 5, cols * spacingX, 20 * spacingY);
-            ctx.fillStyle = 'rgba(59, 130, 246, 0.05)';
-            ctx.fillRect(padLeft - 5, padTop + 20 * spacingY - 5, cols * spacingX, 20 * spacingY);
-            ctx.fillStyle = 'rgba(234, 179, 8, 0.05)';
-            ctx.fillRect(padLeft - 5, padTop + 40 * spacingY - 5, cols * spacingX, 20 * spacingY);
-            ctx.fillStyle = 'rgba(156, 163, 175, 0.05)';
-            ctx.fillRect(padLeft - 5, padTop + 60 * spacingY - 5, cols * spacingX, 20 * spacingY);
-
-            ctx.font = 'bold 7px Inter';
+            // Текстовая метка текущей позиции
+            ctx.fillStyle = goldColor;
+            ctx.font = 'italic bold 11px Georgia';
+            ctx.fillText(`${age} ${appState.lang === 'ru' ? 'лет сейчас' : 'yrs old'}`, barX + 30, barY + (barH * pctSpent) + 4);
             
-            const darkTheme = !document.body.classList.contains('light-theme');
-            ctx.fillStyle = darkTheme ? '#f3f4f6' : '#050505'; 
-            
-            for (let y = 10; y <= rows; y += 10) {
-                ctx.fillText(`${y} ${appState.lang === 'ru' ? 'лет' : 'years'}`, 8, padTop + y * spacingY + 2);
-            }
+            // Тонкая линия-указатель к текущему возрасту
+            ctx.strokeStyle = goldColor;
+            ctx.beginPath();
+            ctx.moveTo(barX + barW, barY + (barH * pctSpent));
+            ctx.lineTo(barX + barW + 25, barY + (barH * pctSpent));
+            ctx.stroke();
 
-            for (let year = 0; year < rows; year++) {
-                for (let week = 0; week < cols; week++) {
-                    const currentWeekNum = year * 52 + week;
-                    const x = padLeft + week * spacingX;
-                    const y = padTop + year * spacingY;
+
+            // --- ЗОНА 2: ТАКТИЧЕСКОЕ ДЕСЯТИЛЕТИЕ (ПРАВАЯ КОЛОНКА - ZOOM-IN) ---
+            const startDecadeAge = Math.floor(age / 10) * 10;
+            const endDecadeAge = startDecadeAge + 10;
+
+            const tX = 250;
+            const tY = 25;
+            const tW = 570;
+            const tH = 250;
+
+            // Отрисовка подложки сетки десятилетия
+            ctx.fillStyle = gridBgColor;
+            ctx.fillRect(tX, tY, tW, tH);
+            ctx.strokeStyle = isDark ? '#222222' : '#c5c2b0';
+            ctx.strokeRect(tX, tY, tW, tH);
+
+            // Текст заголовка
+            ctx.fillStyle = goldColor;
+            ctx.font = 'bold 10px Inter';
+            ctx.fillText((appState.lang === 'ru' ? 'ТЕКУЩИЙ СЕЗОН СИЛЫ: ДЕСЯТИЛЕТИЕ ' : 'CURRENT DECADE SHIELD: AGES ') + `${startDecadeAge} - ${endDecadeAge}`, tX + 20, tY + 25);
+            
+            ctx.fillStyle = textColor;
+            ctx.font = '9px Inter';
+            ctx.fillText(appState.lang === 'ru' ? 'Каждая строчка — 1 год. Каждая точка — 1 неделя года. Проживи её тотально.' : 'Each row represents 1 year. Each dot is 1 week. Protect your steps.', tX + 20, tY + 42);
+
+            // Рисование сетки 10 лет * 52 недели
+            const startY = tY + 65;
+            const startX = tX + 55;
+            const spacingW = 9.4; // Расстояние по горизонтали для 52 недель
+            const spacingH = 15;  // Расстояние по вертикали для 10 лет
+            const dotRad = 2.0;
+
+            // Текущий индекс недели в рамках текущего десятилетия
+            const yearsIntoDecade = age - startDecadeAge;
+            const currentWeekOfYearIndex = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 1)) / (1000 * 60 * 60 * 24 * 7));
+            const activeWeekLocalIndex = (yearsIntoDecade * 52) + currentWeekOfYearIndex;
+
+            for (let yIndex = 0; yIndex < 10; yIndex++) {
+                const currentAgeLabel = startDecadeAge + yIndex;
+                
+                // Лейблы возраста слева от строчки
+                ctx.fillStyle = currentAgeLabel === age ? goldColor : textColor;
+                ctx.font = currentAgeLabel === age ? 'bold 8px Inter' : '7px Inter';
+                ctx.fillText(`${currentAgeLabel} ${appState.lang === 'ru' ? 'л.' : 'y.'}`, tX + 20, startY + (yIndex * spacingH) + 2.5);
+
+                for (let wIndex = 0; wIndex < 52; wIndex++) {
+                    const absWeekIdx = (yIndex * 52) + wIndex;
+                    const dX = startX + (wIndex * spacingW);
+                    const dY = startY + (yIndex * spacingH);
 
                     ctx.beginPath();
-                    if (currentWeekNum < spentWeeks) {
-                        ctx.fillStyle = darkTheme ? '#333333' : '#bbb6a1'; 
-                        ctx.arc(x, y, dotSize, 0, Math.PI * 2);
-                    } else if (currentWeekNum === spentWeeks) {
-                        ctx.fillStyle = darkTheme ? '#c5a880' : '#8e7250'; 
-                        ctx.arc(x, y, dotSize + 1.2, 0, Math.PI * 2);
+                    if (absWeekIdx < activeWeekLocalIndex) {
+                        // Прожитая неделя в десятилетии
+                        ctx.fillStyle = spentColor;
+                        ctx.arc(dX, dY, dotRad, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else if (absWeekIdx === activeWeekLocalIndex) {
+                        // Текущая неделя (Выделена золотым пульсирующим кружком)
+                        ctx.fillStyle = activeWeekPulse;
+                        ctx.arc(dX, dY, dotRad + 2, 0, Math.PI * 2);
+                        ctx.fill();
+                        
+                        // Дополнительный красивый контур вокруг текущей недели
+                        ctx.strokeStyle = activeWeekPulse;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.arc(dX, dY, dotRad + 4, 0, Math.PI * 2);
+                        ctx.stroke();
                     } else {
-                        ctx.fillStyle = darkTheme ? '#c5a880' : '#8e7250'; 
-                        ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+                        // Будущая неделя в десятилетии
+                        ctx.strokeStyle = goldColor;
+                        ctx.lineWidth = 0.8;
+                        ctx.arc(dX, dY, dotRad, 0, Math.PI * 2);
+                        ctx.stroke();
                     }
-                    ctx.fill();
                 }
             }
 
+            // Отрисовка легенды тактической сетки под ней
+            const legY = tY + 225;
+            const legX = tX + 20;
+            
+            // Пройденные недели
+            ctx.fillStyle = spentColor;
+            ctx.beginPath();
+            ctx.arc(legX, legY, dotRad, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = textColor;
+            ctx.font = '8px Inter';
+            ctx.fillText(appState.lang === 'ru' ? 'Прожито' : 'Spent weeks', legX + 10, legY + 2.5);
+
+            // Текущая неделя
+            ctx.fillStyle = activeWeekPulse;
+            ctx.beginPath();
+            ctx.arc(legX + 100, legY, dotRad + 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = textColor;
+            ctx.fillText(appState.lang === 'ru' ? 'Текущая неделя' : 'Current week', legX + 112, legY + 2.5);
+
+            // Будущее время
+            ctx.strokeStyle = goldColor;
+            ctx.beginPath();
+            ctx.arc(legX + 220, legY, dotRad, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = textColor;
+            ctx.fillText(appState.lang === 'ru' ? 'Ближайший потенциал (недели)' : 'Unlived weeks in decade', legX + 232, legY + 2.5);
+
+            // Синхронизация блока текущей задачи Memento Mori
             const activeBox = document.getElementById('mori-active-task-box');
             if (activeBox) {
                 if (appState.moriActiveTask) {
@@ -3340,7 +3476,7 @@
         }
 
         function confirmResetSovereignState() {
-            localStorage.removeItem('sovereign_final_state_ver2026_v25');
+            localStorage.removeItem('sovereign_final_state_ver2026_v26');
             appState = { ...DEFAULT_STATE };
             closeResetModal();
             playSound('gong');
